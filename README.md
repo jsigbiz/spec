@@ -52,7 +52,7 @@ Some types of values can be described as generic, or "types of types." For examp
 
     var cats = ['tabby', 'shorthair', 'calico', 'persian']
 
-could be described as an "array of strings." In `jsig` this is expressed as Array<String>.
+could be described as an "array of strings." In `jsig` this is expressed as `Array<String>`.
 
 Formally, the generic type preceeds the specific type, which is surrounded by angle brackets `<`,`>`. This notation should be familiar to users of Java or C#. Here, we borrow the notation for the purpose of simplifying otherwise quite verbose notations. Consider Callbacks or Promises in asynchronous JavaScript programming.
 
