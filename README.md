@@ -6,7 +6,7 @@ This specification is a draft. The spirit of what we intend to capture is here, 
 
 ## Motivation
 
-JavaScript is a a dyanmically typed language. Most of the time, this is great - this flexibility lets us write things like `"I'm " + thisMany` and have it work whether `thisMany === 'five'` or `thisMany === 5`. But sometimes it helps to have a vocabulary for explicitly stating expectations about the values and objects our code is expecting, especially when writing documentation for other humans.
+JavaScript is a a dynamically typed language. Most of the time, this is great - this flexibility lets us write things like `"I'm " + thisMany` and have it work whether `thisMany === 'five'` or `thisMany === 5`. But sometimes it helps to have a vocabulary for explicitly stating expectations about the values and objects our code is expecting, especially when writing documentation for other humans.
 
 JSDoc is a attempts to solve this, but falls short by limiting itself to built in types and instanceof constructors. In particular, it is difficult to describe function signatures for callbacks and objects with a certain set of properties.
 
