@@ -1,4 +1,4 @@
-# jsig - JavaScript signature notation
+# jsig - precise & concise JavaScript signature notation
 
 ## Stability Note
 
