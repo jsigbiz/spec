@@ -1,0 +1,10 @@
+gens := (gen: (...args: Any)* => T) =>
+    (...args: Any, cb?: Callback<Error, T>) => Continuable<T>
+
+gens/both := (Continuable<T>) => Continuable<[Error, T]>
+
+gens/wrap := (lambda: (...args: Any, Callback<T>), context: Any) =>
+    (...args: Any) => Continuable<T>
+
+gens/recover := (gen: ()* => T, left: (Error)* => T | Error)
+    => Continuable<T>

@@ -1,0 +1,5 @@
+
+body := (req: HttpRequest) => Continuable<Buffer>
+body/json := (HttpRequest, HttpResponse) => Continuable<Any>
+body/form := (HttpRequest, HttpResponse) => Continuable<Object>
+body/any := (HttpRequest, HttpResponse) => Continuable<Any>
