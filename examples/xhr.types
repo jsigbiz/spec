@@ -1,0 +1,11 @@
+type XhrOptions = String | {
+    cors: Boolean?,
+    uri: String,
+    method: String?,
+    timeout: Number?,
+    headers: Object?,
+    body: String?,
+    json: Object?
+}
+
+xhr := (XhrOptions, Callback<HTTPResponse>) => HTTPRequest

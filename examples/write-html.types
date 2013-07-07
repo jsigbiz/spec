@@ -1,0 +1,4 @@
+write-html := (HttpRequest, HttpResponse) => {
+    writeHead: (String) => void,
+    writeBody: (String) => void
+}

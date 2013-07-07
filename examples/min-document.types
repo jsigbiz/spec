@@ -1,0 +1,13 @@
+type DOMText := { data: String }
+type DOMElement := {
+    tagName: String,
+    className: String,
+    dataset: Object,
+    childNodes: Array<DOMElement>,
+    parentNode: DOMElement?
+}
+
+min-document := () => {
+    createTextNode: (String) => DOMText,
+    createElement: (tagName: String) => DOMElement
+}
