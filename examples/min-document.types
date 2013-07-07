@@ -4,7 +4,7 @@ type DOMElement := {
     className: String,
     dataset: Object,
     childNodes: Array<DOMElement>,
-    parentNode?: DOMElement
+    parentNode: DOMElement?
 }
 
 min-document := () => {
