@@ -9,20 +9,20 @@ type Cursor<T> := {
 
 type Collection<T> := {
     (Callback<mongodb/Collection>) => void,
-    find: (selector: Object, options?: Object) => Cursor<T>,
-    findById: (id: String, options?: Object) => Continuable<T>,
-    findAndModify: (selector: Object, sort?: Array, doc?: Object,
-        options?: Object) => Continuable<T>,
+    find: (selector: Object, options: Object?) => Cursor<T>,
+    findById: (id: String, options: Object?) => Continuable<T>,
+    findAndModify: (selector: Object, sort: Array?, doc: Object?,
+        options: Object?) => Continuable<T>,
     findAndRemove: (selector: Object, sort: Array?, options: Object?) =>
         Continuable<T>
     findOne: (selector: Object, options: Object?) => Continuable<T>,
     insert: (docs: Array<T>, options: Object?) =>
         Continuable<Array<T>>,
-    mapReduce: (map: Function, reduce: Function, options?: Object) =>
+    mapReduce: (map: Function, reduce: Function, options: Object?) =>
         Continuable<Collection>,
-    remove: (selector: Object, options?: Object) =>
+    remove: (selector: Object, options: Object?) =>
         Continuable<Number>,
-    update: (selector: Object, doc?: Object, options?: Object) =>
+    update: (selector: Object, doc: Object?, options: Object?) =>
         Continuable<Number>
 }
 
@@ -33,9 +33,9 @@ type Client := {
 }
 
 continuable-mongo/cursor := (Collection<T>) =>
-    (selector: Object, options?: Object) => Cursor<T>
+    (selector: Object, options: Object?) => Cursor<T>
 
 continuable-mongo/collection := (Client) =>
     (collectionName: String) => Collection
 
-continuable-mongo := (uri: String, options?: Object) => Client
+continuable-mongo := (uri: String, options: Object?) => Client

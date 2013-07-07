@@ -35,7 +35,7 @@ type JsonML :=
         Array<JsonML>
     ]
 
-jsonml-stringify := (jsonml: JsonML, opts?: Object) => String
+jsonml-stringify := (jsonml: JsonML, opts: Object?) => String
 
 jsonml-stringify/normalize := (MaybeJsonML) => JsonML
 

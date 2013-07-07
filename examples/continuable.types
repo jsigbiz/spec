@@ -1,16 +1,17 @@
 type Callback<E, T> := (error: E, value: T) => void
 type Continuable<T> := (Callback<Error, T>) => void
+type ContinuableFn<A, B> := (A) => Continuable<B>
 
 continuable/maybe-callback := (fn: (args...: Any) => Continuable<T>) =>
-    (args...: Any, cb?: Callback<T>) => Continuable<T>
+    (args...: Any, cb: Callback?<T>) => Continuable<T>
 
 continuable/chain := (Continuable<A>, (A) => Continuable<B>) =>
     Continuable<B>
 
 continuable/either :=
     (source: Continuable<A>,
-     left: (Error, cb?: Callback<A>) => Continuable<B>.
-     right?: (A) => Continuable<B>
+     left: (Error, cb: Callback?<A>) => Continuable<B>.
+     right: ContinuableFn?<A, B>
 ) => Continuable<B>
 
 continuable/error := (Error) => Continuable<void>
