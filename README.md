@@ -18,7 +18,7 @@ The goal of this system of annotation is not necessarily to be computable but to
 
 ```js
 /*  reduce := (array: Array<A>,
-        reducer: (accumulated: B, elem: A) => B, seed?: B) => B
+        reducer: (accumulated: B, elem: A) => B, seed: B?) => B
 */
 function reduce(array, reducer, seed) {
   return array.reduce(reducer, seed)
@@ -70,7 +70,7 @@ Formally, the generic type preceeds the specific type, which is surrounded by an
 In Node.js, we can read a file using `fs.readFile`. We could write this signature (simplified) as:
 
 ```ocaml
-readFile := (filename: String, options?: Object,
+readFile := (filename: String, options: Object?,
     callback: (err: Error, content: Buffer) => void) => void
 ```
 
@@ -79,7 +79,7 @@ or we could create a generic `Callback<Type>` notation and write:
 ```ocaml
 type Callback<T> := (err: Error, value: T) => void
 
-readFile := (filename: String, options?: Object, callback: Callback<Buffer>)
+readFile := (filename: String, options: Object?, callback: Callback<Buffer>)
 ```
 
 Using Continuable values, we could simplify and clarify the type signature even further to:
@@ -88,7 +88,7 @@ Using Continuable values, we could simplify and clarify the type signature even 
 type Callback<T> := (err: Error, value: T) => void
 type Continuable<T> := (callback: Callback<T>) => void
 
-readFile := (filename: String, options?: Object) => Continuable<Buffer>
+readFile := (filename: String, options: Object?) => Continuable<Buffer>
 ```
 
 Generic types should be fully specified as a Custom Type (see below). In the custom type definition, any symbol may be used inside the angle brackets and should be internally consistent in the definition. In this example, the definition for generic Callback would be:
