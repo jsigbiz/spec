@@ -1,8 +1,7 @@
 # jsig - precise & concise JavaScript signature notation
 
-## Stability Note
-
-This specification is a draft. The spirit of what we intend to capture is here, but the exact wording is still being ironed out. Expect change. Please participate with your comments and feedback.
+## v 0.1.0
+*Stability Note* - This specification is a draft. The spirit of what we intend to capture is here, but the exact wording is still being ironed out. Expect change. Please participate with your comments and feedback.
 
 ## Motivation
 
@@ -211,6 +210,7 @@ Optional properties can be indicated by a `?` following the name:
 ## Contributors
 
 jden <jason@denizac.org>
+raynos <raynos2@gmail.com>
 
 ## License
 
