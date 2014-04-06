@@ -1,0 +1,3 @@
+[submodule "min-document"]
+	path = min-document
+	url = gh:Raynos/min-document
