@@ -1,0 +1,41 @@
+{
+  "name": "jsig",
+  "version": "1.0.0",
+  "description": "A spec for javascript types",
+  "keywords": [],
+  "author": "Raynos <raynos2@gmail.com>",
+  "repository": "git://github.com/Raynos/jsig.git",
+  "main": "index",
+  "homepage": "https://github.com/Raynos/jsig",
+  "bugs": {
+    "url": "https://github.com/Raynos/jsig/issues",
+    "email": "raynos2@gmail.com"
+  },
+  "dependencies": {
+    "process": "^0.6.0"
+  },
+  "devDependencies": {
+    "istanbul": "~0.2.4",
+    "jshint": "^2.5.0",
+    "pre-commit": "0.0.4",
+    "tap-spec": "~0.1.4",
+    "tape": "^2.10.2"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/Raynos/jsig/raw/master/LICENSE"
+    }
+  ],
+  "scripts": {
+    "test": "npm run jshint",
+    "jshint": "jshint --verbose .",
+    "cover": "istanbul cover --report none --print detail test/index.js",
+    "view-cover": "istanbul report html && open ./coverage/index.html"
+  },
+  "engine": {
+    "node": ">= 0.8.x"
+  },
+  "private": true,
+  "uber-ngen-version": "3.0.0"
+}
