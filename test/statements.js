@@ -168,3 +168,22 @@ test('two statements', function (assert) {
 
     assert.end();
 });
+
+test('foo-baz/bar-boz := Number', function (assert) {
+    var content = 'foo-baz/bar-boz := Number'
+    var result = parse(content).statements[0]
+
+    assert.deepEqual(result, {
+        type: 'assignment',
+        identifier: 'foo-baz/bar-boz',
+        typeExpression: {
+            type: 'typeLiteral',
+            label: null,
+            optional: false,
+            builtin: true,
+            name: 'Number'
+        }
+    })
+
+    assert.end()
+})
