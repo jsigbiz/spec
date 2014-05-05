@@ -23,17 +23,18 @@ var typeExpression = (
         })
 );
 
-var typeLiteral = (
-    Parsimmon.regex(/[a-z]*/i)
-        .skip(Parsimmon.string(':'))
-        .skip(Parsimmon.optWhitespace)
-        .atMost(1)
-        .then(function (labels) {
-            return typeExpression.map(function (expr) {
-                expr.label = labels[0] || null;
-                return expr;
-            });
-        })
-);
+// Label is a name : whitespace at most once
+var label = Parsimmon.regex(/[a-z]*/i)
+    .skip(Parsimmon.string(':'))
+    .skip(Parsimmon.optWhitespace)
+    .atMost(1)
+
+var typeLiteral = label
+    .chain(function (labels) {
+        return typeExpression.map(function (expr) {
+            expr.label = labels[0] || null;
+            return expr;
+        });
+    });
 
 module.exports = typeLiteral;
