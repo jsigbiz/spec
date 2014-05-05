@@ -50,6 +50,22 @@ test('foo := Any', function (assert) {
     assert.end()
 })
 
+test('foo := undefined', function (assert) {
+    var content = 'foo := undefined'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'typeLiteral',
+        name: 'undefined',
+        label: null,
+        builtin: true
+    })
+
+    assert.end()
+})
+
 test('foo := Array', function (assert) {
     var content = 'foo := Array'
     var result = parse(content).statements[0]
