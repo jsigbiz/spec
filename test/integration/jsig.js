@@ -97,7 +97,28 @@ var ASTFixture = AST.program([
         AST.literal('FunctionE'),
         AST.literal('ValueE'),
         AST.literal('GenericE')
-    ]))
+    ])),
+    AST.typeDeclaration('Assignment', AST.object({
+        'type': AST.value('assignment', 'string'),
+        'identifier': AST.literal('String'),
+        'typeExpression': AST.literal('TypeExpression')
+    })),
+    AST.typeDeclaration('TypeDeclaration', AST.object({
+        'type': AST.value('typeDeclaration', 'string'),
+        'identifier': AST.literal('String'),
+        'typeExpression': AST.literal('TypeExpression')
+    })),
+    AST.typeDeclaration('Statement', AST.union([
+        AST.literal('TypeDeclaration'),
+        AST.literal('Assignment')
+    ])),
+    AST.typeDeclaration('Program', AST.object({
+        'type': AST.value('program', 'string'),
+        'statements': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('Statement') ]
+        )
+    }))
 ])
 
 // labeled unions dont parse properly

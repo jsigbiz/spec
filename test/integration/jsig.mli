@@ -53,3 +53,22 @@ type ObjectE := {
 
 type TypeExpression :=
     ObjectE | UnionE | LiteralE | FunctionE | ValueE | GenericE
+
+type Assignment := {
+    type: "assignment",
+    identifier: String,
+    typeExpression: TypeExpression
+}
+
+type TypeDeclaration := {
+    type: "typeDeclaration",
+    identifier: String,
+    typeExpression: TypeExpression
+}
+
+type Statement := TypeDeclaration | Assignment
+
+type Program := {
+    type: "program",
+    statements: Array<Statement>
+}

@@ -15,7 +15,7 @@ function showDiff(left, right, type) {
         return diffC
     } else {
         var diff = jsonDiff.diff(left, right)
-        var diffC = colorize.colorize(diff)
+        diffC = colorize.colorize(diff)
 
         console.log(diffC)
 
