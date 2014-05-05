@@ -2,8 +2,6 @@ var Parsimmon = require('parsimmon');
 
 var join = require('./lib/join.js');
 
-// { text: String }
-
 var objectKey = Parsimmon.regex(/[a-z]+/i)
     .skip(Parsimmon.string(':'))
     .skip(Parsimmon.optWhitespace)
