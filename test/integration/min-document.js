@@ -196,6 +196,33 @@ var ASTFixture = AST.program([
                 AST.literal('DOMElement')
             ])
         })
+    })),
+    AST.typeDeclaration('Event', AST.object({
+        'type': AST.literal('String'),
+        'bubbles': AST.literal('Boolean'),
+        'cancelable': AST.literal('Boolean'),
+        'initEvent': AST.functionType({
+            args: [
+                AST.literal('String', 'type'),
+                AST.literal('Boolean', 'bubbles'),
+                AST.literal('Boolean', 'cancelable')
+            ],
+            thisArg: AST.literal('Event', 'this'),
+            result: AST.literal('void')
+        })
+    })),
+    AST.typeDeclaration('addEventListener', AST.functionType({
+        args: [
+            AST.literal('String', 'type'),
+            AST.literal('Listener', 'listener')
+        ],
+        thisArg: AST.literal('DOMElement', 'this'),
+        result: AST.literal('void')
+    })),
+    AST.typeDeclaration('dispatchEvent', AST.functionType({
+        args: [ AST.literal('Event', 'ev') ],
+        thisArg: AST.literal('DOMElement', 'this'),
+        result: AST.literal('void')
     }))
 ])
 

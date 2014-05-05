@@ -83,3 +83,27 @@ type Document := {
         parent?: DOMElement
     ) => null | DOMElement
 }
+
+type Event := {
+    type: String,
+    bubbles: Boolean,
+    cancelable: Boolean,
+
+    initEvent: (
+        this: Event,
+        type: String,
+        bubbles: Boolean,
+        cancelable: Boolean
+    ) => void
+}
+
+type addEventListener := (
+    this: DOMElement,
+    type: String,
+    listener: Listener
+) => void
+
+type dispatchEvent := (
+    this: DOMElement,
+    ev: Event
+) => void
