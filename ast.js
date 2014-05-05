@@ -48,14 +48,15 @@ function object(keyValues, label) {
     return {
         type: 'object',
         keyValues: keyValues,
-        label: label
+        label: label || null
     }
 }
 
-function union(unions) {
+function union(unions, label) {
     return {
         type: 'unionType',
-        unions: unions
+        unions: unions,
+        label: label || null
     }
 }
 
