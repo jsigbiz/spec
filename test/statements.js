@@ -34,6 +34,38 @@ test('foo := null', function (assert) {
     assert.end()
 })
 
+test('foo := Any', function (assert) {
+    var content = 'foo := Any'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'typeLiteral',
+        name: 'Any',
+        label: null,
+        builtin: true
+    })
+
+    assert.end()
+})
+
+test('foo := Array', function (assert) {
+    var content = 'foo := Array'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'typeLiteral',
+        name: 'Array',
+        label: null,
+        builtin: true
+    })
+
+    assert.end()
+})
+
 test('foo-bar := Number', function (assert) {
     var content = 'foo-bar := Number';
     var result = parse(content).statements[0];
