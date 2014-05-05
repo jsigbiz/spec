@@ -12,6 +12,7 @@ var funcArgs = Parsimmon.lazy(function () {
 });
 
 var typeFunction = Parsimmon.string('(')
+    .skip(Parsimmon.optWhitespace)
     .then(funcArgs)
     .chain(function (args) {
         var thisArg = null;
@@ -19,7 +20,8 @@ var typeFunction = Parsimmon.string('(')
             thisArg = args.shift()
         }
 
-        return Parsimmon.string(')')
+        return Parsimmon.optWhitespace
+            .then(Parsimmon.string(')'))
             .then(Parsimmon.optWhitespace)
             .then(Parsimmon.string('=>'))
             .then(Parsimmon.optWhitespace)
