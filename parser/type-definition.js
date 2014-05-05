@@ -15,6 +15,7 @@ var unionType = join(typeDefinition,
         .then(Parsimmon.string('|'))
         .skip(Parsimmon.optWhitespace)
 ).map(function (unions) {
+    // wtf hack :(
     if (unions.length === 0) {
         return null
     }
