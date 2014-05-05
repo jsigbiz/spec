@@ -3,7 +3,7 @@ var Parsimmon = require('parsimmon')
 var AST = require('../ast.js')
 
 var stringLiteral = valueLiteral('string', Parsimmon.string('"')
-    .then(Parsimmon.regex(/[a-z]+/i))
+    .then(Parsimmon.regex(/[#\-a-z]+/i))
     .skip(Parsimmon.string('"')))
 
 var numberLiteral = valueLiteral('number', 

@@ -109,6 +109,45 @@ var ASTFixture = AST.program([
             result: AST.literal('String'),
             thisArg: AST.literal('DOMElement', 'this')
         })
+    })),
+    AST.typeDeclaration('DocumentFragment', AST.object({
+        'childNodes': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('DOMChild') ]
+        ),
+        'parentNode': AST.union([
+            AST.value('null'),
+            AST.literal('DOMElement')
+        ]),
+        'type': AST.value('DocumentFragment', 'string'),
+        'nodeType': AST.value('11', 'number'),
+        'nodeName': AST.value('#document-fragment', 'string'),
+        'ownerDocument': AST.union([
+            AST.literal('Document'),
+            AST.value('null')
+        ]),
+        'appendChild': AST.functionType({
+            args: [AST.literal('DOMChild', 'child')],
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DocumentFragment', 'this')
+        }),
+        'replaceChild': AST.functionType({
+            args: [
+                AST.literal('DOMChild', 'elem'),
+                AST.literal('DOMChild', 'needle')
+            ],
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DocumentFragment', 'this')
+        }),
+        'removeChild': AST.functionType({
+            args: [ AST.literal('DOMChild', 'child') ],
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DocumentFragment', 'this')
+        }),
+        'toString': AST.functionType({
+            result: AST.literal('String'),
+            thisArg: AST.literal('DocumentFragment', 'this')
+        })
     }))
 ])
 
