@@ -1,11 +1,24 @@
 var difflet = require('difflet')({ indent: 1 })
 
+var jsonDiff = require('json-diff');
+var colorize = require('json-diff/lib/colorize');
+
 module.exports = showDiff
 
-function showDiff(left, right) {
-    var diffC = difflet.compare(left, right)
+function showDiff(left, right, type) {
+    var diffC
+    if (type === 'difflet') {
+        difflet.compare(left, right)
 
-    console.log(diffC)
+        console.log(diffC)
 
-    return diffC
+        return diffC
+    } else {
+        var diff = jsonDiff.diff(left, right)
+        colorize.colorize(diff)
+
+        console.log(diffC)
+
+        return diffC
+    }
 }

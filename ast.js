@@ -53,12 +53,14 @@ function object(keyValues, label) {
     }
 }
 
-function union(unions, label) {
+function union(unions, label, opts) {
+    opts = opts || {}
+
     return {
         type: 'unionType',
         unions: unions,
         label: label || null,
-        optional: false
+        optional: opts.optional || false
     }
 }
 
