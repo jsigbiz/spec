@@ -265,7 +265,6 @@ var ASTFixture = AST.program([
     AST.assignment('min-document', AST.literal('Document'))
 ])
 
-// labeled unions dont parse properly
 test('the min-document type definition', function (assert) {
     var result = parse(content)
 
