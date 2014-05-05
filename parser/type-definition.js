@@ -3,6 +3,13 @@ var Parsimmon = require('parsimmon');
 var AST = require('../ast.js')
 var join = require('./lib/join.js')
 
+// Label is a name : whitespace at most once
+var label = Parsimmon.regex(/[a-z]*/i)
+    .skip(Parsimmon.string(':'))
+    .skip(Parsimmon.optWhitespace)
+    .atMost(1)
+
+
 var typeDefinition = Parsimmon.lazy(function () {
     return Parsimmon.alt(
         typeExpression,
@@ -28,7 +35,18 @@ var unionType = join(typeDefinition,
     return AST.union(unions);
 })
 
-module.exports = unionType;
+
+var typeExpression = label
+    .chain(function (labels) {
+        return unionType.map(function (expr) {
+            if (expr) {
+                expr.label = labels[0] || null;
+            }
+            return expr;
+        });
+    });
+
+module.exports = typeExpression;
 
 var typeExpression = require('./type-expression.js');
 var typeFunction = require('./type-function.js');

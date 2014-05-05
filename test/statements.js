@@ -113,7 +113,8 @@ test('foo := () => Number', function (assert) {
             builtin: true,
             label: null,
             name: 'Number'
-        }
+        },
+        label: null
     });
 
     assert.end();
@@ -139,7 +140,8 @@ test('two statements', function (assert) {
                 label: null,
                 builtin: true,
                 name: 'Number'
-            }
+            },
+            label: null
         }
     });
     assert.deepEqual(result.statements[1], {
