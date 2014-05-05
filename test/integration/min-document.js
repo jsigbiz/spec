@@ -1,5 +1,7 @@
 var test = require('tape');
 
+// var showDiff = require('../lib/show-diff.js')
+
 var parse = require('../../parser.js');
 
 var content = 'type DOMText := {\n' +
@@ -15,7 +17,11 @@ var content = 'type DOMText := {\n' +
     '        length: Number,\n' +
     '        value: String\n' +
     '    ) => void\n' +
-    '}'
+    '}' +
+    '\n' +
+    'type DOMNode := DOMText | DOMElement | DocumentFragment\n' +
+    'type DOMChild := DOMText | DOMElement'
+
 
 var ASTFixture = {
     type: 'program',
@@ -109,13 +115,55 @@ var ASTFixture = {
                 }
             }]
         }
+    }, {
+        type: 'typeDeclaration',
+        identifier: 'DOMNode',
+        typeExpression: {
+            type: 'unionType',
+            unions: [{
+                type: 'typeLiteral',
+                label: null,
+                builtin: false,
+                name: 'DOMText'
+            }, {
+                type: 'typeLiteral',
+                label: null,
+                builtin: false,
+                name: 'DOMElement'
+            }, {
+                type: 'typeLiteral',
+                label: null,
+                builtin: false,
+                name: 'DocumentFragment'
+            }]
+        }
+    }, {
+        type: 'typeDeclaration',
+        identifier: 'DOMChild',
+        typeExpression: {
+            type: 'unionType',
+            unions: [{
+                type: 'typeLiteral',
+                label: null,
+                builtin: false,
+                name: 'DOMText'
+            }, {
+                type: 'typeLiteral',
+                label: null,
+                builtin: false,
+                name: 'DOMElement'
+            }]
+        }
     }]
 }
 
 test('the min-document type definition', function (assert) {
     var result = parse(content)
 
+
+    // showDiff(result, ASTFixture)
     assert.deepEqual(result, ASTFixture)
+
 
     assert.end()
 })
