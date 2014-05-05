@@ -4,7 +4,7 @@ var join = require('./lib/join.js')
 
 var typeDefinition = Parsimmon.lazy(function () {
     return Parsimmon.alt(
-        typeLiteral,
+        typeExpression,
         typeFunction,
         typeObject
     );
@@ -31,6 +31,6 @@ var unionType = join(typeDefinition,
 
 module.exports = unionType;
 
-var typeLiteral = require('./type-literal.js');
+var typeExpression = require('./type-expression.js');
 var typeFunction = require('./type-function.js');
 var typeObject = require('./type-object.js');
