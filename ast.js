@@ -36,7 +36,7 @@ function assignment(identifier, typeExpression) {
     }
 }
 
-function object(keyValues) {
+function object(keyValues, label) {
     if (!Array.isArray(keyValues)) {
         keyValues = Object.keys(keyValues)
             .reduce(function (acc, key) {
@@ -47,7 +47,8 @@ function object(keyValues) {
 
     return {
         type: 'object',
-        keyValues: keyValues
+        keyValues: keyValues,
+        label: label
     }
 }
 
@@ -95,7 +96,8 @@ function functionType(opts) {
         type: 'function',
         args: opts.args || [],
         result: opts.result,
-        thisArg: opts.thisArg || null
+        thisArg: opts.thisArg || null,
+        label: opts.label || null
     }
 }
 

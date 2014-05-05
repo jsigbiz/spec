@@ -19,7 +19,8 @@ test('foo := { text: String }', function (assert) {
                 label: null,
                 name: 'String'
             }
-        }]
+        }],
+        label: null
     })
 
     assert.end();
@@ -54,7 +55,8 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
                 value: 'DOMTextNode',
                 label: null
             }
-        }]
+        }],
+        label: null
     })
 
     assert.end();
@@ -86,9 +88,11 @@ test('foo := { nested: { nodeType: 3 } }', function (assert) {
                         value: '3',
                         label: null
                     }
-                }]
+                }],
+                label: null
             }
-        }]
+        }],
+        label: null
     })
 
     assert.end();

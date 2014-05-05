@@ -27,7 +27,8 @@ test('foo := (String, Number) => Object', function (assert) {
             builtin: true,
             label: null,
             name: 'Object'
-        }
+        },
+        label: null
     });
 
     assert.end();
@@ -49,7 +50,8 @@ test('foo := () => CustomType', function (assert) {
                 label: null,
                 builtin: false,
                 name: 'CustomType'
-            }
+            },
+            label: null
         }
     });
 
@@ -77,8 +79,9 @@ test('foo := (tagName: String) => void', function (assert) {
                 builtin: true,
                 label: null,
                 name: 'void'
-            }
-        } 
+            },
+            label: null
+        }
     });
 
     assert.end();
@@ -110,7 +113,8 @@ test('foo := (this: DOMText, index: Number) => void', function (assert) {
                 builtin: true,
                 label: null,
                 name: 'void'
-            }
+            },
+            label: null
         }
     })
 
