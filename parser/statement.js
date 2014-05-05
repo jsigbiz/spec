@@ -3,7 +3,7 @@ var Parsimmon = require('parsimmon');
 var AST = require('../ast.js')
 var typeDefinition = require('./type-definition.js');
 
-var identifier = Parsimmon.regex(/[a-z\-]*/i)
+var identifier = Parsimmon.regex(/[a-z\-\/]*/i)
     .skip(Parsimmon.optWhitespace);
 
 var assignment = identifier
