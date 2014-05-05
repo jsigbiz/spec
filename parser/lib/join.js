@@ -2,11 +2,11 @@ var Parsimmon = require('parsimmon');
 
 module.exports = join
 
-function join(expr, seperator) {
+function join(expr, seperator, count) {
     return expr.chain(function (value) {
         return seperator
             .then(expr)
-            .many().map(function (values) {
+            .atLeast(count || 0).map(function (values) {
                 return [value].concat(values);
             });
     }).or(Parsimmon.succeed([]));

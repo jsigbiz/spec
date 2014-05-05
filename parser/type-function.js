@@ -20,6 +20,8 @@ var typeFunction = Parsimmon.string('(')
             thisArg = args.shift()
         }
 
+        args = args.filter(Boolean)
+
         return Parsimmon.optWhitespace
             .then(Parsimmon.string(')'))
             .then(Parsimmon.optWhitespace)

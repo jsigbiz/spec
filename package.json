@@ -16,6 +16,7 @@
     "process": "^0.6.0"
   },
   "devDependencies": {
+    "difflet": "^0.2.6",
     "istanbul": "~0.2.4",
     "jshint": "^2.5.0",
     "json-diff": "^0.3.1",
