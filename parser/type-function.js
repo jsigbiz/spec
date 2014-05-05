@@ -20,6 +20,9 @@ var typeFunction = Parsimmon.string('(')
             thisArg = args.shift()
         }
 
+        // wtf hack.
+        // filter out any null arguments created by
+        // union type
         args = args.filter(Boolean)
 
         return Parsimmon.optWhitespace
