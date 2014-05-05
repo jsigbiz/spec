@@ -4,6 +4,8 @@ var builtinType = Parsimmon.string('String')
     .or(Parsimmon.string('Number'))
     .or(Parsimmon.string('Object'))
     .or(Parsimmon.string('void'))
+    .or(Parsimmon.string('Any'))
+    .or(Parsimmon.string('Array'))
     .map(function (type) {
         return { 
             type: 'typeLiteral',
