@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var AST = require('../ast.js');
 var join = require('./lib/join.js');
 
 var funcArgs = Parsimmon.lazy(function () {
@@ -32,12 +33,11 @@ var typeFunction = Parsimmon.string('(')
             .then(Parsimmon.optWhitespace)
             .chain(function () {
                 return typeDefinition.map(function (def) {
-                    return {
-                        type: 'function',
+                    return AST.functionType({
                         args: args,
                         thisArg: thisArg,
                         result: def
-                    };
+                    });
                 });
             });
     });

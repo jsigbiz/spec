@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var AST = require('../ast.js')
 var join = require('./lib/join.js')
 
 var typeDefinition = Parsimmon.lazy(function () {
@@ -24,10 +25,7 @@ var unionType = join(typeDefinition,
         return unions[0]
     }
 
-    return {
-        type: 'unionType',
-        unions: unions
-    }
+    return AST.union(unions);
 })
 
 module.exports = unionType;
