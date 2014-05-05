@@ -41,12 +41,21 @@ var numberLiteral = Parsimmon.regex(/[0-9]+/i)
         }
     })
 
+var nullLiteral = Parsimmon.string('null')
+    .map(function (name) {
+        return {
+            type: 'valueLiteral',
+            name: 'null',
+            value: name
+        }
+    })
 
 var typeExpression = Parsimmon.alt(
-    builtinType,
-    customType,
     stringLiteral,
-    numberLiteral
+    numberLiteral,
+    nullLiteral,
+    builtinType,
+    customType
 );
 
 // Label is a name : whitespace at most once

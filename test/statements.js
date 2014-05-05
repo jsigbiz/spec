@@ -18,6 +18,22 @@ test('foo := String', function (assert) {
     assert.end();
 });
 
+test('foo := null', function (assert) {
+    var content = 'foo := null';
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'valueLiteral',
+        name: 'null',
+        value: 'null',
+        label: null
+    })
+
+    assert.end()
+})
+
 test('foo-bar := Number', function (assert) {
     var content = 'foo-bar := Number';
     var result = parse(content).statements[0];
