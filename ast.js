@@ -62,9 +62,10 @@ function union(unions, label) {
     }
 }
 
-function literal(name, builtin, label) {
+function literal(name, builtin, opts) {
+    opts = opts || {}
     if (typeof builtin === 'string') {
-        label = builtin
+        opts.label = builtin
         builtin = undefined
     }
 
@@ -73,8 +74,8 @@ function literal(name, builtin, label) {
         name: name,
         builtin: builtin !== undefined ? builtin :
             builtinTypes.indexOf(name) !== -1 ? true : false,
-        label: label || null,
-        optional: false
+        label: opts.label || null,
+        optional: opts.optional || false
     }
 }
 

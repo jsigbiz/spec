@@ -63,3 +63,23 @@ type DocumentFragment := {
     removeChild: (this: DocumentFragment, child: DOMChild) => DOMChild,
     toString: (this: DocumentFragment) => String
 }
+
+type Document := {
+    body: DOMElement,
+    documentElement: DOMElement,
+
+    createTextNode: (this: Document, value: String) => DOMText,
+    createElement: (this: Document, tagName: String) => DOMElement,
+    createElementNS: (
+        this: Document,
+        namespace: String | null,
+        tagName: String
+    ) => DOMElement,
+    createDocumentFragment: (this: Document) => DocumentFragment,
+    createEvent: (this: Document) => Event,
+    getElementById: (
+        this: Document,
+        id: String,
+        parent?: DOMElement
+    ) => null | DOMElement
+}

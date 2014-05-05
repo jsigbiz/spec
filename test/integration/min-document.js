@@ -148,6 +148,54 @@ var ASTFixture = AST.program([
             result: AST.literal('String'),
             thisArg: AST.literal('DocumentFragment', 'this')
         })
+    })),
+    AST.typeDeclaration('Document', AST.object({
+        'body': AST.literal('DOMElement'),
+        'documentElement': AST.literal('DOMElement'),
+        'createTextNode': AST.functionType({
+            args: [ AST.literal('String', 'value') ],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.literal('DOMText')
+        }),
+        'createElement': AST.functionType({
+            args: [ AST.literal('String', 'tagName') ],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.literal('DOMElement')
+        }),
+        'createElementNS': AST.functionType({
+            args: [
+                AST.union([
+                    AST.literal('String'),
+                    AST.value('null')
+                ], 'namespace'),
+                AST.literal('String', 'tagName')
+            ],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.literal('DOMElement')
+        }),
+        'createDocumentFragment': AST.functionType({
+            args: [],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.literal('DocumentFragment')
+        }),
+        'createEvent': AST.functionType({
+            args: [],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.literal('Event')
+        }),
+        'getElementById': AST.functionType({
+            args: [
+                AST.literal('String', 'id'),
+                AST.literal('DOMElement', 'parent?', {
+                    optional: true
+                })
+            ],
+            thisArg: AST.literal('Document', 'this'),
+            result: AST.union([
+                AST.value('null'),
+                AST.literal('DOMElement')
+            ])
+        })
     }))
 ])
 
