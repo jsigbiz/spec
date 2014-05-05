@@ -1,5 +1,7 @@
 var Parsimmon = require('parsimmon')
 
+var AST = require('../ast.js')
+
 var stringLiteral = valueLiteral('string', Parsimmon.string('"')
     .then(Parsimmon.regex(/[a-z]+/i))
     .skip(Parsimmon.string('"')))
@@ -20,10 +22,6 @@ module.exports = valueLiteral
 
 function valueLiteral(name, parser) {
     return parser.map(function (value) {
-        return {
-            type: 'valueLiteral',
-            name: name,
-            value: value
-        }
+        return AST.value(value, name)
     })
 }
