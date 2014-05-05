@@ -13,20 +13,25 @@ test('foo := Object<String, Any>', function (assert) {
         value: {
             type: 'typeLiteral',
             builtin: true,
-            name: 'Object'
+            name: 'Object',
+            label: null,
+            optional: false
         },
         generics: [{
             type: 'typeLiteral',
             builtin: true,
             name: 'String',
-            label: null
+            label: null,
+            optional: false
         }, {
             type: 'typeLiteral',
             builtin: true,
             name: 'Any',
-            label: null
+            label: null,
+            optional: false
         }],
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end()

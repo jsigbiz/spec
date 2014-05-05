@@ -12,6 +12,7 @@ test('foo := String', function (assert) {
         type: 'typeLiteral',
         builtin: true,
         label: null,
+        optional: false,
         name: 'String'
     });
 
@@ -28,7 +29,8 @@ test('foo := null', function (assert) {
         type: 'valueLiteral',
         name: 'null',
         value: 'null',
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end()
@@ -44,6 +46,7 @@ test('foo := Any', function (assert) {
         type: 'typeLiteral',
         name: 'Any',
         label: null,
+        optional: false,
         builtin: true
     })
 
@@ -60,6 +63,7 @@ test('foo := undefined', function (assert) {
         type: 'typeLiteral',
         name: 'undefined',
         label: null,
+        optional: false,
         builtin: true
     })
 
@@ -76,6 +80,7 @@ test('foo := Array', function (assert) {
         type: 'typeLiteral',
         name: 'Array',
         label: null,
+        optional: false,
         builtin: true
     })
 
@@ -92,6 +97,7 @@ test('foo-bar := Number', function (assert) {
         type: 'typeLiteral',
         builtin: true,
         label: null,
+        optional: false,
         name: 'Number'
     });
 
@@ -112,9 +118,11 @@ test('foo := () => Number', function (assert) {
             type: 'typeLiteral',
             builtin: true,
             label: null,
+            optional: false,
             name: 'Number'
         },
-        label: null
+        label: null,
+        optional: false
     });
 
     assert.end();
@@ -138,10 +146,12 @@ test('two statements', function (assert) {
             result: {
                 type: 'typeLiteral',
                 label: null,
+                optional: false,
                 builtin: true,
                 name: 'Number'
             },
-            label: null
+            label: null,
+            optional: false
         }
     });
     assert.deepEqual(result.statements[1], {
@@ -150,6 +160,7 @@ test('two statements', function (assert) {
         typeExpression: {
             type: 'typeLiteral',
             label: null,
+            optional: false,
             builtin: true,
             name: 'String'
         }
