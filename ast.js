@@ -90,18 +90,12 @@ function value(_value, name, label) {
     }
 }
 
-function functionType(args, result, thisArg) {
-    if (!Array.isArray(args)) {
-        thisArg = result
-        result = args
-        args = []
-    }
-
+function functionType(opts) {
     return {
         type: 'function',
-        args: args,
-        result: result,
-        thisArg: thisArg || null
+        args: opts.args || [],
+        result: opts.result,
+        thisArg: opts.thisArg || null
     }
 }
 

@@ -17,19 +17,19 @@ var ASTFixture = AST.program([
             AST.value('DOMTextNode', 'string'),
         'length': AST.literal('Number'),
         'nodeType': AST.value('3', 'number'),
-        'toString': AST.functionType(
-            AST.literal('String'),
-            AST.literal('DOMText', 'this')
-        ),
-        'replaceChild': AST.functionType(
-            [
+        'toString': AST.functionType({
+            result: AST.literal('String'),
+            thisArg: AST.literal('DOMText', 'this')
+        }),
+        'replaceChild': AST.functionType({
+            args: [
                 AST.literal('Number', 'index'),
                 AST.literal('Number', 'length'),
                 AST.literal('String', 'value')
             ],
-            AST.literal('void'),
-            AST.literal('DOMText', 'this')
-        )
+            result: AST.literal('void'),
+            thisArg: AST.literal('DOMText', 'this')
+        })
     })),
     AST.typeDeclaration('DOMNode', AST.union([
         AST.literal('DOMText'),
@@ -69,26 +69,26 @@ var ASTFixture = AST.program([
             AST.value('null'),
             AST.literal('String')
         ]),
-        'appendChild': AST.functionType(
-            [ AST.literal('DOMChild', 'child') ],
-            AST.literal('DOMChild'),
-            AST.literal('DOMElement', 'this')
-        ),
-        'replaceChild': AST.functionType(
-            [
+        'appendChild': AST.functionType({
+            args: [ AST.literal('DOMChild', 'child') ],
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DOMElement', 'this')
+        }),
+        'replaceChild': AST.functionType({
+            args: [
                 AST.literal('DOMChild', 'elem'),
                 AST.literal('DOMChild', 'needle')
             ],
-            AST.literal('DOMChild'),
-            AST.literal('DOMElement', 'this')
-        ),
-        'removeChild': AST.functionType(
-            [ AST.literal('DOMChild', 'child') ],
-            AST.literal('DOMChild'),
-            AST.literal('DOMElement', 'this')
-        ),
-        'insertBefore': AST.functionType(
-            [
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DOMElement', 'this')
+        }),
+        'removeChild': AST.functionType({
+            args: [ AST.literal('DOMChild', 'child') ],
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DOMElement', 'this')
+        }),
+        'insertBefore': AST.functionType({
+            args: [
                 AST.literal('DOMChild', 'elem'),
                 AST.union([
                     AST.literal('DOMChild'),
@@ -96,19 +96,19 @@ var ASTFixture = AST.program([
                     AST.literal('undefined')
                 ], 'needle')
             ],
-            AST.literal('DOMChild'),
-            AST.literal('DOMElement', 'this')
-        ),
+            result: AST.literal('DOMChild'),
+            thisArg: AST.literal('DOMElement', 'this')
+        }),
         'addEventListener': AST.literal('addEventListener'),
         'dispatchEvent': AST.literal('dispatchEvent'),
-        'focus': AST.functionType(
-            AST.literal('void'),
-            AST.literal('DOMElement', 'this')
-        ),
-        'toString': AST.functionType(
-            AST.literal('String'),
-            AST.literal('DOMElement', 'this')
-        )
+        'focus': AST.functionType({
+            result: AST.literal('void'),
+            thisArg: AST.literal('DOMElement', 'this')
+        }),
+        'toString': AST.functionType({
+            result: AST.literal('String'),
+            thisArg: AST.literal('DOMElement', 'this')
+        })
     }))
 ])
 
