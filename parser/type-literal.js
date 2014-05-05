@@ -2,25 +2,11 @@ var Parsimmon = require('parsimmon');
 
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
-var builtinTypes = require('./builtin-types.js')
 
-var builtinType = Parsimmon.alt.apply(null,
-    builtinTypes.map(function (str) {
-        return Parsimmon.string(str)
-    })
-).map(function (type) {
-    return AST.literal(type, true);
-})
-
-var customType = Parsimmon.regex(/[a-z]+/i)
+var typeLiteral = Parsimmon.regex(/[a-z]+/i)
     .map(function (type) {
-        return AST.literal(type, false);
+        return AST.literal(type);
     })
-
-var typeLiteral = Parsimmon.alt(
-    builtinType,
-    customType
-)
 
 var genericArgs = Parsimmon.lazy(function () {
     return join(
