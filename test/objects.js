@@ -23,4 +23,38 @@ test('foo := { text: String }', function (assert) {
     })
 
     assert.end();
-})
+});
+
+test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
+    var content = 'foo := {\n' +
+        '    text: String,\n' +
+        '    type: "DOMTextNode"\n' +
+        '}'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'object',
+        keyValues: [{
+            type: 'keyValue',
+            key: 'text',
+            value: {
+                type: 'typeLiteral',
+                builtin: true,
+                label: null,
+                name: 'String'
+            }
+        }, {
+            type: 'keyValue',
+            key: 'type',
+            value: {
+                type: 'stringLiteral',
+                value: 'DOMTextNode',
+                label: null
+            }
+        }]
+    })
+
+    assert.end();
+});
