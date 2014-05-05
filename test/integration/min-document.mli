@@ -107,3 +107,27 @@ type dispatchEvent := (
     this: DOMElement,
     ev: Event
 ) => void
+
+min-document/event/add-event-listener := addEventListener
+
+min-document/event/dispatch-event := dispatchEvent
+
+min-document/document := () => Document
+
+min-document/dom-element := (
+    tagName: String,
+    owner?: Document,
+    namespace?: String | null
+) => DOMElement
+
+min-document/dom-fragment :=
+    (owner?: Document) => DocumentFragment
+
+min-document/dom-text :=
+    (value: String, owner?: Document) => DOMText
+
+min-document/event := () => Event
+
+min-document/serialize := (DOMElement) => String
+
+min-document := Document

@@ -223,7 +223,46 @@ var ASTFixture = AST.program([
         args: [ AST.literal('Event', 'ev') ],
         thisArg: AST.literal('DOMElement', 'this'),
         result: AST.literal('void')
-    }))
+    })),
+    AST.assignment('min-document/event/add-event-listener',
+        AST.literal('addEventListener')),
+    AST.assignment('min-document/event/dispatch-event',
+        AST.literal('dispatchEvent')),
+    AST.assignment('min-document/document', AST.functionType({
+        args: [],
+        result: AST.literal('Document')
+    })),
+    AST.assignment('min-document/dom-element', AST.functionType({
+        args: [
+            AST.literal('String', 'tagName'),
+            AST.literal('Document', 'owner?', { optional: true }),
+            AST.union([
+                AST.literal('String'),
+                AST.value('null')
+            ], 'namespace?', { optional: true })
+        ],
+        result: AST.literal('DOMElement')
+    })),
+    AST.assignment('min-document/dom-fragment', AST.functionType({
+        args: [ AST.literal('Document', 'owner?', { optional: true }) ],
+        result: AST.literal('DocumentFragment')
+    })),
+    AST.assignment('min-document/dom-text', AST.functionType({
+        args: [
+            AST.literal('String', 'value'),
+            AST.literal('Document', 'owner?', { optional: true })
+        ],
+        result: AST.literal('DOMText')
+    })),
+    AST.assignment('min-document/event', AST.functionType({
+        args: [],
+        result: AST.literal('Event')
+    })),
+    AST.assignment('min-document/serialize', AST.functionType({
+        args: [ AST.literal('DOMElement') ],
+        result: AST.literal('String')
+    })),
+    AST.assignment('min-document', AST.literal('Document'))
 ])
 
 // labeled unions dont parse properly
@@ -232,7 +271,6 @@ test('the min-document type definition', function (assert) {
 
     // showDiff(result, ASTFixture)
     assert.deepEqual(result, ASTFixture)
-
 
     assert.end()
 })
