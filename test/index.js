@@ -7,3 +7,4 @@ require('./generics.js')
 
 // integration.js
 require('./integration/min-document.js')
+require('./integration/jsig.js')
