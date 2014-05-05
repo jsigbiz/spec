@@ -4,3 +4,6 @@ require('./objects.js')
 require('./type-definitions.js')
 require('./union.js')
 require('./generics.js')
+
+// integration.js
+require('./integration/min-document.js')

@@ -1,10 +1,7 @@
 var Parsimmon = require('parsimmon');
 
 var join = require('./lib/join.js');
-
-var builtinTypes = [
-    'String', 'Number', 'Object', 'void', 'Any', 'Array'
-];
+var builtinTypes = require('./builtin-types.js')
 
 var builtinType = Parsimmon.alt.apply(null,
     builtinTypes.map(function (str) {
