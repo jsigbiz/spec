@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var AST = require('../ast.js');
 var join = require('./lib/join.js');
 
 var objectKey = Parsimmon.regex(/[a-z]+/i)
@@ -11,11 +12,7 @@ var typeKeyValue = Parsimmon.lazy(function () {
         .chain(function (keyName) {
             return typeDefinition
                 .map(function (keyValue) {
-                    return {
-                        type: 'keyValue',
-                        key: keyName,
-                        value: keyValue
-                    }
+                    return AST.keyValue(keyName, keyValue)
                 })
         })
 })
@@ -33,10 +30,7 @@ var typeObject = Parsimmon.string('{')
     .skip(Parsimmon.optWhitespace)
     .skip(Parsimmon.string('}'))
     .map(function (values) {
-        return {
-            type: 'object',
-            keyValues: values
-        }
+        return AST.object(values)
     })
 
 module.exports = typeObject;
