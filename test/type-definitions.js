@@ -12,7 +12,8 @@ test('type Foo := String', function (assert) {
         type: 'typeLiteral',
         builtin: true,
         name: 'String',
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end()

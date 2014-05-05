@@ -17,10 +17,12 @@ test('foo := { text: String }', function (assert) {
                 type: 'typeLiteral',
                 builtin: true,
                 label: null,
+                optional: false,
                 name: 'String'
             }
         }],
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end();
@@ -44,6 +46,7 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
                 type: 'typeLiteral',
                 builtin: true,
                 label: null,
+                optional: false,
                 name: 'String'
             }
         }, {
@@ -53,10 +56,12 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
                 type: 'valueLiteral',
                 name: 'string',
                 value: 'DOMTextNode',
-                label: null
+                label: null,
+                optional: false
             }
         }],
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end();
@@ -86,13 +91,16 @@ test('foo := { nested: { nodeType: 3 } }', function (assert) {
                         type: 'valueLiteral',
                         name: 'number',
                         value: '3',
-                        label: null
+                        label: null,
+                        optional: false
                     }
                 }],
-                label: null
+                label: null,
+                optional: false
             }
         }],
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end();

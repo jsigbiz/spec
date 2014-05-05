@@ -48,7 +48,8 @@ function object(keyValues, label) {
     return {
         type: 'object',
         keyValues: keyValues,
-        label: label || null
+        label: label || null,
+        optional: false
     }
 }
 
@@ -56,7 +57,8 @@ function union(unions, label) {
     return {
         type: 'unionType',
         unions: unions,
-        label: label || null
+        label: label || null,
+        optional: false
     }
 }
 
@@ -71,7 +73,8 @@ function literal(name, builtin, label) {
         name: name,
         builtin: builtin !== undefined ? builtin :
             builtinTypes.indexOf(name) !== -1 ? true : false,
-        label: label || null
+        label: label || null,
+        optional: false
     }
 }
 
@@ -88,7 +91,8 @@ function value(_value, name, label) {
         type: 'valueLiteral',
         value: _value,
         name: name ? name : _value === 'null' ? 'null' : 'void',
-        label: label || null
+        label: label || null,
+        optional: false
     }
 }
 
@@ -98,17 +102,17 @@ function functionType(opts) {
         args: opts.args || [],
         result: opts.result,
         thisArg: opts.thisArg || null,
-        label: opts.label || null
+        label: opts.label || null,
+        optional: opts.optional || false
     }
 }
 
 function generic(value, generics, label) {
-    delete value.label
-
     return {
         type: 'genericLiteral',
         value: value,
         generics: generics,
-        label: label || null
+        label: label || null,
+        optional: false
     }
 }

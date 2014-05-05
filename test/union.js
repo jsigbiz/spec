@@ -13,15 +13,18 @@ test('type Foo := Bar | Baz', function (assert) {
         unions: [{
             type: 'typeLiteral',
             label: null,
+            optional: false,
             name: 'Bar',
             builtin: false
         }, {
             type: 'typeLiteral',
             label: null,
+            optional: false,
             name: 'Baz',
             builtin: false
         }],
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end();
@@ -41,23 +44,28 @@ test('type Foo := (arg: Number | String) => void', function (assert) {
                 type: 'typeLiteral',
                 name: 'Number',
                 builtin: true,
-                label: null
+                label: null,
+                optional: false
             }, {
                 type: 'typeLiteral',
                 name: 'String',
                 builtin: true,
-                label: null
+                label: null,
+                optional: false
             }],
-            label: 'arg'
+            label: 'arg',
+            optional: false
         }],
         result: {
             type: 'typeLiteral',
             name: 'void',
             builtin: true,
-            label: null
+            label: null,
+            optional: false
         },
         thisArg: null,
-        label: null
+        label: null,
+        optional: false
     })
 
     assert.end()

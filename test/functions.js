@@ -15,20 +15,24 @@ test('foo := (String, Number) => Object', function (assert) {
             type: 'typeLiteral',
             builtin: true,
             label: null,
+            optional: false,
             name: 'String'
         }, {
             type: 'typeLiteral',
             builtin: true,
             label: null,
+            optional: false,
             name:'Number'
         }],
         result: {
             type: 'typeLiteral',
             builtin: true,
             label: null,
-            name: 'Object'
+            name: 'Object',
+            optional: false
         },
-        label: null
+        label: null,
+        optional: false
     });
 
     assert.end();
@@ -48,10 +52,12 @@ test('foo := () => CustomType', function (assert) {
             result: {
                 type: 'typeLiteral',
                 label: null,
+                optional: false,
                 builtin: false,
                 name: 'CustomType'
             },
-            label: null
+            label: null,
+            optional: false
         }
     });
 
@@ -70,6 +76,7 @@ test('foo := (tagName: String) => void', function (assert) {
             args: [{
                 type: 'typeLiteral',
                 label: 'tagName',
+                optional: false,
                 builtin: true,
                 name: 'String'
             }],
@@ -78,9 +85,11 @@ test('foo := (tagName: String) => void', function (assert) {
                 type: 'typeLiteral',
                 builtin: true,
                 label: null,
+                optional: false,
                 name: 'void'
             },
-            label: null
+            label: null,
+            optional: false
         }
     });
 
@@ -99,12 +108,14 @@ test('foo := (this: DOMText, index: Number) => void', function (assert) {
             args: [{
                 type: 'typeLiteral',
                 label: 'index',
+                optional: false,
                 builtin: true,
                 name: 'Number'
             }],
             thisArg: {
                 type: 'typeLiteral',
                 label: 'this',
+                optional: false,
                 builtin: false,
                 name: 'DOMText'
             },
@@ -112,11 +123,51 @@ test('foo := (this: DOMText, index: Number) => void', function (assert) {
                 type: 'typeLiteral',
                 builtin: true,
                 label: null,
+                optional: false,
                 name: 'void'
             },
-            label: null
+            label: null,
+            optional: false
         }
     })
 
     assert.end();
+})
+
+test('foo := (id: String, parent?: Bar) => Baz', function (assert) {
+    var content = 'foo := (id: String, parent?: Bar) => Baz'
+    var result = parse(content).statements[0]
+
+    assert.deepEqual(result, {
+        type: 'assignment',
+        identifier: 'foo',
+        typeExpression: {
+            type: 'function',
+            args: [{
+                type: 'typeLiteral',
+                label: 'id',
+                builtin: true,
+                optional: false,
+                name: 'String'
+            }, {
+                type: 'typeLiteral',
+                label: 'parent?',
+                builtin: false,
+                optional: true,
+                name: 'Bar'
+            }],
+            thisArg: null,
+            result: {
+                type: 'typeLiteral',
+                builtin: false,
+                optional: false,
+                label: null,
+                name: 'Baz'
+            },
+            optional: false,
+            label: null
+        }
+    })
+
+    assert.end()
 })
