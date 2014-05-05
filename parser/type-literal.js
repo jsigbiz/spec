@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var AST = require('../ast.js');
 var join = require('./lib/join.js');
 var builtinTypes = require('./builtin-types.js')
 
@@ -8,20 +9,12 @@ var builtinType = Parsimmon.alt.apply(null,
         return Parsimmon.string(str)
     })
 ).map(function (type) {
-    return { 
-        type: 'typeLiteral',
-        builtin: true,
-        name: type
-    };
+    return AST.literal(type, true);
 })
 
 var customType = Parsimmon.regex(/[a-z]+/i)
     .map(function (type) {
-        return {
-            type: 'typeLiteral',
-            builtin: false,
-            name: type
-        };
+        return AST.literal(type, false);
     })
 
 var typeLiteral = Parsimmon.alt(
@@ -50,11 +43,7 @@ var genericLiteral = Parsimmon.seq(
         return list[0]
     }
 
-    return {
-        type: 'genericLiteral',
-        value: list[0],
-        generics: list[1][0]
-    }
+    return AST.generic(list[0], list[1][0])
 })
 
 
