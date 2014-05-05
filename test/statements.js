@@ -43,6 +43,7 @@ test('foo := () => Number', function (assert) {
     assert.deepEqual(result.typeExpression, {
         type: 'function',
         args: [],
+        thisArg: null,
         result: {
             type: 'typeLiteral',
             builtin: true,
@@ -67,6 +68,7 @@ test('two statements', function (assert) {
         identifier: 'foo',
         typeExpression: {
             type: 'function',
+            thisArg: null,
             args: [],
             result: {
                 type: 'typeLiteral',

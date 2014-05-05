@@ -10,6 +10,7 @@ test('foo := (String, Number) => Object', function (assert) {
     assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'function',
+        thisArg: null,
         args: [{
             type: 'typeLiteral',
             builtin: true,
@@ -42,6 +43,7 @@ test('foo := () => CustomType', function (assert) {
         typeExpression: {
             type: 'function',
             args: [],
+            thisArg: null,
             result: {
                 type: 'typeLiteral',
                 label: null,
@@ -69,6 +71,7 @@ test('foo := (tagName: String) => void', function (assert) {
                 builtin: true,
                 name: 'String'
             }],
+            thisArg: null,
             result: {
                 type: 'typeLiteral',
                 builtin: true,
@@ -80,3 +83,36 @@ test('foo := (tagName: String) => void', function (assert) {
 
     assert.end();
 });
+
+test('foo := (this: DOMText, index: Number) => void', function (assert) {
+    var content = 'foo := (this: DOMText, index: Number) => void'
+    var result = parse(content).statements[0]
+
+    assert.deepEqual(result, {
+        type: 'assignment',
+        identifier: 'foo',
+        typeExpression: {
+            type: 'function',
+            args: [{
+                type: 'typeLiteral',
+                label: 'index',
+                builtin: true,
+                name: 'Number'
+            }],
+            thisArg: {
+                type: 'typeLiteral',
+                label: 'this',
+                builtin: false,
+                name: 'DOMText'
+            },
+            result: {
+                type: 'typeLiteral',
+                builtin: true,
+                label: null,
+                name: 'void'
+            }
+        }
+    })
+
+    assert.end();
+})

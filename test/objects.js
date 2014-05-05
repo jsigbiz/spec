@@ -49,7 +49,8 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
             type: 'keyValue',
             key: 'type',
             value: {
-                type: 'stringLiteral',
+                type: 'valueLiteral',
+                name: 'string',
                 value: 'DOMTextNode',
                 label: null
             }
@@ -58,3 +59,37 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
 
     assert.end();
 });
+
+test('foo := { nested: { nodeType: 3 } }', function (assert) {
+    var content = 'foo := {\n' +
+        '    nested: {\n' +
+        '        nodeType: 3\n' +
+        '    }\n' +
+        '}'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'object',
+        keyValues: [{
+            type: 'keyValue',
+            key: 'nested',
+            value: {
+                type: 'object',
+                keyValues: [{
+                    type: 'keyValue',
+                    key: 'nodeType',
+                    value: {
+                        type: 'valueLiteral',
+                        name: 'number',
+                        value: '3',
+                        label: null
+                    }
+                }]
+            }
+        }]
+    })
+
+    assert.end();
+})
