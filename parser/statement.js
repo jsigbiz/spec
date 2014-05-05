@@ -6,7 +6,7 @@ var identifier = Parsimmon.regex(/[a-z\-]*/i);
 
 var statement = identifier
     .skip(Parsimmon.optWhitespace)
-    .then(function (identifier) {
+    .chain(function (identifier) {
         return Parsimmon.string(':=')
             .skip(Parsimmon.optWhitespace)
             .then(typeDefinition)

@@ -1,5 +1,7 @@
 var Parsimmon = require('parsimmon');
 
+var join = require('./lib/join.js');
+
 var funcArgs = Parsimmon.lazy(function () {
     return join(
         typeDefinition,
@@ -11,12 +13,12 @@ var funcArgs = Parsimmon.lazy(function () {
 
 var typeFunction = Parsimmon.string('(')
     .then(funcArgs)
-    .then(function (args) {
+    .chain(function (args) {
         return Parsimmon.string(')')
             .then(Parsimmon.optWhitespace)
             .then(Parsimmon.string('=>'))
             .then(Parsimmon.optWhitespace)
-            .then(function () {
+            .chain(function () {
                 return typeDefinition.map(function (def) {
                     return {
                         type: 'function',
@@ -24,19 +26,10 @@ var typeFunction = Parsimmon.string('(')
                         result: def
                     };
                 });
-            });    
+            });
     });
 
 module.exports = typeFunction;
 
 var typeDefinition = require('./type-definition.js');
 
-function join(expr, seperator) {
-    return expr.then(function (value) {
-        return seperator
-            .then(expr)
-            .many().map(function (values) {
-                return [value].concat(values);
-            });
-    }).or(Parsimmon.succeed([]));
-}

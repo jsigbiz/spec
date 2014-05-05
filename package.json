@@ -12,7 +12,7 @@
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
-    "parsimmon": "^0.3.1",
+    "parsimmon": "^0.4.0",
     "process": "^0.6.0"
   },
   "devDependencies": {
