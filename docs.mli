@@ -55,7 +55,7 @@ type TypeExpression :=
     ObjectE | UnionE | LiteralE | FunctionE | ValueE | GenericE
 
 type Assignment := {
-    type: "assigment",
+    type: "assignment",
     identifier: String,
     typeExpression: TypeExpression
 }
