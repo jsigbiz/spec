@@ -45,3 +45,21 @@ type DOMElement := {
     focus: (this: DOMElement) => void,
     toString: (this: DOMElement) => String
 }
+
+type DocumentFragment := {
+    childNodes: Array<DOMChild>,
+    parentNode: null | DOMElement,
+    type: "DocumentFragment",
+    nodeType: 11,
+    nodeName: "#document-fragment",
+    ownerDocument: Document | null,
+
+    appendChild: (this: DocumentFragment, child: DOMChild) => DOMChild,
+    replaceChild: (
+        this: DocumentFragment,
+        elem: DOMChild,
+        needle: DOMChild
+    ) => DOMChild,
+    removeChild: (this: DocumentFragment, child: DOMChild) => DOMChild,
+    toString: (this: DocumentFragment) => String
+}
