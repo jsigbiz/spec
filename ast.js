@@ -3,12 +3,14 @@ var builtinTypes = require('./parser/builtin-types.js')
 module.exports = {
     program: program,
     typeDeclaration: typeDeclaration,
+    assignment: assignment,
     object: object,
     union: union,
     literal: literal,
     keyValue: keyValue,
     value: value,
-    functionType: functionType
+    functionType: functionType,
+    generic: generic
 }
 
 function program(statements) {
@@ -21,6 +23,14 @@ function program(statements) {
 function typeDeclaration(identifier, typeExpression) {
     return {
         type: 'typeDeclaration',
+        identifier: identifier,
+        typeExpression: typeExpression
+    }
+}
+
+function assignment(identifier, typeExpression) {
+    return {
+        type: 'assignment',
         identifier: identifier,
         typeExpression: typeExpression
     }
@@ -92,5 +102,16 @@ function functionType(args, result, thisArg) {
         args: args,
         result: result,
         thisArg: thisArg || null
+    }
+}
+
+function generic(value, generics, label) {
+    delete value.label
+
+    return {
+        type: 'genericLiteral',
+        value: value,
+        generics: generics,
+        label: label || null
     }
 }
