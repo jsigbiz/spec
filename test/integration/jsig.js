@@ -118,6 +118,11 @@ var ASTFixture = AST.program([
             AST.literal('Array'),
             [ AST.literal('Statement') ]
         )
+    })),
+    AST.assignment('jsig/ast', AST.literal('AST')),
+    AST.assignment('jsig/parser', AST.functionType({
+        args: [ AST.literal('String', 'content') ],
+        result: AST.literal('Program')
     }))
 ])
 

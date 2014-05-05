@@ -72,3 +72,7 @@ type Program := {
     type: "program",
     statements: Array<Statement>
 }
+
+jsig/ast := AST
+
+jsig/parser := (content: String) => Program
