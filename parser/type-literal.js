@@ -26,15 +26,27 @@ var stringLiteral = Parsimmon.string('"')
     .skip(Parsimmon.string('"'))
     .map(function (name) {
         return {
-            type: 'stringLiteral',
+            type: 'valueLiteral',
+            name: 'string',
             value: name
         }
     })
 
+var numberLiteral = Parsimmon.regex(/[0-9]+/i)
+    .map(function (name) {
+        return {
+            type: 'valueLiteral',
+            name: 'number',
+            value: name
+        }
+    })
+
+
 var typeExpression = Parsimmon.alt(
     builtinType,
     customType,
-    stringLiteral
+    stringLiteral,
+    numberLiteral
 );
 
 // Label is a name : whitespace at most once

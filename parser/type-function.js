@@ -14,6 +14,11 @@ var funcArgs = Parsimmon.lazy(function () {
 var typeFunction = Parsimmon.string('(')
     .then(funcArgs)
     .chain(function (args) {
+        var thisArg = null;
+        if (args[0] && args[0].label === 'this') {
+            thisArg = args.shift()
+        }
+
         return Parsimmon.string(')')
             .then(Parsimmon.optWhitespace)
             .then(Parsimmon.string('=>'))
@@ -23,6 +28,7 @@ var typeFunction = Parsimmon.string('(')
                     return {
                         type: 'function',
                         args: args,
+                        thisArg: thisArg,
                         result: def
                     };
                 });
