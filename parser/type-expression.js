@@ -1,11 +1,11 @@
 var Parsimmon = require('parsimmon')
 
-var typeLiteral = require('./type-generic.js')
+var typeGeneric = require('./type-generic.js')
 var valueLiteral = require('./value-literal.js')
 
 var typeOrValueLiteral = Parsimmon.alt(
     valueLiteral,
-    typeLiteral
+    typeGeneric
 )
 
 module.exports = typeOrValueLiteral;

@@ -28,6 +28,23 @@ var unionType = join(typeDefinition,
     return AST.union(unions);
 })
 
+var intersectionType = join(unionType,
+    Parsimmon.optWhitespace
+        .then(Parsimmon.string('&'))
+        .skip(Parsimmon.optWhitespace)
+).map(function (intersections) {
+    // wtf hack :(
+    if (intersections.length === 0) {
+        return null
+    }
+
+    if (intersections.length === 1) {
+        return intersections[0]
+    }
+
+    return AST.intersection(intersections)
+})
+
 
 // Label is a name : whitespace at most once
 var label = Parsimmon.regex(/[a-z\?]*/i)
@@ -37,7 +54,7 @@ var label = Parsimmon.regex(/[a-z\?]*/i)
 
 var typeExpression = label
     .chain(function (labels) {
-        return unionType.map(function (expr) {
+        return intersectionType.map(function (expr) {
             var label = labels[0] || null;
             var optional = typeof label === 'string' &&
                 label.charAt(label.length - 1) === '?'

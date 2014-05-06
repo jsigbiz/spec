@@ -3,6 +3,7 @@ require('./functions.js')
 require('./objects.js')
 require('./type-definitions.js')
 require('./union.js')
+require('./intersection.js')
 require('./generics.js')
 require('./imports.js')
 
