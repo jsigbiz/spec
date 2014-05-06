@@ -63,7 +63,7 @@ type TupleE := {
     type: "tuple",
     values: Array<TypeExpression>,
     label: String | null,
-    optional: Boolean,
+    optional: Boolean
 }
 
 type TypeExpression := ObjectE | UnionE | LiteralE | FunctionE |
@@ -98,7 +98,8 @@ type Program := {
 type AST := {
     program: (Array<Statement>) => Program,
     typeDeclaration: (String, TypeExpression) => TypeDeclaration,
-    assignment: (String, TypeExpression) => Assigment,
+    assignment: (String, TypeExpression) => Assignment,
+    importStatement: (String, Array<LiteralE>) => Import,
     object: (
         keyValues: Array<KeyValue> | Object<String, TypeExpression>,
         label?: String
@@ -125,7 +126,10 @@ type AST := {
         value: TypeExpression,
         generics: Array<TypeExpression>,
         label?: String
-    ) => GenericE
+    ) => GenericE,
+    tuple: (Array<TypeExpression>, label?: String, opts?: {
+        optional: Boolean
+    }) => TupleE
 }
 
 jsig/ast := AST
