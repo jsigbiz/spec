@@ -1,6 +1,6 @@
 type Payload<T> := {
-    statusCode: Number?,
-    headers: Object?<String, String>,
+    statusCode?: Number,
+    headers?: Object<String, String>,
     body: T
 }
 
