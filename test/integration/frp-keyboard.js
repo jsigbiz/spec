@@ -2,7 +2,7 @@ var test = require('tape');
 var fs = require('fs')
 var path = require('path')
 
-var showDiff = require('../lib/show-diff.js')
+// var showDiff = require('../lib/show-diff.js')
 
 var parse = require('../../parser.js');
 var AST = require('../../ast.js')
@@ -79,13 +79,25 @@ var ASTFixture = AST.program([
                 [ AST.literal('Boolean') ]
             )
         })
-    ]))
+    ])),
+    AST.assignment('frp-keyboard', AST.functionType({
+        args: [],
+        result: AST.literal('Keyboard', 'cachedKeyboard')
+    })),
+    AST.assignment('frp-keyboard/keyboard', AST.functionType({
+        args: [ AST.literal('Delegator') ],
+        result: AST.literal('Keyboard')
+    })),
+    AST.assignment('frp-keyboard/native', AST.functionType({
+        args: [ AST.literal('Delegator') ],
+        result: AST.literal('NativeKeyboard')
+    }))
 ])
 
 test('the frp-keyboard type definition', function (assert) {
     var result = parse(content)
 
-    showDiff(result, ASTFixture)
+    // showDiff(result, ASTFixture)
     assert.deepEqual(result, ASTFixture)
 
     assert.end()
