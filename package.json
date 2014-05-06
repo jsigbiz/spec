@@ -12,6 +12,7 @@
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
+    "minimist": "0.0.8",
     "parsimmon": "^0.4.0",
     "process": "^0.6.0"
   },
@@ -35,6 +36,9 @@
     "jshint": "jshint --verbose .",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "view-cover": "istanbul report html && open ./coverage/index.html"
+  },
+  "bin": {
+    "jsig": "bin/cli.js"
   },
   "engine": {
     "node": ">= 0.8.x"
