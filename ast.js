@@ -114,10 +114,14 @@ function keyValue(key, value, opts) {
 }
 
 function value(_value, name, label) {
+    name = name ? name :
+        _value === 'null' ? 'null' :
+        _value === 'undefined' ? 'undefined' : 'void'
+
     return {
         type: 'valueLiteral',
         value: _value,
-        name: name ? name : _value === 'null' ? 'null' : 'void',
+        name: name,
         label: label || null,
         optional: false
     }

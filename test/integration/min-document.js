@@ -93,7 +93,7 @@ var ASTFixture = AST.program([
                 AST.union([
                     AST.literal('DOMChild'),
                     AST.value('null'),
-                    AST.literal('undefined')
+                    AST.value('undefined')
                 ], 'needle')
             ],
             result: AST.literal('DOMChild'),

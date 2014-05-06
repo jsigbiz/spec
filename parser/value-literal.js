@@ -15,11 +15,14 @@ var numberLiteral = valueLiteral('number',
 
 var nullLiteral = valueLiteral('null', Parsimmon.string('null'))
 
+var undefinedLiteral = valueLiteral('undefined', 
+    Parsimmon.string('undefined'))
 
 var valueLiteral = Parsimmon.alt(
     stringLiteral,
     numberLiteral,
-    nullLiteral
+    nullLiteral,
+    undefinedLiteral
 )
 
 module.exports = valueLiteral
