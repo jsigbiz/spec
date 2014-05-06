@@ -4,7 +4,11 @@ var AST = require('../ast.js')
 
 var stringLiteral = valueLiteral('string', Parsimmon.string('"')
     .then(Parsimmon.regex(/[#\-a-z]+/i))
-    .skip(Parsimmon.string('"')))
+    .skip(Parsimmon.string('"'))
+    .map(function (str) {
+        return '"' + str + '"'
+    }))
+
 
 var numberLiteral = valueLiteral('number', 
     Parsimmon.regex(/[0-9]+/i))
