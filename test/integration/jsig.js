@@ -7,7 +7,7 @@ var path = require('path')
 var parse = require('../../parser.js');
 var AST = require('../../ast.js')
 
-var uri = path.join(__dirname, 'jsig.mli')
+var uri = path.join(__dirname, 'definitions', 'jsig.mli')
 var content = fs.readFileSync(uri, 'utf8')
 
 var ASTFixture = AST.program([
@@ -250,7 +250,6 @@ var ASTFixture = AST.program([
     }))
 ])
 
-// labeled unions dont parse properly
 test('the jsig type definition', function (assert) {
     var result = parse(content)
 

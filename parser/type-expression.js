@@ -1,6 +1,6 @@
 var Parsimmon = require('parsimmon')
 
-var typeLiteral = require('./type-literal.js')
+var typeLiteral = require('./type-generic.js')
 var valueLiteral = require('./value-literal.js')
 
 var typeOrValueLiteral = Parsimmon.alt(

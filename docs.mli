@@ -66,7 +66,13 @@ type TypeDeclaration := {
     typeExpression: TypeExpression
 }
 
-type Statement := TypeDeclaration | Assignment
+type Import := {
+    type: "import",
+    dependency: String,
+    types: Array<LiteralE>
+}
+
+type Statement := Import | TypeDeclaration | Assignment
 
 type Program := {
     type: "program",

@@ -7,7 +7,7 @@ var path = require('path')
 var parse = require('../../parser.js');
 var AST = require('../../ast.js')
 
-var uri = path.join(__dirname, 'min-document.mli')
+var uri = path.join(__dirname, 'definitions', 'min-document.mli')
 var content = fs.readFileSync(uri, 'utf8')
 
 var ASTFixture = AST.program([
