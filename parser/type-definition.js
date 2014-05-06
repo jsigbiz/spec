@@ -7,7 +7,8 @@ var typeDefinition = Parsimmon.lazy(function () {
     return Parsimmon.alt(
         typeExpression,
         typeFunction,
-        typeObject
+        typeObject,
+        typeTuple
     );
 });
 
@@ -73,3 +74,4 @@ module.exports = typeExpression;
 var typeExpression = require('./type-expression.js');
 var typeFunction = require('./type-function.js');
 var typeObject = require('./type-object.js');
+var typeTuple = require('./type-tuple.js');
