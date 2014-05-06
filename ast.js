@@ -7,6 +7,7 @@ module.exports = {
     importStatement: importStatement,
     object: object,
     union: union,
+    intersection: intersection,
     literal: literal,
     keyValue: keyValue,
     value: value,
@@ -69,6 +70,17 @@ function union(unions, label, opts) {
     return {
         type: 'unionType',
         unions: unions,
+        label: label || null,
+        optional: opts.optional || false
+    }
+}
+
+function intersection(intersections, label, opts) {
+    opts = opts || {}
+
+    return {
+        type: 'intersectionType',
+        intersections: intersections,
         label: label || null,
         optional: opts.optional || false
     }
