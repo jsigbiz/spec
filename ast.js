@@ -12,7 +12,8 @@ module.exports = {
     keyValue: keyValue,
     value: value,
     functionType: functionType,
-    generic: generic
+    generic: generic,
+    tuple: tuple
 }
 
 function program(statements) {
@@ -146,5 +147,15 @@ function generic(value, generics, label) {
         generics: generics,
         label: label || null,
         optional: false
+    }
+}
+
+function tuple(values, label, opts) {
+    opts = opts || {}
+    return {
+        type: 'tuple',
+        values: values,
+        label: label || null,
+        optional: opts.optional || false
     }
 }

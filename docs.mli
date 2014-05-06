@@ -48,7 +48,8 @@ type IntersectionE := {
 type KeyValue := {
     type: "keyValue",
     key: String,
-    value: TypeExpression
+    value: TypeExpression,
+    optional: Boolean
 }
 
 type ObjectE := {
@@ -58,8 +59,15 @@ type ObjectE := {
     optional: Boolean
 }
 
-type TypeExpression :=
-    ObjectE | UnionE | LiteralE | FunctionE | ValueE | GenericE
+type TupleE := {
+    type: "tuple",
+    values: Array<TypeExpression>,
+    label: String | null,
+    optional: Boolean,
+}
+
+type TypeExpression := ObjectE | UnionE | LiteralE | FunctionE |
+    ValueE | GenericE | TupleE | IntersectionE
 
 type Assignment := {
     type: "assignment",
