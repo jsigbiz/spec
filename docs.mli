@@ -70,7 +70,8 @@ type Assignment := {
 type TypeDeclaration := {
     type: "typeDeclaration",
     identifier: String,
-    typeExpression: TypeExpression
+    typeExpression: TypeExpression,
+    generics: Array<LiteralE>
 }
 
 type Import := {
