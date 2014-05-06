@@ -25,3 +25,9 @@ type Keyboard := NativeKeyboard & {
     ctrl: Observ<Boolean>,
     shift: Observ<Boolean>
 }
+
+frp-keyboard := () => cachedKeyboard: Keyboard
+
+frp-keyboard/keyboard := (Delegator) => Keyboard
+
+frp-keyboard/native := (Delegator) => NativeKeyboard

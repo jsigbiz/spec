@@ -58,7 +58,28 @@ var ASTFixture = AST.program([
                 AST.literal('Observ'),
                 [ AST.literal('Coord') ])
         })
-    }))
+    })),
+    AST.typeDeclaration('Keyboard', AST.intersection([
+        AST.literal('NativeKeyboard'),
+        AST.object({
+            'arrows': AST.generic(
+                AST.literal('Observ'),
+                [ AST.literal('Coord') ]
+            ),
+            'wasd': AST.generic(
+                AST.literal('Observ'),
+                [ AST.literal('Coord') ]
+            ),
+            'ctrl': AST.generic(
+                AST.literal('Observ'),
+                [ AST.literal('Boolean') ]
+            ),
+            'shift': AST.generic(
+                AST.literal('Observ'),
+                [ AST.literal('Boolean') ]
+            )
+        })
+    ]))
 ])
 
 test('the frp-keyboard type definition', function (assert) {

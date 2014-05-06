@@ -38,6 +38,13 @@ type UnionE := {
     optional: Boolean
 }
 
+type IntersectionE := {
+    type: "intersectionType",
+    intersections: Array<TypeExpression>,
+    label: String | null,
+    optional: Boolean
+}
+
 type KeyValue := {
     type: "keyValue",
     key: String,
@@ -90,6 +97,9 @@ type AST := {
     union: (Array<TypeExpression>, label?: String, opts?: {
         optional: Boolean
     }) => UnionE,
+    intersection: (Array<TypeExpression>, label?: String, opts?: {
+        optional: Boolean
+    }) => IntersectionE,
     literal: (String, builtin?: String, opts?: {
         optional: Boolean
     }) => LiteralE,
