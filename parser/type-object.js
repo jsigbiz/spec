@@ -3,16 +3,19 @@ var Parsimmon = require('parsimmon');
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
 
-var objectKey = Parsimmon.regex(/[a-z]+/i)
+var objectKey = Parsimmon.regex(/[a-z\?]+/i)
     .skip(Parsimmon.string(':'))
     .skip(Parsimmon.optWhitespace)
 
 var typeKeyValue = Parsimmon.lazy(function () {
     return objectKey
         .chain(function (keyName) {
+            var optional = keyName[keyName.length - 1] === '?'
             return typeDefinition
                 .map(function (keyValue) {
-                    return AST.keyValue(keyName, keyValue)
+                    return AST.keyValue(keyName, keyValue, {
+                        optional: optional
+                    })
                 })
         })
 })

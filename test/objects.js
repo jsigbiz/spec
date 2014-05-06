@@ -19,7 +19,8 @@ test('foo := { text: String }', function (assert) {
                 label: null,
                 optional: false,
                 name: 'String'
-            }
+            },
+            optional: false
         }],
         label: null,
         optional: false
@@ -48,7 +49,8 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
                 label: null,
                 optional: false,
                 name: 'String'
-            }
+            },
+            optional: false
         }, {
             type: 'keyValue',
             key: 'type',
@@ -58,7 +60,8 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
                 value: 'DOMTextNode',
                 label: null,
                 optional: false
-            }
+            },
+            optional: false
         }],
         label: null,
         optional: false
@@ -93,15 +96,44 @@ test('foo := { nested: { nodeType: 3 } }', function (assert) {
                         value: '3',
                         label: null,
                         optional: false
-                    }
+                    },
+                    optional: false
                 }],
                 label: null,
                 optional: false
-            }
+            },
+            optional: false
         }],
         label: null,
         optional: false
     })
 
     assert.end();
+})
+
+test('foo := { bar?: Baz }', function (assert) {
+    var content = 'foo := { bar?: Baz }'
+    var result = parse(content).statements[0]
+
+    assert.equal(result.type, 'assignment')
+    assert.equal(result.identifier, 'foo')
+    assert.deepEqual(result.typeExpression, {
+        type: 'object',
+        keyValues: [{
+            type: 'keyValue',
+            key: 'bar?',
+            value: {
+                type: 'typeLiteral',
+                builtin: false,
+                optional: false,
+                label: null,
+                name: 'Baz'
+            },
+            optional: true
+        }],
+        label: null,
+        optional: false
+    })
+
+    assert.end()
 })
