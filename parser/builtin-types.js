@@ -1,6 +1,6 @@
 var builtinTypes = [
     'String', 'Number', 'Object', 'void', 'Any', 'Array',
-    'undefined'
+    'Error'
 ];
 
 module.exports = builtinTypes

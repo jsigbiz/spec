@@ -19,6 +19,23 @@ test('foo := String', function (assert) {
     assert.end();
 });
 
+test('foo := Error', function (assert) {
+    var content = 'foo := Error';
+    var result = parse(content).statements[0];
+
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
+    assert.deepEqual(result.typeExpression, {
+        type: 'typeLiteral',
+        builtin: true,
+        label: null,
+        optional: false,
+        name: 'Error'
+    });
+
+    assert.end();
+})
+
 test('foo := null', function (assert) {
     var content = 'foo := null';
     var result = parse(content).statements[0]
@@ -60,11 +77,11 @@ test('foo := undefined', function (assert) {
     assert.equal(result.type, 'assignment')
     assert.equal(result.identifier, 'foo')
     assert.deepEqual(result.typeExpression, {
-        type: 'typeLiteral',
+        type: 'valueLiteral',
         name: 'undefined',
+        value: 'undefined',
         label: null,
-        optional: false,
-        builtin: true
+        optional: false
     })
 
     assert.end()
