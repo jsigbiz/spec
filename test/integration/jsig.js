@@ -2,7 +2,7 @@ var test = require('tape');
 var fs = require('fs')
 var path = require('path')
 
-// var showDiff = require('../lib/show-diff.js')
+var showDiff = require('../lib/show-diff.js')
 
 var parse = require('../../parser.js');
 var AST = require('../../ast.js')
@@ -73,10 +73,23 @@ var ASTFixture = AST.program([
         ]),
         'optional': AST.literal('Boolean')
     })),
+    AST.typeDeclaration('IntersectionE', AST.object({
+        'type': AST.value('"intersectionType"', 'string'),
+        'intersections': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('TypeExpression') ]
+        ),
+        'label': AST.union([
+            AST.literal('String'),
+            AST.value('null')
+        ]),
+        'optional': AST.literal('Boolean')
+    })),
     AST.typeDeclaration('KeyValue', AST.object({
         'type': AST.value('"keyValue"', 'string'),
         'key': AST.literal('String'),
-        'value': AST.literal('TypeExpression')
+        'value': AST.literal('TypeExpression'),
+        'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('ObjectE', AST.object({
         'type': AST.value('"object"', 'string'),
@@ -90,13 +103,27 @@ var ASTFixture = AST.program([
         ]),
         'optional': AST.literal('Boolean')
     })),
+    AST.typeDeclaration('TupleE', AST.object({
+        'type': AST.value('"tuple"', 'string'),
+        'values': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('TypeExpression') ]
+        ),
+        'label': AST.union([
+            AST.literal('String'),
+            AST.value('null')
+        ]),
+        'optional': AST.literal('Boolean')
+    })),
     AST.typeDeclaration('TypeExpression', AST.union([
         AST.literal('ObjectE'),
         AST.literal('UnionE'),
         AST.literal('LiteralE'),
         AST.literal('FunctionE'),
         AST.literal('ValueE'),
-        AST.literal('GenericE')
+        AST.literal('GenericE'),
+        AST.literal('TupleE'),
+        AST.literal('IntersectionE')
     ])),
     AST.typeDeclaration('Assignment', AST.object({
         'type': AST.value('"assignment"', 'string'),
@@ -106,9 +133,22 @@ var ASTFixture = AST.program([
     AST.typeDeclaration('TypeDeclaration', AST.object({
         'type': AST.value('"typeDeclaration"', 'string'),
         'identifier': AST.literal('String'),
-        'typeExpression': AST.literal('TypeExpression')
+        'typeExpression': AST.literal('TypeExpression'),
+        'generics': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('LiteralE') ]
+        )
+    })),
+    AST.typeDeclaration('Import', AST.object({
+        'type': AST.value('"import"', 'string'),
+        'dependency': AST.literal('String'),
+        'types': AST.generic(
+            AST.literal('Array'),
+            [ AST.literal('LiteralE') ]
+        )
     })),
     AST.typeDeclaration('Statement', AST.union([
+        AST.literal('Import'),
         AST.literal('TypeDeclaration'),
         AST.literal('Assignment')
     ])),
@@ -140,6 +180,16 @@ var ASTFixture = AST.program([
                 AST.literal('TypeExpression')
             ],
             result: AST.literal('Assignment')
+        }),
+        'importStatement': AST.functionType({
+            args: [
+                AST.literal('String'),
+                AST.generic(
+                    AST.literal('Array'),
+                    [ AST.literal('LiteralE') ]
+                )
+            ],
+            result: AST.literal('Import')
         }),
         'object': AST.functionType({
             args: [
@@ -176,6 +226,21 @@ var ASTFixture = AST.program([
                 }, 'opts?', { optional: true })
             ],
             result: AST.literal('UnionE')
+        }),
+        'intersection': AST.functionType({
+            args: [
+                AST.generic(
+                    AST.literal('Array'),
+                    [ AST.literal('TypeExpression') ]
+                ),
+                AST.literal('String', 'label?', {
+                    optional: true
+                }),
+                AST.object({
+                    'optional': AST.literal('Boolean')
+                }, 'opts?', { optional: true })
+            ],
+            result: AST.literal('IntersectionE')
         }),
         'literal': AST.functionType({
             args: [
@@ -241,7 +306,22 @@ var ASTFixture = AST.program([
                 })
             ],
             result: AST.literal('GenericE')
-        })
+        }),
+        'tuple': AST.functionType({
+            args: [
+                AST.generic(
+                    AST.literal('Array'),
+                    [ AST.literal('TypeExpression') ]
+                ),
+                AST.literal('String', 'label?', {
+                    optional: true
+                }),
+                AST.object({
+                    'optional': AST.literal('Boolean')
+                }, 'opts?', { optional: true })
+            ],
+            result: AST.literal('TupleE')
+        }),
     })),
     AST.assignment('jsig/ast', AST.literal('AST')),
     AST.assignment('jsig/parser', AST.functionType({
@@ -253,7 +333,7 @@ var ASTFixture = AST.program([
 test('the jsig type definition', function (assert) {
     var result = parse(content)
 
-    // showDiff(result, ASTFixture)
+    showDiff(result, ASTFixture)
     assert.deepEqual(result, ASTFixture)
 
     assert.end()

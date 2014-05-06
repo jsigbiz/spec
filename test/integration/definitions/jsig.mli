@@ -38,10 +38,18 @@ type UnionE := {
     optional: Boolean
 }
 
+type IntersectionE := {
+    type: "intersectionType",
+    intersections: Array<TypeExpression>,
+    label: String | null,
+    optional: Boolean
+}
+
 type KeyValue := {
     type: "keyValue",
     key: String,
-    value: TypeExpression
+    value: TypeExpression,
+    optional: Boolean
 }
 
 type ObjectE := {
@@ -51,8 +59,15 @@ type ObjectE := {
     optional: Boolean
 }
 
-type TypeExpression :=
-    ObjectE | UnionE | LiteralE | FunctionE | ValueE | GenericE
+type TupleE := {
+    type: "tuple",
+    values: Array<TypeExpression>,
+    label: String | null,
+    optional: Boolean
+}
+
+type TypeExpression := ObjectE | UnionE | LiteralE | FunctionE |
+    ValueE | GenericE | TupleE | IntersectionE
 
 type Assignment := {
     type: "assignment",
@@ -63,10 +78,17 @@ type Assignment := {
 type TypeDeclaration := {
     type: "typeDeclaration",
     identifier: String,
-    typeExpression: TypeExpression
+    typeExpression: TypeExpression,
+    generics: Array<LiteralE>
 }
 
-type Statement := TypeDeclaration | Assignment
+type Import := {
+    type: "import",
+    dependency: String,
+    types: Array<LiteralE>
+}
+
+type Statement := Import | TypeDeclaration | Assignment
 
 type Program := {
     type: "program",
@@ -77,6 +99,7 @@ type AST := {
     program: (Array<Statement>) => Program,
     typeDeclaration: (String, TypeExpression) => TypeDeclaration,
     assignment: (String, TypeExpression) => Assignment,
+    importStatement: (String, Array<LiteralE>) => Import,
     object: (
         keyValues: Array<KeyValue> | Object<String, TypeExpression>,
         label?: String
@@ -84,6 +107,9 @@ type AST := {
     union: (Array<TypeExpression>, label?: String, opts?: {
         optional: Boolean
     }) => UnionE,
+    intersection: (Array<TypeExpression>, label?: String, opts?: {
+        optional: Boolean
+    }) => IntersectionE,
     literal: (String, builtin?: String, opts?: {
         optional: Boolean
     }) => LiteralE,
@@ -100,7 +126,10 @@ type AST := {
         value: TypeExpression,
         generics: Array<TypeExpression>,
         label?: String
-    ) => GenericE
+    ) => GenericE,
+    tuple: (Array<TypeExpression>, label?: String, opts?: {
+        optional: Boolean
+    }) => TupleE
 }
 
 jsig/ast := AST
