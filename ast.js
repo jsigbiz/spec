@@ -4,6 +4,7 @@ module.exports = {
     program: program,
     typeDeclaration: typeDeclaration,
     assignment: assignment,
+    importStatement: importStatement,
     object: object,
     union: union,
     literal: literal,
@@ -33,6 +34,14 @@ function assignment(identifier, typeExpression) {
         type: 'assignment',
         identifier: identifier,
         typeExpression: typeExpression
+    }
+}
+
+function importStatement(dependency, types) {
+    return {
+        type: 'import',
+        dependency: dependency,
+        types: types
     }
 }
 
