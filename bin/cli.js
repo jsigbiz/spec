@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var process = require('process');
 var Parsimmon = require('parsimmon');
 var util = require('util');
