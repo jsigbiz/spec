@@ -12,7 +12,7 @@ var content = fs.readFileSync(uri, 'utf8')
 
 var ASTFixture = AST.program([
     AST.typeDeclaration('GenericE', AST.object({
-        'type': AST.value('genericLiteral', 'string'),
+        'type': AST.value('"genericLiteral"', 'string'),
         'value': AST.literal('TypeExpression'),
         'generics': AST.generic(
             AST.literal('Array'),
@@ -25,7 +25,7 @@ var ASTFixture = AST.program([
         'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('FunctionE', AST.object({
-        'type': AST.value('function', 'string'),
+        'type': AST.value('"function"', 'string'),
         'args': AST.generic(
             AST.literal('Array'),
             [ AST.literal('TypeExpression') ]
@@ -42,7 +42,7 @@ var ASTFixture = AST.program([
         'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('ValueE', AST.object({
-        'type': AST.value('valueLiteral', 'string'),
+        'type': AST.value('"valueLiteral"', 'string'),
         'value': AST.literal('String'),
         'name': AST.literal('String'),
         'label': AST.union([
@@ -52,7 +52,7 @@ var ASTFixture = AST.program([
         'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('LiteralE', AST.object({
-        'type': AST.value('typeLiteral', 'string'),
+        'type': AST.value('"typeLiteral"', 'string'),
         'name': AST.literal('String'),
         'builtin': AST.literal('Boolean'),
         'label': AST.union([
@@ -62,7 +62,7 @@ var ASTFixture = AST.program([
         'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('UnionE', AST.object({
-        'type': AST.value('unionType', 'string'),
+        'type': AST.value('"unionType"', 'string'),
         'unions': AST.generic(
             AST.literal('Array'),
             [ AST.literal('TypeExpression') ]
@@ -74,12 +74,12 @@ var ASTFixture = AST.program([
         'optional': AST.literal('Boolean')
     })),
     AST.typeDeclaration('KeyValue', AST.object({
-        'type': AST.value('keyValue', 'string'),
+        'type': AST.value('"keyValue"', 'string'),
         'key': AST.literal('String'),
         'value': AST.literal('TypeExpression')
     })),
     AST.typeDeclaration('ObjectE', AST.object({
-        'type': AST.value('object', 'string'),
+        'type': AST.value('"object"', 'string'),
         'keyValues': AST.generic(
             AST.literal('Array'),
             [ AST.literal('KeyValue') ]
@@ -99,12 +99,12 @@ var ASTFixture = AST.program([
         AST.literal('GenericE')
     ])),
     AST.typeDeclaration('Assignment', AST.object({
-        'type': AST.value('assignment', 'string'),
+        'type': AST.value('"assignment"', 'string'),
         'identifier': AST.literal('String'),
         'typeExpression': AST.literal('TypeExpression')
     })),
     AST.typeDeclaration('TypeDeclaration', AST.object({
-        'type': AST.value('typeDeclaration', 'string'),
+        'type': AST.value('"typeDeclaration"', 'string'),
         'identifier': AST.literal('String'),
         'typeExpression': AST.literal('TypeExpression')
     })),
@@ -113,7 +113,7 @@ var ASTFixture = AST.program([
         AST.literal('Assignment')
     ])),
     AST.typeDeclaration('Program', AST.object({
-        'type': AST.value('program', 'string'),
+        'type': AST.value('"program"', 'string'),
         'statements': AST.generic(
             AST.literal('Array'),
             [ AST.literal('Statement') ]

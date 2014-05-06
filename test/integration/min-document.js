@@ -14,7 +14,7 @@ var ASTFixture = AST.program([
     AST.typeDeclaration('DOMText', AST.object({
         'data': AST.literal('String'),
         'type':
-            AST.value('DOMTextNode', 'string'),
+            AST.value('"DOMTextNode"', 'string'),
         'length': AST.literal('Number'),
         'nodeType': AST.value('3', 'number'),
         'toString': AST.functionType({
@@ -59,7 +59,7 @@ var ASTFixture = AST.program([
             AST.literal('Object'),
             [ AST.literal('String'), AST.literal('String') ]
         ),
-        'type': AST.value('DOMElement', 'string'),
+        'type': AST.value('"DOMElement"', 'string'),
         'nodeType': AST.value('1', 'number'),
         'ownerDocument': AST.union([
             AST.value('null'),
@@ -119,9 +119,9 @@ var ASTFixture = AST.program([
             AST.value('null'),
             AST.literal('DOMElement')
         ]),
-        'type': AST.value('DocumentFragment', 'string'),
+        'type': AST.value('"DocumentFragment"', 'string'),
         'nodeType': AST.value('11', 'number'),
-        'nodeName': AST.value('#document-fragment', 'string'),
+        'nodeName': AST.value('"#document-fragment"', 'string'),
         'ownerDocument': AST.union([
             AST.literal('Document'),
             AST.value('null')

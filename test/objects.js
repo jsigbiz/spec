@@ -57,7 +57,7 @@ test('foo := { text: String, type: "DOMTextNode" }', function (assert) {
             value: {
                 type: 'valueLiteral',
                 name: 'string',
-                value: 'DOMTextNode',
+                value: '"DOMTextNode"',
                 label: null,
                 optional: false
             },
