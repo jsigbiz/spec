@@ -22,11 +22,12 @@ function program(statements) {
     }
 }
 
-function typeDeclaration(identifier, typeExpression) {
+function typeDeclaration(identifier, typeExpression, generics) {
     return {
         type: 'typeDeclaration',
         identifier: identifier,
-        typeExpression: typeExpression
+        typeExpression: typeExpression,
+        generics: generics || []
     }
 }
 

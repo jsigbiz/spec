@@ -28,6 +28,6 @@ var genericLiteral = Parsimmon.seq(
     return AST.generic(list[0], list[1][0])
 })
 
-module.exports = genericLiteral
+module.exports = genericLiteral;
 
-var typeDefinition = require('./type-definition.js');
+var typeDefinition = require('./type-definition.js')

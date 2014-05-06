@@ -3,6 +3,7 @@ var Parsimmon = require('parsimmon');
 var AST = require('../ast.js')
 var typeDefinition = require('./type-definition.js');
 var typeLiteral = require('./type-literal.js');
+var typeDeclaration = require('./type-declaration.js');
 
 var identifier = Parsimmon.regex(/[a-z\-\/]*/i)
     .skip(Parsimmon.optWhitespace);
@@ -38,17 +39,7 @@ var assignment = identifier
             });
     });
 
-var typeDeclaration = Parsimmon.string('type')
-    .skip(Parsimmon.optWhitespace)
-    .then(identifier)
-    .chain(function (identifier) {
-        return Parsimmon.string(':=')
-            .skip(Parsimmon.optWhitespace)
-            .then(typeDefinition)
-            .map(function (type) {
-                return AST.typeDeclaration(identifier, type);
-            })
-    })
+
 
 var statement = Parsimmon.alt(
     importStatement,
