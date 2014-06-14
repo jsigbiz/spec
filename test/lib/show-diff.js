@@ -1,3 +1,4 @@
+var console = require('console');
 var difflet = require('difflet')({ indent: 1 })
 
 var jsonDiff = require('json-diff');
