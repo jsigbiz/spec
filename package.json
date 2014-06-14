@@ -6,13 +6,18 @@
   "author": "Raynos <raynos2@gmail.com>",
   "repository": "git://github.com/Raynos/jsig.git",
   "main": "index",
+  "main.jsig": "docs.mli",
   "homepage": "https://github.com/Raynos/jsig",
   "bugs": {
     "url": "https://github.com/Raynos/jsig/issues",
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
+    "body": "^4.4.2",
+    "error": "^4.0.0",
+    "falafel": "^0.3.1",
     "minimist": "0.0.8",
+    "node-hook": "^0.1.0",
     "parsimmon": "^0.4.0",
     "process": "^0.6.0"
   },
@@ -21,6 +26,7 @@
     "istanbul": "~0.2.4",
     "jshint": "^2.5.0",
     "json-diff": "^0.3.1",
+    "opn": "^0.1.2",
     "pre-commit": "0.0.4",
     "tap-spec": "^0.1.8",
     "tape": "^2.12.3"
@@ -33,9 +39,11 @@
   ],
   "scripts": {
     "test": "npm run jshint && node test/index.js | tap-spec",
+    "integration": "npm run jshint -s && node test/integration-runtime/ | tap-spec",
+    "cover-integration": "istanbul cover --report html --print none test/integration-runtime/ | tap-spec",
     "jshint": "jshint --verbose .",
     "cover": "istanbul cover --report none --print detail test/index.js",
-    "view-cover": "istanbul report html && open ./coverage/index.html"
+    "view-cover": "istanbul report html && opn ./coverage/index.html"
   },
   "bin": {
     "jsig": "bin/cli.js"

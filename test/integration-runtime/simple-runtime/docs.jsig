@@ -1,0 +1,3 @@
+simple-runtime := (String, String) => String
+
+simple-runtime/extra := (String | Number) => String | Number
