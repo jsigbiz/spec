@@ -26,6 +26,12 @@
     "node": false,
     "nonstandard": false,
 
-    "predef": ["require", "module", "__dirname", "__filename"]
+    "predef": {
+        "require": false,
+        "module": false,
+        "__dirname": false,
+        "__filename": false,
+        "console": true
+    }
 }
 
