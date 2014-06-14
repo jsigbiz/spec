@@ -30,10 +30,7 @@ function interceptAndInstrument(source, filename) {
         return source
     }
 
-    // cannot annotate the annotator
-    if (filename === annotateUri) {
-        return source
-    }
+    
 
     var dirname = package[0]
     package = package[1]
@@ -43,37 +40,17 @@ function interceptAndInstrument(source, filename) {
     }
 
     var jsigUri = path.join(dirname, package['main.jsig'])
-    var prefix = 'var jsigAnnotate = require("' +
-        annotateUri + '")\n'
+    // cannot annotate the annotator. must self reference
+    var prefix = filename === annotateUri ?
+        'var jsigAnnotate = annotate\n' :
+        'var jsigAnnotate = require("' +
+            annotateUri + '")\n'
 
     var res = prefix + falafel(source, function (node) {
-        if (node.type !== 'AssignmentExpression') {
+        if (!isModuleExportsStatement(node)) {
             return
         }
 
-        if (node.operator !== '=') {
-            return
-        }
-
-        if (node.left.type !== 'MemberExpression') {
-            return
-        }
-
-        if (!node.left ||
-            node.left && !node.left.object ||
-            node.left && node.left.object &&
-                node.left.object.name !== 'module'
-        ) {
-            return
-        }
-
-        if (!node.left ||
-            node.left && !node.left.property ||
-            node.left && node.left.property &&
-                node.left.property.name !== 'exports'
-        ) {
-            return
-        }
         var newSource = 'jsigAnnotate(' + node.right.source() +
             ', ' + JSON.stringify(jsigUri) +
             ', ' + JSON.stringify(filename) + ')'
@@ -96,4 +73,36 @@ function findPackage(uri) {
     }
 
     return findPackage(dirname)
+}
+
+function isModuleExportsStatement(node) {
+    if (node.type !== 'AssignmentExpression') {
+        return
+    }
+
+    if (node.operator !== '=') {
+        return
+    }
+
+    if (node.left.type !== 'MemberExpression') {
+        return
+    }
+
+    if (!node.left ||
+        node.left && !node.left.object ||
+        node.left && node.left.object &&
+            node.left.object.name !== 'module'
+    ) {
+        return
+    }
+
+    if (!node.left ||
+        node.left && !node.left.property ||
+        node.left && node.left.property &&
+            node.left.property.name !== 'exports'
+    ) {
+        return
+    }
+
+    return true
 }
