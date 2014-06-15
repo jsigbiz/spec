@@ -21,7 +21,9 @@ module.exports = functionDeclaration
 
 */
 function functionDeclaration(node, meta, callback) {
-    console.log('node', node)
+    // console.log('node', node)
+    console.warn('skipping all function declarations',
+        node.id.name)
 
     callback(null)
 }
