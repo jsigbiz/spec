@@ -3,6 +3,9 @@ var fs = require('fs')
 var path = require('path')
 var falafel = require('falafel')
 
+var isModuleExportsStatement =
+    require('../lib/is-module-exports.js')
+
 var annotateUri = path.join(__dirname, '..',
     'runtime', 'annotate.js')
 
@@ -53,11 +56,14 @@ function interceptAndInstrument(source, filename) {
             return
         }
 
-        var newSource = 'jsigAnnotate(' + node.right.source() +
+        var expression = node.expression
+
+        var newSource = 'jsigAnnotate(' +
+            expression.right.source() +
             ', ' + JSON.stringify(jsigUri) +
             ', ' + JSON.stringify(filename) + ')'
 
-        node.right.update(newSource)
+        expression.right.update(newSource)
     })
 
     return res
@@ -77,34 +83,4 @@ function findPackage(uri) {
     return findPackage(dirname)
 }
 
-function isModuleExportsStatement(node) {
-    if (node.type !== 'AssignmentExpression') {
-        return
-    }
 
-    if (node.operator !== '=') {
-        return
-    }
-
-    if (node.left.type !== 'MemberExpression') {
-        return
-    }
-
-    if (!node.left ||
-        node.left && !node.left.object ||
-        node.left && node.left.object &&
-            node.left.object.name !== 'module'
-    ) {
-        return
-    }
-
-    if (!node.left ||
-        node.left && !node.left.property ||
-        node.left && node.left.property &&
-            node.left.property.name !== 'exports'
-    ) {
-        return
-    }
-
-    return true
-}

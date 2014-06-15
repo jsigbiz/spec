@@ -1,9 +1,19 @@
+var verify = require('../verify.js')
+
 module.exports = variableDeclarator
 
 function variableDeclarator(node, meta, callback) {
-    console.log('node', node)
+    var id = node.id.name
 
-    // var id = node.id.name
+    verify(node.init, meta, function (err, jsigAst) {
+        if (err) {
+            return callback(err)
+        }
 
-    callback(null)
+        meta.identifiers[id] = {
+            type: 'variable',
+            jsig: jsigAst
+        }
+        callback(null)
+    })
 }
