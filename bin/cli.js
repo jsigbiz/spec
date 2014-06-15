@@ -5,7 +5,7 @@ var util = require('util');
 var parseArgs = require('minimist');
 
 var parse = require('./parse.js');
-var cover = require('./cover.js');
+var annotate = require('./annotate.js');
 
 module.exports = main
 
@@ -27,8 +27,8 @@ function main(opts) {
                 depth: opts.depth || 2
             }))
         })
-    } else if (command === 'cover') {
-        cover(opts, function (err) {
+    } else if (command === 'annotate') {
+        annotate(opts, function (err) {
             if (err) {
                 throw err
             }
