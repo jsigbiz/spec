@@ -39,8 +39,6 @@ var assignment = identifier
             });
     });
 
-
-
 var statement = Parsimmon.alt(
     importStatement,
     assignment,
