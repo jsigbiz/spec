@@ -15,11 +15,13 @@
   "dependencies": {
     "body": "^4.4.2",
     "error": "^4.0.0",
+    "esprima": "^1.2.2",
     "falafel": "^0.3.1",
     "minimist": "0.0.8",
     "node-hook": "^0.1.0",
     "parsimmon": "^0.4.0",
-    "process": "^0.6.0"
+    "process": "^0.6.0",
+    "run-parallel": "^1.0.0"
   },
   "devDependencies": {
     "difflet": "^0.2.6",
@@ -39,8 +41,8 @@
   ],
   "scripts": {
     "test": "npm run jshint && node test/index.js | tap-spec",
-    "integration": "npm run jshint -s && node test/integration-runtime/ | tap-spec",
-    "cover-integration": "istanbul cover --report html --print none test/integration-runtime/ | tap-spec",
+    "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
+    "cover-runtime": "istanbul cover --report html --print none test/runtime/ | tap-spec",
     "jshint": "jshint --verbose .",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "view-cover": "istanbul report html && opn ./coverage/index.html"

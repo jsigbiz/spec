@@ -6,6 +6,7 @@ var parseArgs = require('minimist');
 
 var parse = require('./parse.js');
 var annotate = require('./annotate.js');
+var compile = require('./compile.js');
 
 module.exports = main
 
@@ -29,6 +30,12 @@ function main(opts) {
         })
     } else if (command === 'annotate') {
         annotate(opts, function (err) {
+            if (err) {
+                throw err
+            }
+        })
+    } else if (command === 'compile') {
+        compile(opts, function (err, code) {
             if (err) {
                 throw err
             }
