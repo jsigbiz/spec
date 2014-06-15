@@ -31,12 +31,14 @@ function main(opts) {
     } else if (command === 'annotate') {
         annotate(opts, function (err) {
             if (err) {
+                console.log('stack', new Error().stack)
                 throw err
             }
         })
     } else if (command === 'compile') {
         compile(opts, function (err, code) {
             if (err) {
+                console.log('stack', new Error().stack)
                 throw err
             }
         })

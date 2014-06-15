@@ -16,6 +16,12 @@ module.exports = callExpression
 */
 function callExpression(node, meta, callback) {
     var callee = node.callee.name
+
+    if (!meta.identifiers[callee]) {
+        console.warn('skipping call expression', callee)
+        return callback(null)
+    }
+
     var type = meta.identifiers[callee].jsig
 
     var errors = node.arguments.map(function (arg, index) {
@@ -41,14 +47,29 @@ function getASTForRequire(node, meta, callback) {
     var arg = node.arguments[0].value
 
     var dirname = path.dirname(meta.filename)
-    var uri = path.resolve(dirname, arg)
+    var uri
+    //TODO handle non local uris
+    //TODO replace resolve logic with node-resolve module
+    if (arg[0] === '.') {
+        uri = path.resolve(dirname, arg)
+    }
+
+    if (!uri) {
+        console.warn('skipping require analysis for', arg)
+        return callback(null)
+    }
+
+    // handle folders. lengthen to index.js
+    if (uri.substr(-3) !== '.js') {
+        uri = path.join(uri, 'index.js')
+    }
 
     compile(uri, function (err, meta) {
         if (err) {
             return callback(err)
         }
 
-        console.log('requireMeta', meta)
-        callback(null, meta)
+        // console.log('requireMeta', meta)
+        callback(null)
     })
 }
