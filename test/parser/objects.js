@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var parse = require('../parser.js');
+var parse = require('../../parser.js');
 
 test('foo := { text: String }', function (assert) {
     var content = 'foo := { text: String }';
