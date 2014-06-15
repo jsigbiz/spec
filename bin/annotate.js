@@ -1,8 +1,8 @@
 var hook = require('node-hook')
-var fs = require('fs')
 var path = require('path')
 var falafel = require('falafel')
 
+var findJsigUriSync = require('../lib/find-jsig-uri').sync
 var isModuleExportsStatement =
     require('../lib/is-module-exports.js')
 
@@ -32,19 +32,7 @@ function annotate(opts, cb) {
 }
 
 function interceptAndInstrument(source, filename) {
-    var package = findPackage(filename)
-    if (package === null) {
-        return source
-    }
-
-    var dirname = package[0]
-    package = package[1]
-
-    if (!package['main.jsig']) {
-        return source
-    }
-
-    var jsigUri = path.join(dirname, package['main.jsig'])
+    var jsigUri = findJsigUriSync(filename)
     // cannot annotate the annotator. must self reference
     var prefix = filename === annotateUri ?
         'var jsigAnnotate = annotate\n' :
@@ -67,20 +55,6 @@ function interceptAndInstrument(source, filename) {
     })
 
     return res
-}
-
-function findPackage(uri) {
-    var dirname = path.dirname(uri)
-    var package = path.join(dirname, 'package.json')
-    if (fs.existsSync(package)) {
-        return [dirname, JSON.parse(fs.readFileSync(package, 'utf8'))]
-    }
-
-    if (dirname === '/') {
-        return null
-    }
-
-    return findPackage(dirname)
 }
 
 

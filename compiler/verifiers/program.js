@@ -1,5 +1,8 @@
 var series = require('run-series')
+var fs = require('fs')
 
+var parser = require('../../parser.js')
+var findJsigUri = require('../../lib/find-jsig-uri.js')
 var isModuleExports = require('../../lib/is-module-exports.js')
 var verify = require('../verify.js')
 
@@ -14,11 +17,42 @@ function program(node, meta, callback) {
         meta.moduleExportsNode = right
     }
 
-    var tasks = body.map(function (node) {
-        return verify.bind(null, node, meta)
+    findJsigUri(meta.filename, function (err, jsigUri) {
+        if (err) {
+            return callback(err)
+        }
+
+        if (jsigUri) {
+            meta.jsigUri = jsigUri
+            fs.readFile(jsigUri, 'utf8',  onfile)
+        } else {
+            handleBody()
+        }
+
+        function onfile(err, content) {
+            if (err) {
+                return callback(err)
+            }
+
+            parser(content, handleBody)
+        }
     })
 
-    series(tasks, callback)
+    function handleBody(err, jsigAst) {
+        if (err) {
+            return callback(err)
+        }
+
+        if (jsigAst) {
+            meta.jsigAst = jsigAst
+        }
+
+        var tasks = body.map(function (node) {
+            return verify.bind(null, node, meta)
+        })
+
+        series(tasks, callback)
+    }
 }
 
 // hoisting function declarations to the top makes the tree

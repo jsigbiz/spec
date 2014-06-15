@@ -23,7 +23,9 @@ module.exports = Meta
             type: 'variable' | 'function',
             jsig: JsigASTNode
         }>,
-        moduleExportsNode: EsprimaASTNode
+        moduleExportsNode: EsprimaASTNode,
+        jsigUri: stringUriToJsigFile,
+        jsigAst: jsigAstForFile
     }
 
     We prepopulate meta with known identifiers and their types
@@ -37,6 +39,8 @@ function Meta(ast, filename) {
     this.filename = filename
     this.identifiers = {}
     this.moduleExportsNode = null
+    this.jsigUri = null
+    this.jsigAst = null
 
     this.identifiers.require = {
         type: 'variable',

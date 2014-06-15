@@ -1,8 +1,7 @@
 var fs = require('fs')
 var path = require('path')
-var Parsimmon = require('parsimmon')
 
-var program
+var parser
 var enforceTypeExpression
 
 // must export to analyse circular code. i.e. code that annotate
@@ -10,7 +9,7 @@ var enforceTypeExpression
 module.exports = annotate
 
 // lazy require to break circular reference
-program = require('../parser/program.js')
+parser = require('../parser.js')
 
 // lazy require to break circular references
 enforceTypeExpression = require('./enforce-type-expression')
@@ -49,16 +48,9 @@ function getAST(jsigUri) {
     var jsig = fs.readFileSync(jsigUri, 'utf8')
 
     // lazy require to break circular reference
-    program = require('../parser/program.js')
+    parser = require('../parser.js')
 
-    var parseRes = program.parse(jsig)
-
-    if (!parseRes.status) {
-        var message = Parsimmon.formatError(jsig, parseRes)
-        throw new Error(message)
-    }
-
-    return parseRes.value
+    return parser(jsig)
 }
 
 function getIdentifier(jsigUri, filename) {

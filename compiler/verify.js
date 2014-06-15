@@ -16,7 +16,9 @@ var verifiers = {
     'VariableDeclarator':
         require('./verifiers/variable-declarator.js'),
     'CallExpression':
-        require('./verifiers/call-expression.js')
+        require('./verifiers/call-expression.js'),
+    'FunctionDeclaration':
+        require('./verifiers/function-declaration.js')
 }
 
 function verify(node, meta, callback) {
