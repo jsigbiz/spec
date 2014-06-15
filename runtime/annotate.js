@@ -2,6 +2,12 @@ var fs = require('fs')
 var path = require('path')
 var Parsimmon = require('parsimmon')
 
+// lazy require to break circular reference
+var program = require('../parser/program.js')
+
+// lazy require to break circular references
+var enforceTypeExpression = require('./enforce-type-expression')
+
 // must export to analyse circular code. i.e. code that annotate
 // uses.
 module.exports = annotate
@@ -15,8 +21,6 @@ function annotate(object, jsigUri, filename) {
         return object
     }
 
-    // lazy require to break circular references
-    var enforceTypeExpression = require('./enforce-type-expression')
 
     return enforceTypeExpression(shape.typeExpression, object,
         shape.identifier)
@@ -38,9 +42,6 @@ function findByIdentifier(program, identifier) {
 
 function getAST(jsigUri) {
     var jsig = fs.readFileSync(jsigUri, 'utf8')
-
-    // lazy require to break circular reference
-    var program = require('../parser/program.js')
 
     var parseRes = program.parse(jsig)
 

@@ -7,7 +7,8 @@ module.exports = getModule
 function getModule(folder, file) {
     file = file || 'index.js'
 
-    var uri = path.join(__dirname, '..', folder, file)
+    var uri = path.join(__dirname, '..', '..', 'fixtures',
+        folder, file)
 
     // require runtime for code coverage
     require('../../../runtime/annotate.js')
