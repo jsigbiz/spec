@@ -4,8 +4,8 @@ var path = require('path')
 
 // var showDiff = require('../lib/show-diff.js')
 
-var parse = require('../../parser.js');
-var AST = require('../../ast.js')
+var parse = require('../../../parser.js');
+var AST = require('../../../ast.js')
 
 var uri = path.join(__dirname, 'definitions', 'error.mli')
 var content = fs.readFileSync(uri, 'utf8')

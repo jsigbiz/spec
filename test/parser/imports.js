@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var parse = require('../parser.js');
+var parse = require('../../parser.js');
 
 test('import { Foo } from "bar"', function (assert) {
     var content = 'import { Foo } from "bar"'
