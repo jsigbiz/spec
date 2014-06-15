@@ -21,6 +21,10 @@ function annotate(opts, cb) {
 
     hook.unhook('.js')
 
+    if (cb) {
+        cb(null, res)
+    }
+
     return res
 }
 
@@ -29,8 +33,6 @@ function interceptAndInstrument(source, filename) {
     if (package === null) {
         return source
     }
-
-    
 
     var dirname = package[0]
     package = package[1]
