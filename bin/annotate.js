@@ -6,9 +6,9 @@ var falafel = require('falafel')
 var annotateUri = path.join(__dirname, '..',
     'runtime', 'annotate.js')
 
-module.exports = cover
+module.exports = annotate
 
-function cover(opts, cb) {
+function annotate(opts, cb) {
     var file = opts._[0]
 
     if (!file) {

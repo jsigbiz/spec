@@ -1,6 +1,6 @@
 var path = require('path')
 
-var cover = require('../../../bin/cover.js')
+var annotate = require('../../../bin/annotate.js')
 
 module.exports = getModule
 
@@ -12,5 +12,5 @@ function getModule(folder, file) {
     // require runtime for code coverage
     require('../../../runtime/annotate.js')
 
-    return cover({ _: [uri] })
+    return annotate({ _: [uri] })
 }
