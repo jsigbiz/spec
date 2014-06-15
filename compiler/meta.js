@@ -4,6 +4,7 @@ var requireType = JsigAST.functionType({
     args: [JsigAST.literal('String')],
     result: JsigAST.literal('Any')
 })
+requireType.isNodeRequireToken = true
 
 module.exports = Meta
 
@@ -16,12 +17,13 @@ module.exports = Meta
     currently it is
 
     {
-        ast: EntireASTNode,
+        ast: EsprimaASTNodeForFile,
         filename: filenameOfAst,
         identifiers: Object<String, {
             type: 'variable' | 'function',
             jsig: JsigASTNode
-        }>
+        }>,
+        moduleExportsNode: EsprimaASTNode
     }
 
     We prepopulate meta with known identifiers and their types
@@ -34,6 +36,7 @@ function Meta(ast, filename) {
     this.ast = ast
     this.filename = filename
     this.identifiers = {}
+    this.moduleExportsNode = null
 
     this.identifiers.require = {
         type: 'variable',
