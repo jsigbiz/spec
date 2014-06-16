@@ -23,7 +23,11 @@ var verifiers = {
     'ReturnStatement':
         require('./esprima-verifiers/return-statement.js'),
     'BinaryExpression':
-        require('./esprima-verifiers/binary-expression.js')
+        require('./esprima-verifiers/binary-expression.js'),
+    'ExpressionStatement':
+        require('./esprima-verifiers/expression-statement.js'),
+    'Literal':
+        require('./esprima-verifiers/literal.js')
 }
 
 function verify(node, meta, callback) {
