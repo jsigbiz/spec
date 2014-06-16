@@ -1,7 +1,7 @@
 var test = require('tape')
 var path = require('path')
 
-var compile = require('../../bin/compile.js')
+var compile = require('../../bin/type-check.js')
 
 test('compile simple-runtime', function (assert) {
     var file = path.join(__dirname, '..',

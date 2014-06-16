@@ -1,3 +1,5 @@
+/*global global*/
+
 var hook = require('node-hook')
 var path = require('path')
 var falafel = require('falafel')
@@ -33,11 +35,16 @@ function annotate(opts, cb) {
 
 function interceptAndInstrument(source, filename) {
     var jsigUri = findJsigUriSync(filename)
-    // cannot annotate the annotator. must self reference
-    var prefix = filename === annotateUri ?
-        'var jsigAnnotate = annotate\n' :
-        'var jsigAnnotate = require("' +
-            annotateUri + '")\n'
+
+    // do not annotate the annotator file, thats silly
+    if (filename === annotateUri ||
+        global.JSIG_ANNOTATION_MODE_ON
+    ) {
+        return source
+    }
+
+    var prefix = 'var jsigAnnotate = require("' +
+        annotateUri + '")\n'
 
     var res = prefix + falafel(source, function (node) {
         if (!isModuleExportsStatement(node)) {

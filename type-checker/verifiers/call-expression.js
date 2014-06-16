@@ -1,6 +1,6 @@
 var path = require('path')
 
-var compile = require('../../compiler/')
+var typeCheck = require('../../type-checker/')
 var validType = require('../valid-type.js')
 
 module.exports = callExpression
@@ -64,7 +64,7 @@ function getASTForRequire(node, meta, callback) {
         uri = path.join(uri, 'index.js')
     }
 
-    compile(uri, function (err, meta) {
+    typeCheck(uri, function (err, meta) {
         if (err) {
             return callback(err)
         }

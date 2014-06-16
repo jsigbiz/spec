@@ -6,7 +6,7 @@ var parseArgs = require('minimist');
 
 var parse = require('./parse.js');
 var annotate = require('./annotate.js');
-var compile = require('./compile.js');
+var typeCheck = require('./type-check.js');
 
 module.exports = main
 
@@ -35,8 +35,8 @@ function main(opts) {
                 throw err
             }
         })
-    } else if (command === 'compile') {
-        compile(opts, function (err, code) {
+    } else if (command === 'type-check') {
+        typeCheck(opts, function (err, code) {
             if (err) {
                 console.log('stack', new Error().stack)
                 throw err

@@ -1,5 +1,3 @@
-// break circular references
-
 /* verify takes an AST node, a meta and a callback
     it will then verify that the AST node is type sound.
 
@@ -7,6 +5,7 @@
     inference
 
 */
+// break circular references
 module.exports = verify
 
 var verifiers = {
@@ -18,7 +17,11 @@ var verifiers = {
     'CallExpression':
         require('./verifiers/call-expression.js'),
     'FunctionDeclaration':
-        require('./verifiers/function-declaration.js')
+        require('./verifiers/function-declaration.js'),
+    'BlockStatement':
+        require('./verifiers/block-statement.js'),
+    'ReturnStatement':
+        require('./verifiers/return-statement.js')
 }
 
 function verify(node, meta, callback) {

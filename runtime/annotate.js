@@ -1,20 +1,83 @@
 var fs = require('fs')
-var path = require('path')
 
-var parser
-var enforceTypeExpression
+var IN_ANNOTATE_MODE = false
 
 // must export to analyse circular code. i.e. code that annotate
 // uses.
 module.exports = annotate
 
-// lazy require to break circular reference
-parser = require('../parser.js')
-
-// lazy require to break circular references
-enforceTypeExpression = require('./enforce-type-expression')
+var getIdentifier = require('../lib/get-jsig-identifier.js')
+var findByIdentifier =
+    require('../lib/find-by-jsig-identifier.js')
+var parser = require('../parser.js')
+var enforceTypeExpression = require('./enforce-type-expression')
 
 function annotate(object, jsigUri, filename) {
+    var _fn = null
+
+    function Empty() {}
+
+    // do lazy for function
+    if (typeof object === 'function') {
+        return proxy
+    }
+
+    return _annotate(object, jsigUri, filename)
+
+    function proxy() {
+        var res
+
+        if (IN_ANNOTATE_MODE) {
+            if (this instanceof proxy) {
+                res = object.apply(this, arguments)
+                if (Object(res) === res) {
+                    return res
+                }
+                return this
+            }
+
+            return object.apply(this, arguments)
+        }
+
+        if (!_fn) {
+            var constr = this instanceof proxy
+
+            if (object.prototype) {
+                Empty.prototype = object.prototype;
+                proxy.prototype = new Empty();
+                Empty.prototype = null;
+            }
+
+            Object.keys(object).forEach(function (key) {
+                proxy[key] = object[key]
+            })
+
+            IN_ANNOTATE_MODE = true
+            _fn = _annotate(object, jsigUri, filename)
+            IN_ANNOTATE_MODE = false
+
+            if (constr) {
+                return proxy.apply(
+                    Object.create(proxy.prototype),
+                    arguments)
+            }
+
+            return proxy.apply(this, arguments)
+        }
+
+        if (this instanceof proxy) {
+            res = _fn.apply(this, arguments)
+            if (Object(res) === res) {
+                return res
+            }
+            return this
+        }
+
+        return _fn.apply(this, arguments)
+    }
+}
+
+function _annotate(object, jsigUri, filename) {
     var ast = getAST(jsigUri)
     var identifier = getIdentifier(jsigUri, filename)
     var shape = findByIdentifier(ast, identifier)
@@ -23,50 +86,13 @@ function annotate(object, jsigUri, filename) {
         return object
     }
 
-    // lazy require to break circular references
-    enforceTypeExpression = require('./enforce-type-expression')
-
     return enforceTypeExpression(shape.typeExpression, object,
         shape.identifier)
-}
-
-function findByIdentifier(program, identifier) {
-    if (program.type !== 'program') {
-        throw new Error('invalid argument program')
-    }
-
-    var statements = program.statements
-    var assignments = statements.filter(function (node) {
-        return node.identifier === identifier &&
-            node.type === 'assignment'
-    })
-
-    return assignments[0]
 }
 
 function getAST(jsigUri) {
     var jsig = fs.readFileSync(jsigUri, 'utf8')
 
-    // lazy require to break circular reference
-    parser = require('../parser.js')
-
     return parser(jsig)
 }
 
-function getIdentifier(jsigUri, filename) {
-    var jsigFolder = path.dirname(jsigUri)
-    var relativeUri = path.relative(jsigFolder, filename)
-    var extName = path.extname(relativeUri)
-
-    var identifier = relativeUri.substr(0,
-        relativeUri.length - extName.length)
-    var base = path.basename(jsigFolder)
-
-    if (identifier === 'index') {
-        identifier = base
-    } else {
-        identifier = base + '/' + identifier
-    }
-
-    return identifier
-}
