@@ -21,7 +21,9 @@ var verifiers = {
     'BlockStatement':
         require('./esprima-verifiers/block-statement.js'),
     'ReturnStatement':
-        require('./esprima-verifiers/return-statement.js')
+        require('./esprima-verifiers/return-statement.js'),
+    'BinaryExpression':
+        require('./esprima-verifiers/binary-expression.js')
 }
 
 function verify(node, meta, callback) {
