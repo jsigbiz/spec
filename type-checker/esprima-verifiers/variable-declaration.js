@@ -1,6 +1,6 @@
 var parallel = require('run-parallel')
 
-var verify = require('../verify.js')
+var verify = require('../verify-esprima-ast.js')
 
 module.exports = variableDeclaration
 

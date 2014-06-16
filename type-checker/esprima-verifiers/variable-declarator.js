@@ -1,4 +1,4 @@
-var verify = require('../verify.js')
+var verify = require('../verify-esprima-ast.js')
 
 module.exports = variableDeclarator
 

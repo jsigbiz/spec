@@ -6,6 +6,11 @@ var requireType = JsigAST.functionType({
 })
 requireType.isNodeRequireToken = true
 
+var moduleType = JsigAST.object({
+    exports: JsigAST.literal('Any')
+})
+moduleType.isNodeModuleToken = true
+
 module.exports = ProgramMeta
 
 /*  ProgramMeta is threaded through every verifier which
@@ -47,5 +52,9 @@ function ProgramMeta(ast, filename) {
     this.identifiers.require = {
         type: 'variable',
         jsig: requireType
+    }
+    this.identifiers.module = {
+        type: 'variable',
+        jsig: moduleType
     }
 }

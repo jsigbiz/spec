@@ -9,19 +9,19 @@
 module.exports = verify
 
 var verifiers = {
-    'Program': require('./verifiers/program.js'),
+    'Program': require('./esprima-verifiers/program.js'),
     'VariableDeclaration':
-        require('./verifiers/variable-declaration.js'),
+        require('./esprima-verifiers/variable-declaration.js'),
     'VariableDeclarator':
-        require('./verifiers/variable-declarator.js'),
+        require('./esprima-verifiers/variable-declarator.js'),
     'CallExpression':
-        require('./verifiers/call-expression.js'),
+        require('./esprima-verifiers/call-expression.js'),
     'FunctionDeclaration':
-        require('./verifiers/function-declaration.js'),
+        require('./esprima-verifiers/function-declaration.js'),
     'BlockStatement':
-        require('./verifiers/block-statement.js'),
+        require('./esprima-verifiers/block-statement.js'),
     'ReturnStatement':
-        require('./verifiers/return-statement.js')
+        require('./esprima-verifiers/return-statement.js')
 }
 
 function verify(node, meta, callback) {
