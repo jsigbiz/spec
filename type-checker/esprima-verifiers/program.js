@@ -80,6 +80,8 @@ function storeAndExpand(meta, jsigAst) {
         return
     }
 
+    meta.moduleExportsType = type.typeExpression
+
     var node = meta.moduleExportsNode
 
     if (node.type === 'Identifier') {

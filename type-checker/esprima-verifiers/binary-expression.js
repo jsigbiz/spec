@@ -1,3 +1,6 @@
+var series = require('run-series')
+
+var verify = require('../verify-esprima-ast.js')
 var operators = require('../operators/')
 var checkSubType = require('../check-sub-type.js')
 
@@ -10,28 +13,32 @@ function binaryExpression(node, meta, callback) {
         return callback(null)
     }
 
-    console.log('binary', node)
-
     var args = [node.left, node.right]
 
-    var errors = args.map(function (arg, index) {
-        var name = arg.name
-        var type = meta.identifiers[name] &&
-            meta.identifiers[name].jsig
-
-        if (!type) {
-            return new Error('untyped identifier ' + name)
+    var tasks = args.map(function (arg) {
+        return verify.bind(null, arg, meta)
+    })
+    series(tasks, function (err, argTypes) {
+        if (err) {
+            return callback(err)
         }
 
-        return checkSubType(operatorType.args[index], type)
-    }).filter(Boolean)
+        var errors = argTypes.map(function (type, index) {
+            if (!type) {
+                return new Error('untyped identifier ' + 
+                    args[index].name)
+            }
 
-    if (errors.length) {
-        return callback(errors[0])
-    }
+            return checkSubType(operatorType.args[index], type)
+        }).filter(Boolean)
 
-    // must verify that invoking the operator of the expression
-    // is sound. Similar to how we verify callExpression
+        if (errors.length) {
+            return callback(errors[0])
+        }
 
-    callback(null, operatorType.result)
+        // must verify that invoking the operator of the expression
+        // is sound. Similar to how we verify callExpression
+
+        callback(null, operatorType.result)
+    })
 }
