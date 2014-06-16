@@ -16,8 +16,8 @@ test('compile simple-runtime', function (assert) {
 
         console.log('meta', meta)
 
-        assert.ok(meta.identifiers.require)
-        assert.ok(meta.identifiers.sum)
+        assert.ok(meta && meta.identifiers.require)
+        assert.ok(meta && meta.identifiers.sum)
 
         assert.end()
     })

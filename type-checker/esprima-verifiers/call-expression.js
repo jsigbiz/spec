@@ -1,8 +1,9 @@
 var path = require('path')
+var series = require('run-series')
 
+var verify = require('../verify-esprima-ast.js')
 var typeCheck = require('../../type-checker/')
 var checkSubType = require('../check-sub-type.js')
-var getType = require('../get-type-for-esprima.js')
 
 module.exports = callExpression
 
@@ -25,29 +26,40 @@ function callExpression(node, meta, callback) {
 
     var funcType = meta.identifiers[callee].jsig
 
-    var errors = node.arguments.map(function (arg, index) {
-        var type = getType(arg, meta)
-        if (!type) {
-            return new Error('could not get type for ' +
-                arg.type)
+    var tasks = node.arguments.map(function (arg) {
+        return verify.bind(null, arg, meta)
+    })
+    series(tasks, onargs)
+
+    function onargs(err, args) {
+        if (err) {
+            return callback(err)
         }
 
-        return checkSubType(funcType.args[index], type)
-    }).filter(Boolean)
+        var errors = args.map(function (type, index) {
+            if (!type) {
+                return new Error('could not get type for ' +
+                    node.arguments[index].type)
+            }
 
-    if (errors.length) {
-        return callback(errors[0])
+            return checkSubType(funcType.args[index], type)
+        }).filter(Boolean)
+
+        if (errors.length) {
+            return callback(errors[0])
+        }
+
+        if (!funcType.isNodeRequireToken) {
+            callback(null, funcType.result)
+        }
+
+        // special case for require. The require function has a
+        // return value of Any but we can find the real type by 
+        // loading the source and analyzing it either by loading 
+        // the correct jsig definition file or 
+        // by doing type inference
+        getASTForRequire(node, meta, callback)
     }
-
-    if (!funcType.isNodeRequireToken) {
-        callback(null, funcType.result)
-    }
-
-    // special case for require. The require function has a
-    // return value of Any but we can find the real type by 
-    // loading the source and analyzing it either by loading the
-    // correct jsig definition file or by doing type inference
-    getASTForRequire(node, meta, callback)
 }
 
 function getASTForRequire(node, meta, callback) {
