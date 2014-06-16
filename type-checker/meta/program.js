@@ -1,4 +1,4 @@
-var JsigAST = require('../ast.js')
+var JsigAST = require('../../ast.js')
 
 var requireType = JsigAST.functionType({
     args: [JsigAST.literal('String')],

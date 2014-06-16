@@ -1,7 +1,8 @@
 var path = require('path')
 
 var typeCheck = require('../../type-checker/')
-var validType = require('../valid-type.js')
+var checkSubType = require('../check-sub-type.js')
+var getType = require('../get-type-for-esprima.js')
 
 module.exports = callExpression
 
@@ -22,18 +23,24 @@ function callExpression(node, meta, callback) {
         return callback(null)
     }
 
-    var type = meta.identifiers[callee].jsig
+    var funcType = meta.identifiers[callee].jsig
 
     var errors = node.arguments.map(function (arg, index) {
-        return validType(arg, type.args[index], meta)
+        var type = getType(arg, meta)
+        if (!type) {
+            return new Error('could not get type for ' +
+                arg.type)
+        }
+
+        return checkSubType(funcType.args[index], type)
     }).filter(Boolean)
 
     if (errors.length) {
         return callback(errors[0])
     }
 
-    if (!type.isNodeRequireToken) {
-        callback(null, type.result)
+    if (!funcType.isNodeRequireToken) {
+        callback(null, funcType.result)
     }
 
     // special case for require. The require function has a

@@ -1,4 +1,4 @@
-var FunctionMeta = require('../function-meta.js')
+var FunctionMeta = require('../meta/function.js')
 var verify = require('../verify-esprima-ast.js')
 
 module.exports = functionDeclaration

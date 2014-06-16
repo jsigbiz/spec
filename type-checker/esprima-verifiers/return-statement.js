@@ -1,5 +1,5 @@
 var verify = require('../verify-esprima-ast.js')
-var isSubType = require('../is-sub-type.js')
+var checkSubType = require('../check-sub-type.js')
 
 module.exports = returnStatement
 
@@ -17,10 +17,8 @@ function returnStatement(node, meta, callback) {
             return callback(null)
         }
 
-        var bool = isSubType(meta.returnValueType, jsigType)
-        if (!bool) {
-            var error = new Error('expected return statement ' +
-                'to be subtype of thing')
+        var error = checkSubType(meta.returnValueType, jsigType)
+        if (error) {
             return callback(error)
         }
 
