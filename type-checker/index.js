@@ -2,7 +2,7 @@
 module.exports = compile
 
 var readAST = require('./lib/read-ast.js')
-var verify = require('./verify.js')
+var verify = require('./verify-esprima-ast.js')
 var ProgramMeta = require('./program-meta.js')
 
 function compile(filename, callback) {

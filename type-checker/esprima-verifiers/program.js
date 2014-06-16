@@ -8,7 +8,7 @@ var getJsigIdentifier =
     require('../../lib/get-jsig-identifier.js')
 var findByJsigIdentifier =
     require('../../lib/find-by-jsig-identifier.js')
-var verify = require('../verify.js')
+var verify = require('../verify-esprima-ast.js')
 
 
 module.exports = program
