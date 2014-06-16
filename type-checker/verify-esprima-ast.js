@@ -27,7 +27,9 @@ var verifiers = {
     'ExpressionStatement':
         require('./esprima-verifiers/expression-statement.js'),
     'Literal':
-        require('./esprima-verifiers/literal.js')
+        require('./esprima-verifiers/literal.js'),
+    'Identifier':
+        require('./esprima-verifiers/identifier.js')
 }
 
 function verify(node, meta, callback) {

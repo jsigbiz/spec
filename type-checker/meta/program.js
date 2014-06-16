@@ -29,6 +29,7 @@ module.exports = ProgramMeta
             jsig: JsigASTNode
         }>,
         moduleExportsNode: EsprimaASTNode,
+        moduleExportsType: JsigASTNode,
         jsigUri: stringUriToJsigFile,
         jsigAst: jsigAstForFile,
         type: 'program'
@@ -45,6 +46,7 @@ function ProgramMeta(ast, filename) {
     this.filename = filename
     this.identifiers = {}
     this.moduleExportsNode = null
+    this.moduleExportsType = null
     this.jsigUri = null
     this.jsigAst = null
     this.type = 'program'

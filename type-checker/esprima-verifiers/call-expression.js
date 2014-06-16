@@ -50,7 +50,7 @@ function callExpression(node, meta, callback) {
         }
 
         if (!funcType.isNodeRequireToken) {
-            callback(null, funcType.result)
+            return callback(null, funcType.result)
         }
 
         // special case for require. The require function has a
@@ -74,6 +74,7 @@ function getASTForRequire(node, meta, callback) {
     }
 
     if (!uri) {
+        console.log('arg', node)
         console.warn('skipping require analysis for', arg)
         return callback(null)
     }
@@ -89,6 +90,6 @@ function getASTForRequire(node, meta, callback) {
         }
 
         // console.log('requireMeta', meta)
-        callback(null)
+        callback(null, meta.moduleExportsType)
     })
 }
