@@ -10,6 +10,10 @@ function variableDeclarator(node, meta, callback) {
             return callback(err)
         }
 
+        if (!jsigAst) {
+            console.warn('could not get type for', id)
+        }
+
         meta.identifiers[id] = {
             type: 'variable',
             jsig: jsigAst

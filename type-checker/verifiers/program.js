@@ -4,7 +4,12 @@ var fs = require('fs')
 var parser = require('../../parser.js')
 var findJsigUri = require('../../lib/find-jsig-uri.js')
 var isModuleExports = require('../../lib/is-module-exports.js')
+var getJsigIdentifier =
+    require('../../lib/get-jsig-identifier.js')
+var findByJsigIdentifier =
+    require('../../lib/find-by-jsig-identifier.js')
 var verify = require('../verify.js')
+
 
 module.exports = program
 
@@ -44,7 +49,7 @@ function program(node, meta, callback) {
         }
 
         if (jsigAst) {
-            meta.jsigAst = jsigAst
+            storeAndExpand(meta, jsigAst)
         }
 
         var tasks = body.map(function (node) {
@@ -52,6 +57,39 @@ function program(node, meta, callback) {
         })
 
         series(tasks, callback)
+    }
+}
+
+function storeAndExpand(meta, jsigAst) {
+    meta.jsigAst = jsigAst
+    var identifier = getJsigIdentifier(
+        meta.jsigUri, meta.filename)
+
+    if (!identifier) {
+        return
+    }
+
+    var type = findByJsigIdentifier(jsigAst, identifier)
+    if (!type) {
+        return
+    }
+
+    if (!meta.moduleExportsNode) {
+        console.warn('got a type for file', meta.filename,
+            'but got no module.exports')
+        return
+    }
+
+    var node = meta.moduleExportsNode
+
+    if (node.type === 'Identifier') {
+        meta.identifiers[node.name] = {
+            type: 'variable',
+            jsig: type.typeExpression
+        }
+    } else {
+        console.warn('got unknown module.exports node',
+            node.type)
     }
 }
 

@@ -6,10 +6,10 @@ var requireType = JsigAST.functionType({
 })
 requireType.isNodeRequireToken = true
 
-module.exports = Meta
+module.exports = ProgramMeta
 
-/* Meta is threaded through every verifier which verifies that
-    an AST node is type sound.
+/*  ProgramMeta is threaded through every verifier which
+    verifies that an AST node is type sound.
 
     This is a place to put meta data about the state of the
     program so that each node in the AST can access it.
@@ -25,14 +25,15 @@ module.exports = Meta
         }>,
         moduleExportsNode: EsprimaASTNode,
         jsigUri: stringUriToJsigFile,
-        jsigAst: jsigAstForFile
+        jsigAst: jsigAstForFile,
+        type: 'program'
     }
 
     We prepopulate meta with known identifiers and their types
 */
-function Meta(ast, filename) {
-    if (!(this instanceof Meta)) {
-        return new Meta(ast, filename)
+function ProgramMeta(ast, filename) {
+    if (!(this instanceof ProgramMeta)) {
+        return new ProgramMeta(ast, filename)
     }
 
     this.ast = ast
@@ -41,6 +42,7 @@ function Meta(ast, filename) {
     this.moduleExportsNode = null
     this.jsigUri = null
     this.jsigAst = null
+    this.type = 'program'
 
     this.identifiers.require = {
         type: 'variable',
