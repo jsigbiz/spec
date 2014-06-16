@@ -12,6 +12,8 @@ function literal(node, meta, callback) {
 
     if (typeof value === 'string') {
         callback(null, AST.literal('String'))
+    } else if (typeof value === 'number') {
+        callback(null, AST.literal('Number'))
     } else {
         console.warn('literal not implement for value',
             typeof value)
