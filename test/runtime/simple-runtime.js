@@ -74,3 +74,14 @@ test('extra throws on invalid return', function (assert) {
 
     assert.end()
 })
+
+test('value file does not throw', function (assert) {
+    var res = tryCatch(function () {
+        return getModule('simple-runtime', 'value')
+    })
+
+    assert.ifError(res[0])
+    assert.equal(res[1], 'a string')
+
+    assert.end()
+})

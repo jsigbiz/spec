@@ -46,6 +46,7 @@ function interceptAndInstrument(source, filename) {
     var prefix = 'var jsigAnnotate = require("' +
         annotateUri + '")\n'
 
+
     var res = prefix + falafel(source, function (node) {
         if (!isModuleExportsStatement(node)) {
             return
