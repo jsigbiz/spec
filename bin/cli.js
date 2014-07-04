@@ -4,10 +4,6 @@ var process = require('process');
 var util = require('util');
 var parseArgs = require('minimist');
 
-var parse = require('./parse.js');
-var annotate = require('./annotate.js');
-var typeCheck = require('./type-check.js');
-
 module.exports = main
 
 if (require.main === module) {
@@ -19,6 +15,7 @@ function main(opts) {
     var command = opts._.shift() || 'parse';
 
     if (command === 'parse') {
+        var parse = require('./parse.js');
         parse(opts, function (err, result) {
             if (err) {
                 throw err
@@ -29,6 +26,7 @@ function main(opts) {
             }))
         })
     } else if (command === 'annotate') {
+        var annotate = require('./annotate.js');
         annotate(opts, function (err) {
             if (err) {
                 console.log('stack', new Error().stack)
@@ -36,6 +34,7 @@ function main(opts) {
             }
         })
     } else if (command === 'type-check') {
+        var typeCheck = require('./type-check.js');
         typeCheck(opts, function (err, code) {
             if (err) {
                 console.log('stack', new Error().stack)
