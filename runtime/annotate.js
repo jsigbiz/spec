@@ -1,16 +1,21 @@
+/*global global*/
 var fs = require('fs')
 
 var IN_ANNOTATE_MODE = false
+global.JSIG_ANNOTATE_SKIP = true
 
 // must export to analyse circular code. i.e. code that annotate
 // uses.
 module.exports = annotate
 
-var getIdentifier = require('../lib/get-jsig-identifier.js')
+var getIdentifier = requireClean('../lib/get-jsig-identifier.js')
 var findByIdentifier =
-    require('../lib/find-by-jsig-identifier.js')
-var parser = require('../parser.js')
-var enforceTypeExpression = require('./enforce-type-expression')
+    requireClean('../lib/find-by-jsig-identifier.js')
+var parser = requireClean('../parser.js')
+var enforceTypeExpression =
+    requireClean('./enforce-type-expression')
+
+global.JSIG_ANNOTATE_SKIP = false
 
 function annotate(object, jsigUri, filename) {
     var _fn = null
@@ -78,11 +83,17 @@ function annotate(object, jsigUri, filename) {
 }
 
 function _annotate(object, jsigUri, filename) {
+    if (!jsigUri) {
+        // cannot determine anything without jsigUri
+        return object
+    }
+
     var ast = getAST(jsigUri)
     var identifier = getIdentifier(jsigUri, filename)
     var shape = findByIdentifier(ast, identifier)
 
     if (!shape) {
+        console.warn('could not find shape', filename, jsigUri);
         return object
     }
 
@@ -96,3 +107,17 @@ function getAST(jsigUri) {
     return parser(jsig)
 }
 
+
+function requireClean(uri) {
+    var oldCache = Object.keys(require.cache)
+        .reduce(function (acc, key) {
+            acc[key] = require.cache[key]
+            return acc
+        }, {})
+
+    var mod = require(uri)
+
+    require.cache = oldCache
+
+    return mod
+}

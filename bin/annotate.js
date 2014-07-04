@@ -38,7 +38,7 @@ function interceptAndInstrument(source, filename) {
 
     // do not annotate the annotator file, thats silly
     if (filename === annotateUri ||
-        global.JSIG_ANNOTATION_MODE_ON
+        global.JSIG_ANNOTATE_SKIP
     ) {
         return source
     }
