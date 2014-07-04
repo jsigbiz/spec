@@ -8,8 +8,6 @@ test('invalidJsig throws an error', function (assert) {
         return getModule('invalid-jsig')
     })
 
-    // console.log('res', tuple[0])
-
     assert.ok(tuple[0])
     assert.notEqual(tuple[0].message.indexOf('Baz+16'), -1)
 

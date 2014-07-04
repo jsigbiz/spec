@@ -41,9 +41,8 @@ function enforceTypeExpression(expr, value, name) {
         return wrapFunction(expr, value, name)
     } else {
         console.warn('skipping check', expr)
+        return value
     }
-
-    return value
 }
 
 function wrapFunction(expr, value, name) {
