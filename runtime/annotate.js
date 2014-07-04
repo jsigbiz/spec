@@ -1,6 +1,7 @@
 /*global global*/
 var fs = require('fs')
 
+var jsigAstCache = {}
 var IN_ANNOTATE_MODE = false
 global.JSIG_ANNOTATE_SKIP = true
 
@@ -93,7 +94,7 @@ function _annotate(object, jsigUri, filename) {
     var shape = findByIdentifier(ast, identifier)
 
     if (!shape) {
-        console.warn('could not find shape', filename, jsigUri);
+        // console.warn('could not find shape', filename, jsigUri);
         return object
     }
 
@@ -102,22 +103,29 @@ function _annotate(object, jsigUri, filename) {
 }
 
 function getAST(jsigUri) {
-    var jsig = fs.readFileSync(jsigUri, 'utf8')
+    if (jsigAstCache[jsigUri]) {
+        return jsigAstCache[jsigUri]
+    }
 
-    return parser(jsig)
+    var jsig = fs.readFileSync(jsigUri, 'utf8')
+    var ast = parser(jsig)
+
+    jsigAstCache[jsigUri] = ast
+
+    return ast
 }
 
 
 function requireClean(uri) {
     var oldCache = Object.keys(require.cache)
-        .reduce(function (acc, key) {
-            acc[key] = require.cache[key]
-            return acc
-        }, {})
 
     var mod = require(uri)
 
-    require.cache = oldCache
+    Object.keys(require.cache).forEach(function (key) {
+        if (oldCache.indexOf(key) === -1) {
+            delete require.cache[key]
+        }
+    })
 
     return mod
 }
