@@ -13,11 +13,6 @@ var typeFunction = lexemes.openRoundBrace
             thisArg = args.shift();
         }
 
-        // wtf hack.
-        // filter out any null arguments created by
-        // union type
-        args = args.filter(Boolean);
-
         return lexemes.closeRoundBrace
             .then(lexemes.arrow)
             .then(typeDefinition)

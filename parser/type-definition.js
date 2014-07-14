@@ -8,35 +8,29 @@ var join = require('./lib/join.js');
 
 var innerTypes = Parsimmon.lazy(lazyAlt);
 
-var unionType = join(innerTypes,
-    lexemes.unionSeperator
-).map(function unpackUnions(unions) {
-    // wtf hack :(
-    if (unions.length === 0) {
-        return null;
-    }
+var unionType = Parsimmon.alt(
+    join(innerTypes, lexemes.unionSeperator, 1)
+        .map(function unpackUnions(unions) {
+            if (unions.length === 1) {
+                return unions[0];
+            }
 
-    if (unions.length === 1) {
-        return unions[0];
-    }
+            return AST.union(unions);
+        }),
+    innerTypes
+);
 
-    return AST.union(unions);
-});
+var intersectionType = Parsimmon.alt(
+    join(unionType, lexemes.intersectionSeperator, 1)
+        .map(function unpackIntersections(intersections) {
+            if (intersections.length === 1) {
+                return intersections[0];
+            }
 
-var intersectionType = join(unionType,
-    lexemes.intersectionSeperator
-).map(function unpackIntersections(intersections) {
-    // wtf hack :(
-    if (intersections.length === 0) {
-        return null;
-    }
-
-    if (intersections.length === 1) {
-        return intersections[0];
-    }
-
-    return AST.intersection(intersections);
-});
+            return AST.intersection(intersections);
+        }),
+    unionType
+);
 
 // Label is a name : whitespace at most once
 var label = lexemes.labelName
