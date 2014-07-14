@@ -1,19 +1,17 @@
 var Parsimmon = require('parsimmon');
 
+var lexemes = require('./lexemes.js');
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
 
 var funcArgs = Parsimmon.lazy(function () {
     return join(
         typeDefinition,
-        Parsimmon.optWhitespace
-            .then(Parsimmon.string(','))
-            .then(Parsimmon.optWhitespace)
+        lexemes.comma
     );
 });
 
-var typeFunction = Parsimmon.string('(')
-    .skip(Parsimmon.optWhitespace)
+var typeFunction = lexemes.openRoundBrace
     .then(funcArgs)
     .chain(function (args) {
         var thisArg = null;
@@ -26,11 +24,8 @@ var typeFunction = Parsimmon.string('(')
         // union type
         args = args.filter(Boolean)
 
-        return Parsimmon.optWhitespace
-            .then(Parsimmon.string(')'))
-            .then(Parsimmon.optWhitespace)
-            .then(Parsimmon.string('=>'))
-            .then(Parsimmon.optWhitespace)
+        return lexemes.closeRoundBrace
+            .then(lexemes.arrow)
             .chain(function () {
                 return typeDefinition.map(function (def) {
                     return AST.functionType({

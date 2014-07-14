@@ -1,31 +1,21 @@
 var Parsimmon = require('parsimmon')
 
+var lexemes = require('./lexemes.js');
 var AST = require('../ast.js')
 
-var stringLiteral = valueLiteral('string', Parsimmon.string('"')
-    .then(Parsimmon.regex(/[#\-a-z]+/i))
-    .skip(Parsimmon.string('"'))
-    .map(function (str) {
-        return '"' + str + '"'
-    }))
-
-
-var numberLiteral = valueLiteral('number', 
-    Parsimmon.regex(/[0-9]+/i))
-
-var nullLiteral = valueLiteral('null', Parsimmon.string('null'))
-
-var undefinedLiteral = valueLiteral('undefined', 
-    Parsimmon.string('undefined'))
-
-var valueLiteral = Parsimmon.alt(
-    stringLiteral,
-    numberLiteral,
-    nullLiteral,
-    undefinedLiteral
+var valueLiterals = Parsimmon.alt(
+    valueLiteral('string', lexemes.quote
+        .then(lexemes.notAQuote)
+        .skip(lexemes.quote)
+        .map(function (str) {
+            return '"' + str + '"'
+        })),
+    valueLiteral('number', lexemes.number),
+    valueLiteral('null', lexemes.nullWord),
+    valueLiteral('undefined', lexemes.undefinedWord)
 )
 
-module.exports = valueLiteral
+module.exports = valueLiterals
 
 function valueLiteral(name, parser) {
     return parser.map(function (value) {

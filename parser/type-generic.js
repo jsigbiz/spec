@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var lexemes = require('./lexemes.js');
 var typeLiteral = require('./type-literal.js')
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
@@ -7,15 +8,13 @@ var join = require('./lib/join.js');
 var genericArgs = Parsimmon.lazy(function () {
     return join(
         typeDefinition,
-        Parsimmon.optWhitespace
-            .then(Parsimmon.string(','))
-            .then(Parsimmon.optWhitespace)
+        lexemes.comma
     );
 })
 
-var genericExpression = Parsimmon.string('<')
+var genericExpression = lexemes.openAngularBrace
     .then(genericArgs)
-    .skip(Parsimmon.string('>'))
+    .skip(lexemes.closeAngularBrace)
 
 var genericLiteral = Parsimmon.seq(
     typeLiteral,

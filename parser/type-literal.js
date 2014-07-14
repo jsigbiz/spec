@@ -1,8 +1,7 @@
-var Parsimmon = require('parsimmon');
-
+var lexemes = require('./lexemes.js');
 var AST = require('../ast.js');
 
-var typeLiteral = Parsimmon.regex(/[a-z]+/i)
+var typeLiteral = lexemes.typeName
     .map(function (type) {
         return AST.literal(type);
     })

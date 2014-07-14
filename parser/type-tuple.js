@@ -1,23 +1,20 @@
 var Parsimmon = require('parsimmon');
 
+var lexemes = require('./lexemes.js');
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
 
 var tupleArgs = Parsimmon.lazy(function () {
     return join(
         typeDefinition,
-        Parsimmon.optWhitespace
-            .then(Parsimmon.string(','))
-            .then(Parsimmon.optWhitespace)
+        lexemes.comma
     )
 })
 
 
-var typeTuple = Parsimmon.string('[')
-    .then(Parsimmon.optWhitespace)
+var typeTuple = lexemes.openSquareBrace
     .then(tupleArgs)
-    .skip(Parsimmon.optWhitespace)
-    .skip(Parsimmon.string(']'))
+    .skip(lexemes.closeSquareBrace)
     .map(function (values) {
         return AST.tuple(values)
     })

@@ -1,5 +1,6 @@
 var Parsimmon = require('parsimmon');
 
+var lexemes = require('./lexemes.js');
 var AST = require('../ast.js')
 var join = require('./lib/join.js')
 
@@ -9,13 +10,11 @@ var typeDefinition = Parsimmon.lazy(function () {
         typeFunction,
         typeObject,
         typeTuple
-    );
+    ).skip(Parsimmon.optWhitespace);
 });
 
 var unionType = join(typeDefinition,
-    Parsimmon.optWhitespace
-        .then(Parsimmon.string('|'))
-        .skip(Parsimmon.optWhitespace)
+    lexemes.unionSeperator
 ).map(function (unions) {
     // wtf hack :(
     if (unions.length === 0) {
@@ -30,9 +29,7 @@ var unionType = join(typeDefinition,
 })
 
 var intersectionType = join(unionType,
-    Parsimmon.optWhitespace
-        .then(Parsimmon.string('&'))
-        .skip(Parsimmon.optWhitespace)
+    lexemes.intersectionSeperator
 ).map(function (intersections) {
     // wtf hack :(
     if (intersections.length === 0) {
@@ -48,9 +45,8 @@ var intersectionType = join(unionType,
 
 
 // Label is a name : whitespace at most once
-var label = Parsimmon.regex(/[a-z\?]*/i)
-    .skip(Parsimmon.string(':'))
-    .skip(Parsimmon.optWhitespace)
+var label = lexemes.labelName
+    .skip(lexemes.labelSeperator)
     .atMost(1)
 
 var typeExpression = label
