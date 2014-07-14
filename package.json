@@ -41,7 +41,7 @@
     }
   ],
   "scripts": {
-    "test": "npm run jshint && node test/index.js | tap-spec",
+    "test": "node test/index.js | tap-spec",
     "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
     "cover-runtime": "istanbul cover --report html --print none test/runtime/ | tap-spec",
     "jshint": "jshint --verbose .",
