@@ -1,14 +1,16 @@
+'use strict';
+
 var test = require('tape');
-var fs = require('fs')
-var path = require('path')
+var fs = require('fs');
+var path = require('path');
 
 // var showDiff = require('../lib/show-diff.js')
 
 var parse = require('../../../parser.js');
-var AST = require('../../../ast.js')
+var AST = require('../../../ast.js');
 
-var uri = path.join(__dirname, 'definitions', 'min-document.mli')
-var content = fs.readFileSync(uri, 'utf8')
+var uri = path.join(__dirname, 'definitions', 'min-document.mli');
+var content = fs.readFileSync(uri, 'utf8');
 
 var ASTFixture = AST.program([
     AST.typeDeclaration('DOMText', AST.object({
@@ -263,14 +265,14 @@ var ASTFixture = AST.program([
         result: AST.literal('String')
     })),
     AST.assignment('min-document', AST.literal('Document'))
-])
+]);
 
 test('the min-document type definition', function (assert) {
-    var result = parse(content)
+    var result = parse(content);
 
     // showDiff(result, ASTFixture)
-    assert.deepEqual(result, ASTFixture)
+    assert.deepEqual(result, ASTFixture);
 
-    assert.end()
-})
+    assert.end();
+});
 

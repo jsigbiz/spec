@@ -1,13 +1,15 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo : [Number, Number]', function (assert) {
-    var content = 'foo : [Number, Number]'
-    var result = parse(content).statements[0]
+test('foo : [Number, Number]', function t(assert) {
+    var content = 'foo : [Number, Number]';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'tuple',
         values: [{
@@ -25,17 +27,17 @@ test('foo : [Number, Number]', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('bar : [String, Object, Array]', function (assert) {
-    var content = 'bar : [String, Object, Array]'
-    var result = parse(content).statements[0]
+test('bar : [String, Object, Array]', function t(assert) {
+    var content = 'bar : [String, Object, Array]';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'bar')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'bar');
     assert.deepEqual(result.typeExpression, {
         type: 'tuple',
         values: [{
@@ -59,7 +61,7 @@ test('bar : [String, Object, Array]', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});

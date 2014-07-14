@@ -1,13 +1,15 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo : Bar & Baz', function (assert) {
-    var content = 'foo : Bar & Baz'
-    var result = parse(content).statements[0]
+test('foo : Bar & Baz', function t(assert) {
+    var content = 'foo : Bar & Baz';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'intersectionType',
         intersections: [{
@@ -25,7 +27,7 @@ test('foo : Bar & Baz', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});

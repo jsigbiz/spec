@@ -1,13 +1,15 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('type Foo : Bar | Baz', function (assert) {
-    var content = 'type Foo : Bar | Baz'
-    var result = parse(content).statements[0]
+test('type Foo : Bar | Baz', function t(assert) {
+    var content = 'type Foo : Bar | Baz';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'typeDeclaration')
-    assert.equal(result.identifier, 'Foo')
+    assert.equal(result.type, 'typeDeclaration');
+    assert.equal(result.identifier, 'Foo');
     assert.deepEqual(result.typeExpression, {
         type: 'unionType',
         unions: [{
@@ -25,17 +27,17 @@ test('type Foo : Bar | Baz', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
     assert.end();
-})
+});
 
-test('type A : ObjectE | C | D', function (assert) {
-    var content = '\ntype A :\n     ObjectE | C | D'
-    var result = parse(content).statements[0]
+test('type A : ObjectE | C | D', function t(assert) {
+    var content = '\ntype A :\n     ObjectE | C | D';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'typeDeclaration')
-    assert.equal(result.identifier, 'A')
+    assert.equal(result.type, 'typeDeclaration');
+    assert.equal(result.identifier, 'A');
     assert.deepEqual(result.typeExpression, {
         type: 'unionType',
         unions: [{
@@ -59,17 +61,17 @@ test('type A : ObjectE | C | D', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('type Foo : (arg: Number | String) => void', function (assert) {
-    var content = 'type Foo : (arg: Number | String) => void'
-    var result = parse(content).statements[0]
+test('type Foo : (arg: Number | String) => void', function t(assert) {
+    var content = 'type Foo : (arg: Number | String) => void';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'typeDeclaration')
-    assert.equal(result.identifier, 'Foo')
+    assert.equal(result.type, 'typeDeclaration');
+    assert.equal(result.identifier, 'Foo');
     assert.deepEqual(result.typeExpression, {
         type: 'function',
         args: [{
@@ -100,7 +102,7 @@ test('type Foo : (arg: Number | String) => void', function (assert) {
         thisArg: null,
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});

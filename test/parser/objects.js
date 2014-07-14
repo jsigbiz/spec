@@ -1,13 +1,15 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo : { text: String }', function (assert) {
+test('foo : { text: String }', function t(assert) {
     var content = 'foo : { text: String }';
-    var result = parse(content).statements[0]
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'object',
         keyValues: [{
@@ -24,20 +26,20 @@ test('foo : { text: String }', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
     assert.end();
 });
 
-test('foo : { text: String, type: "DOMTextNode" }', function (assert) {
+test('foo : { text: String, type: "DOMTextNode" }', function t(assert) {
     var content = 'foo : {\n' +
         '    text: String,\n' +
         '    type: "DOMTextNode"\n' +
-        '}'
-    var result = parse(content).statements[0]
+        '}';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'object',
         keyValues: [{
@@ -65,21 +67,21 @@ test('foo : { text: String, type: "DOMTextNode" }', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
     assert.end();
 });
 
-test('foo : { nested: { nodeType: 3 } }', function (assert) {
+test('foo : { nested: { nodeType: 3 } }', function t(assert) {
     var content = 'foo : {\n' +
         '    nested: {\n' +
         '        nodeType: 3\n' +
         '    }\n' +
-        '}'
-    var result = parse(content).statements[0]
+        '}';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'object',
         keyValues: [{
@@ -106,17 +108,17 @@ test('foo : { nested: { nodeType: 3 } }', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
     assert.end();
-})
+});
 
-test('foo : { bar?: Baz }', function (assert) {
-    var content = 'foo : { bar?: Baz }'
-    var result = parse(content).statements[0]
+test('foo : { bar?: Baz }', function t(assert) {
+    var content = 'foo : { bar?: Baz }';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'object',
         keyValues: [{
@@ -133,7 +135,7 @@ test('foo : { bar?: Baz }', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});

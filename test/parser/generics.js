@@ -1,13 +1,15 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo : Object<String, Any>', function (assert) {
-    var content = 'foo : Object<String, Any>'
-    var result = parse(content).statements[0]
+test('foo : Object<String, Any>', function t(assert) {
+    var content = 'foo : Object<String, Any>';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'genericLiteral',
         value: {
@@ -32,7 +34,7 @@ test('foo : Object<String, Any>', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
+    assert.end();
 });

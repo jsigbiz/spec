@@ -1,30 +1,32 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('type Foo : String', function (assert) {
-    var content = 'type Foo : String'
-    var result = parse(content).statements[0]
+test('type Foo : String', function t(assert) {
+    var content = 'type Foo : String';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'typeDeclaration')
-    assert.equal(result.identifier, 'Foo')
+    assert.equal(result.type, 'typeDeclaration');
+    assert.equal(result.identifier, 'Foo');
     assert.deepEqual(result.typeExpression, {
         type: 'typeLiteral',
         builtin: true,
         name: 'String',
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('type OptionError<T> : { option: T }', function (assert) {
-    var content = 'type OptionError<T> : { option: T }'
-    var result = parse(content).statements[0]
+test('type OptionError<T> : { option: T }', function t(assert) {
+    var content = 'type OptionError<T> : { option: T }';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'typeDeclaration')
-    assert.equal(result.identifier, 'OptionError')
+    assert.equal(result.type, 'typeDeclaration');
+    assert.equal(result.identifier, 'OptionError');
     assert.deepEqual(result.typeExpression, {
         type: 'object',
         keyValues: [{
@@ -41,14 +43,14 @@ test('type OptionError<T> : { option: T }', function (assert) {
         }],
         label: null,
         optional: false
-    })
+    });
     assert.deepEqual(result.generics, [{
         type: 'typeLiteral',
         name: 'T',
         builtin: false,
         label: null,
         optional: false
-    }])
+    }]);
 
-    assert.end()
-})
+    assert.end();
+});

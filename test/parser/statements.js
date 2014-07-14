@@ -1,8 +1,10 @@
+'use strict';
+
 var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo : String', function (assert) {
+test('foo : String', function t(assert) {
     var content = 'foo : String';
     var result = parse(content).statements[0];
 
@@ -19,7 +21,7 @@ test('foo : String', function (assert) {
     assert.end();
 });
 
-test('foo : Error', function (assert) {
+test('foo : Error', function t(assert) {
     var content = 'foo : Error';
     var result = parse(content).statements[0];
 
@@ -34,77 +36,77 @@ test('foo : Error', function (assert) {
     });
 
     assert.end();
-})
+});
 
-test('foo : null', function (assert) {
+test('foo : null', function t(assert) {
     var content = 'foo : null';
-    var result = parse(content).statements[0]
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'valueLiteral',
         name: 'null',
         value: 'null',
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('foo : Any', function (assert) {
-    var content = 'foo : Any'
-    var result = parse(content).statements[0]
+test('foo : Any', function t(assert) {
+    var content = 'foo : Any';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'typeLiteral',
         name: 'Any',
         label: null,
         optional: false,
         builtin: true
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('foo : undefined', function (assert) {
-    var content = 'foo : undefined'
-    var result = parse(content).statements[0]
+test('foo : undefined', function t(assert) {
+    var content = 'foo : undefined';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'valueLiteral',
         name: 'undefined',
         value: 'undefined',
         label: null,
         optional: false
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('foo : Array', function (assert) {
-    var content = 'foo : Array'
-    var result = parse(content).statements[0]
+test('foo : Array', function t(assert) {
+    var content = 'foo : Array';
+    var result = parse(content).statements[0];
 
-    assert.equal(result.type, 'assignment')
-    assert.equal(result.identifier, 'foo')
+    assert.equal(result.type, 'assignment');
+    assert.equal(result.identifier, 'foo');
     assert.deepEqual(result.typeExpression, {
         type: 'typeLiteral',
         name: 'Array',
         label: null,
         optional: false,
         builtin: true
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
 
-test('foo-bar : Number', function (assert) {
+test('foo-bar : Number', function t(assert) {
     var content = 'foo-bar : Number';
     var result = parse(content).statements[0];
 
@@ -121,7 +123,7 @@ test('foo-bar : Number', function (assert) {
     assert.end();
 });
 
-test('foo : () => Number', function (assert) {
+test('foo : () => Number', function t(assert) {
     var content = 'foo : () => Number';
     var result = parse(content).statements[0];
 
@@ -145,7 +147,7 @@ test('foo : () => Number', function (assert) {
     assert.end();
 });
 
-test('two statements', function (assert) {
+test('two statements', function t(assert) {
     var content = 'foo : () => Number\n' +
         'bar : String';
     var result = parse(content);
@@ -186,9 +188,9 @@ test('two statements', function (assert) {
     assert.end();
 });
 
-test('foo-baz/bar-boz : Number', function (assert) {
-    var content = 'foo-baz/bar-boz : Number'
-    var result = parse(content).statements[0]
+test('foo-baz/bar-boz : Number', function t(assert) {
+    var content = 'foo-baz/bar-boz : Number';
+    var result = parse(content).statements[0];
 
     assert.deepEqual(result, {
         type: 'assignment',
@@ -200,7 +202,7 @@ test('foo-baz/bar-boz : Number', function (assert) {
             builtin: true,
             name: 'Number'
         }
-    })
+    });
 
-    assert.end()
-})
+    assert.end();
+});
