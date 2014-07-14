@@ -1,3 +1,5 @@
+'use strict';
+
 var builtinTypes = [
     'String',
     'Number',
@@ -8,4 +10,4 @@ var builtinTypes = [
     'Error'
 ];
 
-module.exports = builtinTypes
+module.exports = builtinTypes;

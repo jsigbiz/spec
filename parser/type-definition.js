@@ -1,60 +1,54 @@
+'use strict';
+
 var Parsimmon = require('parsimmon');
 
 var lexemes = require('./lexemes.js');
-var AST = require('../ast.js')
-var join = require('./lib/join.js')
+var AST = require('../ast.js');
+var join = require('./lib/join.js');
 
-var typeDefinition = Parsimmon.lazy(function () {
-    return Parsimmon.alt(
-        typeExpression,
-        typeFunction,
-        typeObject,
-        typeTuple
-    ).skip(Parsimmon.optWhitespace);
-});
+var innerTypes = Parsimmon.lazy(lazyAlt);
 
-var unionType = join(typeDefinition,
+var unionType = join(innerTypes,
     lexemes.unionSeperator
-).map(function (unions) {
+).map(function unpackUnions(unions) {
     // wtf hack :(
     if (unions.length === 0) {
-        return null
+        return null;
     }
 
     if (unions.length === 1) {
-        return unions[0]
+        return unions[0];
     }
 
     return AST.union(unions);
-})
+});
 
 var intersectionType = join(unionType,
     lexemes.intersectionSeperator
-).map(function (intersections) {
+).map(function unpackIntersections(intersections) {
     // wtf hack :(
     if (intersections.length === 0) {
-        return null
+        return null;
     }
 
     if (intersections.length === 1) {
-        return intersections[0]
+        return intersections[0];
     }
 
-    return AST.intersection(intersections)
-})
-
+    return AST.intersection(intersections);
+});
 
 // Label is a name : whitespace at most once
 var label = lexemes.labelName
     .skip(lexemes.labelSeperator)
-    .atMost(1)
+    .atMost(1);
 
-var typeExpression = label
-    .chain(function (labels) {
-        return intersectionType.map(function (expr) {
+var typeDeclaration = label
+    .chain(function captureLabels(labels) {
+        return intersectionType.map(function toExpr(expr) {
             var label = labels[0] || null;
             var optional = typeof label === 'string' &&
-                label.charAt(label.length - 1) === '?'
+                label.charAt(label.length - 1) === '?';
 
             if (expr) {
                 expr.label = label;
@@ -65,9 +59,18 @@ var typeExpression = label
         });
     });
 
-module.exports = typeExpression;
+module.exports = typeDeclaration;
 
 var typeExpression = require('./type-expression.js');
 var typeFunction = require('./type-function.js');
 var typeObject = require('./type-object.js');
 var typeTuple = require('./type-tuple.js');
+
+function lazyAlt() {
+    return Parsimmon.alt(
+        typeExpression,
+        typeFunction,
+        typeObject,
+        typeTuple
+    ).skip(Parsimmon.optWhitespace);
+}

@@ -1,3 +1,5 @@
+'use strict';
+
 var Parsimmon = require('parsimmon');
 
 module.exports = {
@@ -25,8 +27,8 @@ module.exports = {
     number: lexeme(Parsimmon.regex(/[0-9]+/i)),
     nullWord: lexeme(Parsimmon.string('null')),
     undefinedWord: lexeme(Parsimmon.string('undefined'))
-}
+};
 
 function lexeme(p) {
-    return p.skip(Parsimmon.optWhitespace)
+    return p.skip(Parsimmon.optWhitespace);
 }
