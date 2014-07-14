@@ -63,7 +63,7 @@
     ],
     "disallowMultipleVarDecl": true,
     "disallowEmptyBlocks": true,
-    "disallowQuotedKeysInObjects": true,
+    "disallowQuotedKeysInObjects": false,
     "disallowSpaceAfterObjectKeys": true,
     "requireCommaBeforeLineBreak": true,
     "requireSpaceBeforeBinaryOperators": true,
