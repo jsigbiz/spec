@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo := String', function (assert) {
-    var content = 'foo := String';
+test('foo : String', function (assert) {
+    var content = 'foo : String';
     var result = parse(content).statements[0];
 
     assert.equal(result.type, 'assignment');
@@ -19,8 +19,8 @@ test('foo := String', function (assert) {
     assert.end();
 });
 
-test('foo := Error', function (assert) {
-    var content = 'foo := Error';
+test('foo : Error', function (assert) {
+    var content = 'foo : Error';
     var result = parse(content).statements[0];
 
     assert.equal(result.type, 'assignment');
@@ -36,8 +36,8 @@ test('foo := Error', function (assert) {
     assert.end();
 })
 
-test('foo := null', function (assert) {
-    var content = 'foo := null';
+test('foo : null', function (assert) {
+    var content = 'foo : null';
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')
@@ -53,8 +53,8 @@ test('foo := null', function (assert) {
     assert.end()
 })
 
-test('foo := Any', function (assert) {
-    var content = 'foo := Any'
+test('foo : Any', function (assert) {
+    var content = 'foo : Any'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')
@@ -70,8 +70,8 @@ test('foo := Any', function (assert) {
     assert.end()
 })
 
-test('foo := undefined', function (assert) {
-    var content = 'foo := undefined'
+test('foo : undefined', function (assert) {
+    var content = 'foo : undefined'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')
@@ -87,8 +87,8 @@ test('foo := undefined', function (assert) {
     assert.end()
 })
 
-test('foo := Array', function (assert) {
-    var content = 'foo := Array'
+test('foo : Array', function (assert) {
+    var content = 'foo : Array'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')
@@ -104,8 +104,8 @@ test('foo := Array', function (assert) {
     assert.end()
 })
 
-test('foo-bar := Number', function (assert) {
-    var content = 'foo-bar := Number';
+test('foo-bar : Number', function (assert) {
+    var content = 'foo-bar : Number';
     var result = parse(content).statements[0];
 
     assert.equal(result.type, 'assignment');
@@ -121,8 +121,8 @@ test('foo-bar := Number', function (assert) {
     assert.end();
 });
 
-test('foo := () => Number', function (assert) {
-    var content = 'foo := () => Number';
+test('foo : () => Number', function (assert) {
+    var content = 'foo : () => Number';
     var result = parse(content).statements[0];
 
     assert.equal(result.type, 'assignment');
@@ -146,8 +146,8 @@ test('foo := () => Number', function (assert) {
 });
 
 test('two statements', function (assert) {
-    var content = 'foo := () => Number\n' +
-        'bar := String';
+    var content = 'foo : () => Number\n' +
+        'bar : String';
     var result = parse(content);
 
     assert.equal(result.type, 'program');
@@ -186,8 +186,8 @@ test('two statements', function (assert) {
     assert.end();
 });
 
-test('foo-baz/bar-boz := Number', function (assert) {
-    var content = 'foo-baz/bar-boz := Number'
+test('foo-baz/bar-boz : Number', function (assert) {
+    var content = 'foo-baz/bar-boz : Number'
     var result = parse(content).statements[0]
 
     assert.deepEqual(result, {

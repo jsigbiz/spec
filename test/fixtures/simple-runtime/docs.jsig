@@ -1,5 +1,6 @@
-simple-runtime := (String, String) => String
+simple-runtime : (String, String) => String
 
-simple-runtime/extra := (String || Number) => String || Number
+simple-runtime/extra : (String || Number) => String || Number
 
-simple-runtime/value := String
+simple-runtime/value : String
+

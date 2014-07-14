@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo := Bar && Baz', function (assert) {
-    var content = 'foo := Bar && Baz'
+test('foo : Bar && Baz', function (assert) {
+    var content = 'foo : Bar && Baz'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')

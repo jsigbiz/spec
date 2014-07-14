@@ -31,7 +31,7 @@ var importStatement = Parsimmon.string('import')
 
 var assignment = identifier
     .chain(function (identifier) {
-        return Parsimmon.string(':=')
+        return Parsimmon.string(':')
             .skip(Parsimmon.optWhitespace)
             .then(typeDefinition)
             .map(function (type) {

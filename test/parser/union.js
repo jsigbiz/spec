@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('type Foo := Bar || Baz', function (assert) {
-    var content = 'type Foo := Bar || Baz'
+test('type Foo : Bar || Baz', function (assert) {
+    var content = 'type Foo : Bar || Baz'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'typeDeclaration')
@@ -30,8 +30,8 @@ test('type Foo := Bar || Baz', function (assert) {
     assert.end();
 })
 
-test('type A := ObjectE || C || D', function (assert) {
-    var content = '\ntype A :=\n     ObjectE || C || D'
+test('type A : ObjectE || C || D', function (assert) {
+    var content = '\ntype A :\n     ObjectE || C || D'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'typeDeclaration')
@@ -64,8 +64,8 @@ test('type A := ObjectE || C || D', function (assert) {
     assert.end()
 })
 
-test('type Foo := (arg: Number || String) => void', function (assert) {
-    var content = 'type Foo := (arg: Number || String) => void'
+test('type Foo : (arg: Number || String) => void', function (assert) {
+    var content = 'type Foo : (arg: Number || String) => void'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'typeDeclaration')

@@ -1,1 +1,1 @@
-bad-code/not-a-function := (String) => String
+bad-code/not-a-function : (String) => String

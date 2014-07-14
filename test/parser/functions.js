@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo := (String, Number) => Object', function (assert) {
-    var content = 'foo := (String, Number) => Object';
+test('foo : (String, Number) => Object', function (assert) {
+    var content = 'foo : (String, Number) => Object';
     var result = parse(content).statements[0];
 
     assert.equal(result.type, 'assignment');
@@ -38,8 +38,8 @@ test('foo := (String, Number) => Object', function (assert) {
     assert.end();
 });
 
-test('foo := () => CustomType', function (assert) {
-    var content = 'foo := () => CustomType';
+test('foo : () => CustomType', function (assert) {
+    var content = 'foo : () => CustomType';
     var result = parse(content).statements[0];
 
     assert.deepEqual(result, {
@@ -64,8 +64,8 @@ test('foo := () => CustomType', function (assert) {
     assert.end();
 });
 
-test('foo := (tagName: String) => void', function (assert) {
-    var content = 'foo := (tagName: String) => void';
+test('foo : (tagName: String) => void', function (assert) {
+    var content = 'foo : (tagName: String) => void';
     var result = parse(content).statements[0];
 
     assert.deepEqual(result, {
@@ -96,8 +96,8 @@ test('foo := (tagName: String) => void', function (assert) {
     assert.end();
 });
 
-test('foo := (this: DOMText, index: Number) => void', function (assert) {
-    var content = 'foo := (this: DOMText, index: Number) => void'
+test('foo : (this: DOMText, index: Number) => void', function (assert) {
+    var content = 'foo : (this: DOMText, index: Number) => void'
     var result = parse(content).statements[0]
 
     assert.deepEqual(result, {
@@ -134,8 +134,8 @@ test('foo := (this: DOMText, index: Number) => void', function (assert) {
     assert.end();
 })
 
-test('foo := (id: String, parent?: Bar) => Baz', function (assert) {
-    var content = 'foo := (id: String, parent?: Bar) => Baz'
+test('foo : (id: String, parent?: Bar) => Baz', function (assert) {
+    var content = 'foo : (id: String, parent?: Bar) => Baz'
     var result = parse(content).statements[0]
 
     assert.deepEqual(result, {

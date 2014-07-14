@@ -1,4 +1,4 @@
-type DOMText := {
+type DOMText : {
     data: String,
     type: "DOMTextNode",
     length: Number,
@@ -13,10 +13,10 @@ type DOMText := {
     ) => void
 }
 
-type DOMNode := DOMText || DOMElement || DocumentFragment
-type DOMChild := DOMText || DOMElement
+type DOMNode : DOMText || DOMElement || DocumentFragment
+type DOMChild : DOMText || DOMElement
 
-type DOMElement := {
+type DOMElement : {
     tagName: String,
     className: String,
     dataset: Object<String, Any>,
@@ -46,7 +46,7 @@ type DOMElement := {
     toString: (this: DOMElement) => String
 }
 
-type DocumentFragment := {
+type DocumentFragment : {
     childNodes: Array<DOMChild>,
     parentNode: null || DOMElement,
     type: "DocumentFragment",
@@ -64,7 +64,7 @@ type DocumentFragment := {
     toString: (this: DocumentFragment) => String
 }
 
-type Document := {
+type Document : {
     body: DOMElement,
     documentElement: DOMElement,
 
@@ -84,7 +84,7 @@ type Document := {
     ) => null || DOMElement
 }
 
-type Event := {
+type Event : {
     type: String,
     bubbles: Boolean,
     cancelable: Boolean,
@@ -97,37 +97,37 @@ type Event := {
     ) => void
 }
 
-type addEventListener := (
+type addEventListener : (
     this: DOMElement,
     type: String,
     listener: Listener
 ) => void
 
-type dispatchEvent := (
+type dispatchEvent : (
     this: DOMElement,
     ev: Event
 ) => void
 
-min-document/event/add-event-listener := addEventListener
+min-document/event/add-event-listener : addEventListener
 
-min-document/event/dispatch-event := dispatchEvent
+min-document/event/dispatch-event : dispatchEvent
 
-min-document/document := () => Document
+min-document/document : () => Document
 
-min-document/dom-element := (
+min-document/dom-element : (
     tagName: String,
     owner?: Document,
     namespace?: String || null
 ) => DOMElement
 
-min-document/dom-fragment :=
+min-document/dom-fragment :
     (owner?: Document) => DocumentFragment
 
-min-document/dom-text :=
+min-document/dom-text :
     (value: String, owner?: Document) => DOMText
 
-min-document/event := () => Event
+min-document/event : () => Event
 
-min-document/serialize := (DOMElement) => String
+min-document/serialize : (DOMElement) => String
 
-min-document := Document
+min-document : Document

@@ -1,25 +1,25 @@
-type OptionError<T> := {
+type OptionError<T> : {
     option: T || null,
     message: String,
     type: "OptionError"
 }
 
-type TypedError<T> := {
+type TypedError<T> : {
     message: String,
     type: T
 }
 
-type ValidationError := {
+type ValidationError : {
     errors: Array<Error>,
     message: String,
     type: "ValidationError"
 }
 
-error/option := (String, T) => OptionError<T>
+error/option : (String, T) => OptionError<T>
 
-error/typed := (args: {
+error/typed : (args: {
     message: String,
     type: String
 }) => (opts: Object) => TypedError<String>
 
-error/validation := (Array<Error>) => ValidationError
+error/validation : (Array<Error>) => ValidationError

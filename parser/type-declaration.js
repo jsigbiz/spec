@@ -32,7 +32,7 @@ var typeDeclaration = Parsimmon.string('type')
         var identifier = list[0]
         var generics = list[1][0] || []
 
-        return Parsimmon.string(':=')
+        return Parsimmon.string(':')
             .skip(Parsimmon.optWhitespace)
             .then(typeDefinition)
             .map(function (type) {

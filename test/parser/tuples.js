@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('foo := [Number, Number]', function (assert) {
-    var content = 'foo := [Number, Number]'
+test('foo : [Number, Number]', function (assert) {
+    var content = 'foo : [Number, Number]'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')
@@ -30,8 +30,8 @@ test('foo := [Number, Number]', function (assert) {
     assert.end()
 })
 
-test('bar := [String, Object, Array]', function (assert) {
-    var content = 'bar := [String, Object, Array]'
+test('bar : [String, Object, Array]', function (assert) {
+    var content = 'bar : [String, Object, Array]'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'assignment')

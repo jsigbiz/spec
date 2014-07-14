@@ -2,8 +2,8 @@ var test = require('tape');
 
 var parse = require('../../parser.js');
 
-test('type Foo := String', function (assert) {
-    var content = 'type Foo := String'
+test('type Foo : String', function (assert) {
+    var content = 'type Foo : String'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'typeDeclaration')
@@ -19,8 +19,8 @@ test('type Foo := String', function (assert) {
     assert.end()
 })
 
-test('type OptionError<T> := { option: T }', function (assert) {
-    var content = 'type OptionError<T> := { option: T }'
+test('type OptionError<T> : { option: T }', function (assert) {
+    var content = 'type OptionError<T> : { option: T }'
     var result = parse(content).statements[0]
 
     assert.equal(result.type, 'typeDeclaration')
