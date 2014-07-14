@@ -9,6 +9,7 @@ module.exports = {
     fromWord: lexeme(Parsimmon.string('from')),
     quote: lexeme(Parsimmon.string('"')),
     identifier: lexeme(Parsimmon.regex(/[a-z\-\/]+/i)),
+    moduleName: lexeme(Parsimmon.regex(/[a-z\-\/\.]+/i)),
     labelName: lexeme(Parsimmon.regex(/[a-z\?]+/i)),
     typeName: lexeme(Parsimmon.regex(/[a-z]+/i)),
     labelSeperator: lexeme(Parsimmon.string(':')),
@@ -26,7 +27,8 @@ module.exports = {
     notAQuote: lexeme(Parsimmon.regex(/[^\"]+/i)),
     number: lexeme(Parsimmon.regex(/[0-9]+/i)),
     nullWord: lexeme(Parsimmon.string('null')),
-    undefinedWord: lexeme(Parsimmon.string('undefined'))
+    undefinedWord: lexeme(Parsimmon.string('undefined')),
+    asWord: lexeme(Parsimmon.string('as'))
 };
 
 function lexeme(p) {
