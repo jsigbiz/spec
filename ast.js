@@ -15,7 +15,8 @@ module.exports = {
     value: value,
     functionType: functionType,
     generic: generic,
-    tuple: tuple
+    tuple: tuple,
+    renamedLiteral: renamedLiteral
 };
 
 function program(statements) {
@@ -162,3 +163,24 @@ function tuple(values, label, opts) {
         optional: opts.optional || false
     };
 }
+
+function renamedLiteral(token, original, opts) {
+    opts = opts || {};
+
+    if (typeof token === 'string') {
+        token = literal(token, false, opts);
+    }
+
+    if (typeof original === 'string') {
+        original = literal(original);
+    }
+
+    return {
+        type: 'renamedLiteral',
+        name: token.name,
+        builtin: token.builtin,
+        optional: token.optional,
+        label: token.label,
+        original: original
+    };
+} 
