@@ -8,7 +8,7 @@ function join(expr, seperator, count) {
     count = count || 0;
 
     var defaultToken = count > 0 ?
-        Parsimmon.fail('not found') :
+        Parsimmon.fail('must join() at least 1 token') :
         Parsimmon.succeed([]);
 
     return expr.chain(function (value) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var Parsimmon = require('parsimmon');
 var program = require('./parser/program.js');
 
@@ -6,17 +8,17 @@ function parse(content, cb) {
 
     if (res.status) {
         if (cb) {
-            cb(null, res.value)
+            cb(null, res.value);
         }
-        return res.value
+        return res.value;
     }
 
-    var message = Parsimmon.formatError(content, res)
-    var error = new Error(message)
+    var message = Parsimmon.formatError(content, res);
+    var error = new Error(message);
     if (cb) {
-        return cb(error)
+        return cb(error);
     }
-    throw error
+    throw error;
 }
 
 module.exports = parse;

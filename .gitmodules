@@ -1,6 +1,0 @@
-[submodule "min-document"]
-	path = min-document
-	url = gh:Raynos/min-document
-[submodule "frp-keyboard"]
-	path = frp-keyboard
-	url = gh:Raynos/frp-keyboard
