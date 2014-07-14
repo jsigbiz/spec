@@ -13,20 +13,20 @@ type DOMText : {
     ) => void
 }
 
-type DOMNode : DOMText || DOMElement || DocumentFragment
-type DOMChild : DOMText || DOMElement
+type DOMNode : DOMText | DOMElement | DocumentFragment
+type DOMChild : DOMText | DOMElement
 
 type DOMElement : {
     tagName: String,
     className: String,
     dataset: Object<String, Any>,
     childNodes: Array<DOMChild>,
-    parentNode: null || DOMElement,
+    parentNode: null | DOMElement,
     style: Object<String, String>,
     type: "DOMElement",
     nodeType: 1,
-    ownerDocument: null || Document,
-    namespaceURI: null || String,
+    ownerDocument: null | Document,
+    namespaceURI: null | String,
 
     appendChild: (this: DOMElement, child: DOMChild) => DOMChild,
     replaceChild:(
@@ -38,7 +38,7 @@ type DOMElement : {
     insertBefore: (
         this: DOMElement,
         elem: DOMChild,
-        needle: DOMChild || null || undefined
+        needle: DOMChild | null | undefined
     ) => DOMChild,
     addEventListener: addEventListener,
     dispatchEvent: dispatchEvent,
@@ -48,11 +48,11 @@ type DOMElement : {
 
 type DocumentFragment : {
     childNodes: Array<DOMChild>,
-    parentNode: null || DOMElement,
+    parentNode: null | DOMElement,
     type: "DocumentFragment",
     nodeType: 11,
     nodeName: "#document-fragment",
-    ownerDocument: Document || null,
+    ownerDocument: Document | null,
 
     appendChild: (this: DocumentFragment, child: DOMChild) => DOMChild,
     replaceChild: (
@@ -72,7 +72,7 @@ type Document : {
     createElement: (this: Document, tagName: String) => DOMElement,
     createElementNS: (
         this: Document,
-        namespace: String || null,
+        namespace: String | null,
         tagName: String
     ) => DOMElement,
     createDocumentFragment: (this: Document) => DocumentFragment,
@@ -81,7 +81,7 @@ type Document : {
         this: Document,
         id: String,
         parent?: DOMElement
-    ) => null || DOMElement
+    ) => null | DOMElement
 }
 
 type Event : {
@@ -117,7 +117,7 @@ min-document/document : () => Document
 min-document/dom-element : (
     tagName: String,
     owner?: Document,
-    namespace?: String || null
+    namespace?: String | null
 ) => DOMElement
 
 min-document/dom-fragment :

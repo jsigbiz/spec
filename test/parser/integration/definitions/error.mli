@@ -1,5 +1,5 @@
 type OptionError<T> : {
-    option: T || null,
+    option: T | null,
     message: String,
     type: "OptionError"
 }

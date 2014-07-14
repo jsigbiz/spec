@@ -2,7 +2,7 @@ import { Observ } from "observ"
 import { Delegator } from "dom-delegator"
 
 type KeyCode : Number
-type Direction : "left" || "right" || "up" || "down" || "void"
+type Direction : "left" | "right" | "up" | "down" | "void"
 type Coord : {
     x: Number,
     y: Number,
@@ -19,7 +19,7 @@ type NativeKeyboard : {
     ) => Observ<Coord>
 }
 
-type Keyboard : NativeKeyboard && {
+type Keyboard : NativeKeyboard & {
     arrows: Observ<Coord>,
     wasd: Observ<Coord>,
     ctrl: Observ<Boolean>,

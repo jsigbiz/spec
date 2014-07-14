@@ -14,7 +14,7 @@ var typeDefinition = Parsimmon.lazy(function () {
 
 var unionType = join(typeDefinition,
     Parsimmon.optWhitespace
-        .then(Parsimmon.string('||'))
+        .then(Parsimmon.string('|'))
         .skip(Parsimmon.optWhitespace)
 ).map(function (unions) {
     // wtf hack :(
@@ -31,7 +31,7 @@ var unionType = join(typeDefinition,
 
 var intersectionType = join(unionType,
     Parsimmon.optWhitespace
-        .then(Parsimmon.string('&&'))
+        .then(Parsimmon.string('&'))
         .skip(Parsimmon.optWhitespace)
 ).map(function (intersections) {
     // wtf hack :(
