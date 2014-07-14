@@ -1,24 +1,15 @@
-var Parsimmon = require('parsimmon');
+'use strict';
 
 var lexemes = require('./lexemes.js');
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
-
-var tupleArgs = Parsimmon.lazy(function () {
-    return join(
-        typeDefinition,
-        lexemes.comma
-    )
-})
-
+var typeDefinition = require('./type-definition.js');
 
 var typeTuple = lexemes.openSquareBrace
-    .then(tupleArgs)
+    .then(join(typeDefinition, lexemes.comma ))
     .skip(lexemes.closeSquareBrace)
-    .map(function (values) {
-        return AST.tuple(values)
-    })
+    .map(function toTuple(values) {
+        return AST.tuple(values);
+    });
 
-module.exports = typeTuple
-
-var typeDefinition = require('./type-definition.js')
+module.exports = typeTuple;

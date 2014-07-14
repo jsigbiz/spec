@@ -19,7 +19,7 @@
     "falafel": "^0.3.1",
     "minimist": "0.0.8",
     "node-hook": "^0.1.0",
-    "parsimmon": "^0.4.0",
+    "parsimmon": "^0.5.1",
     "process": "^0.6.0",
     "run-parallel": "^1.0.0",
     "run-series": "^1.0.2"

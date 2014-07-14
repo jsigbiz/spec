@@ -1,18 +1,10 @@
-var Parsimmon = require('parsimmon');
-
 var lexemes = require('./lexemes.js');
 var AST = require('../ast.js');
 var join = require('./lib/join.js');
-
-var funcArgs = Parsimmon.lazy(function () {
-    return join(
-        typeDefinition,
-        lexemes.comma
-    );
-});
+var typeDefinition = require('./type-definition.js');
 
 var typeFunction = lexemes.openRoundBrace
-    .then(funcArgs)
+    .then(join(typeDefinition, lexemes.comma))
     .chain(function (args) {
         var thisArg = null;
         if (args[0] && args[0].label === 'this') {
@@ -39,5 +31,4 @@ var typeFunction = lexemes.openRoundBrace
 
 module.exports = typeFunction;
 
-var typeDefinition = require('./type-definition.js');
 
