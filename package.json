@@ -13,7 +13,7 @@
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
-    "body": "^4.4.2",
+    "body": "^4.5.0",
     "error": "^4.0.0",
     "esprima": "^1.2.2",
     "falafel": "^0.3.1",
@@ -22,7 +22,8 @@
     "parsimmon": "^0.5.1",
     "process": "^0.6.0",
     "run-parallel": "^1.0.0",
-    "run-series": "^1.0.2"
+    "run-series": "^1.0.2",
+    "xtend": "^3.0.0"
   },
   "devDependencies": {
     "difflet": "^0.2.6",
