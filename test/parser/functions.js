@@ -153,7 +153,7 @@ test('foo : (id: String, parent?: Bar) => Baz', function t(assert) {
                 name: 'String'
             }, {
                 type: 'typeLiteral',
-                label: 'parent?',
+                label: 'parent',
                 builtin: false,
                 optional: true,
                 name: 'Bar'

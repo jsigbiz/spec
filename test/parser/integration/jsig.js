@@ -208,7 +208,7 @@ var ASTFixture = AST.program([
                         ]
                     )
                 ], 'keyValues'),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 })
             ],
@@ -220,12 +220,12 @@ var ASTFixture = AST.program([
                     AST.literal('Array'),
                     [ AST.literal('TypeExpression') ]
                 ),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 }),
                 AST.object({
                     'optional': AST.literal('Boolean')
-                }, 'opts?', { optional: true })
+                }, 'opts', { optional: true })
             ],
             result: AST.literal('UnionE')
         }),
@@ -235,24 +235,24 @@ var ASTFixture = AST.program([
                     AST.literal('Array'),
                     [ AST.literal('TypeExpression') ]
                 ),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 }),
                 AST.object({
                     'optional': AST.literal('Boolean')
-                }, 'opts?', { optional: true })
+                }, 'opts', { optional: true })
             ],
             result: AST.literal('IntersectionE')
         }),
         'literal': AST.functionType({
             args: [
                 AST.literal('String'),
-                AST.literal('String', 'builtin?', {
+                AST.literal('String', 'builtin', {
                     optional: true
                 }),
                 AST.object({
                     'optional': AST.literal('Boolean')
-                }, 'opts?', { optional: true })
+                }, 'opts', { optional: true })
             ],
             result: AST.literal('LiteralE')
         }),
@@ -267,7 +267,7 @@ var ASTFixture = AST.program([
             args: [
                 AST.literal('String'),
                 AST.literal('String', 'name'),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 })
             ],
@@ -275,20 +275,20 @@ var ASTFixture = AST.program([
         }),
         'functionType': AST.functionType({
             args: [ AST.object([
-                AST.keyValue('args?', AST.generic(
+                AST.keyValue('args', AST.generic(
                     AST.literal('Array'),
                     [ AST.literal('TypeExpression') ]
                 ), { optional: true }),
                 AST.keyValue('result', AST.literal('TypeExpression')),
-                AST.keyValue('thisArg?',
+                AST.keyValue('thisArg',
                     AST.literal('TypeExpression'), {
                         optional: true
                     }),
-                AST.keyValue('label?',
+                AST.keyValue('label',
                     AST.literal('String'), {
                         optional: true
                     }),
-                AST.keyValue('optional?',
+                AST.keyValue('optional',
                     AST.literal('Boolean'), {
                         optional: true
                     })
@@ -303,7 +303,7 @@ var ASTFixture = AST.program([
                     [ AST.literal('TypeExpression') ],
                     'generics'
                 ),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 })
             ],
@@ -315,12 +315,12 @@ var ASTFixture = AST.program([
                     AST.literal('Array'),
                     [ AST.literal('TypeExpression') ]
                 ),
-                AST.literal('String', 'label?', {
+                AST.literal('String', 'label', {
                     optional: true
                 }),
                 AST.object({
                     'optional': AST.literal('Boolean')
-                }, 'opts?', { optional: true })
+                }, 'opts', { optional: true })
             ],
             result: AST.literal('TupleE')
         }),

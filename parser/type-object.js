@@ -11,6 +11,11 @@ var objectKey = lexemes.labelName
 var typeKeyValue = objectKey
     .chain(function captureOptional(keyName) {
         var optional = keyName[keyName.length - 1] === '?';
+
+        if (optional) {
+            keyName = keyName.substr(0, keyName.length - 1);
+        }
+
         return typeDefinition
             .map(function toKeyValue(keyValue) {
                 return AST.keyValue(keyName, keyValue, {

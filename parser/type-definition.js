@@ -44,6 +44,10 @@ var typeDeclaration = label
             var optional = typeof label === 'string' &&
                 label.charAt(label.length - 1) === '?';
 
+            if (optional) {
+                label = label.substr(0, label.length - 1);
+            }
+
             if (expr) {
                 expr.label = label;
                 expr.optional = optional;

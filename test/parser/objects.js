@@ -123,7 +123,7 @@ test('foo : { bar?: Baz }', function t(assert) {
         type: 'object',
         keyValues: [{
             type: 'keyValue',
-            key: 'bar?',
+            key: 'bar',
             value: {
                 type: 'typeLiteral',
                 builtin: false,

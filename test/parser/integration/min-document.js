@@ -188,7 +188,7 @@ var ASTFixture = AST.program([
         'getElementById': AST.functionType({
             args: [
                 AST.literal('String', 'id'),
-                AST.literal('DOMElement', 'parent?', {
+                AST.literal('DOMElement', 'parent', {
                     optional: true
                 })
             ],
@@ -237,22 +237,22 @@ var ASTFixture = AST.program([
     AST.assignment('min-document/dom-element', AST.functionType({
         args: [
             AST.literal('String', 'tagName'),
-            AST.literal('Document', 'owner?', { optional: true }),
+            AST.literal('Document', 'owner', { optional: true }),
             AST.union([
                 AST.literal('String'),
                 AST.value('null')
-            ], 'namespace?', { optional: true })
+            ], 'namespace', { optional: true })
         ],
         result: AST.literal('DOMElement')
     })),
     AST.assignment('min-document/dom-fragment', AST.functionType({
-        args: [ AST.literal('Document', 'owner?', { optional: true }) ],
+        args: [ AST.literal('Document', 'owner', { optional: true }) ],
         result: AST.literal('DocumentFragment')
     })),
     AST.assignment('min-document/dom-text', AST.functionType({
         args: [
             AST.literal('String', 'value'),
-            AST.literal('Document', 'owner?', { optional: true })
+            AST.literal('Document', 'owner', { optional: true })
         ],
         result: AST.literal('DOMText')
     })),
