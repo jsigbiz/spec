@@ -294,7 +294,7 @@ var ASTFixture = AST.program([
     }))
 ]);
 
-test('the error type definition', function t(assert) {
+test('the continuable-mongo type definition', function t(assert) {
     var result = parse(content);
 
     // showDiff(result, ASTFixture);
