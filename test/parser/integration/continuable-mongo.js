@@ -78,7 +78,220 @@ var ASTFixture = AST.program([
             )],
             result: AST.literal('void')
         })
-    ]))
+    ])),
+    AST.typeDeclaration('Collection', AST.intersection([
+        AST.object({
+            'find': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Cursor'),
+                    [AST.literal('T')]
+                )
+            }),
+            'findById': AST.functionType({
+                args: [
+                    AST.literal('String', true, {
+                        label: 'id'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('T')]
+                )
+            }),
+            'findAndModify': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Array', true, {
+                        label: 'sort',
+                        optional: true
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'doc',
+                        optional: true
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('T')]
+                )
+            }),
+            'findAndRemove': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Array', true, {
+                        label: 'sort',
+                        optional: true
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('T')]
+                )
+            }),
+            'findOne': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('T')]
+                )
+            }),
+            'insert': AST.functionType({
+                args: [
+                    AST.generic(
+                        AST.literal('Array'),
+                        [AST.literal('T')],
+                        'docs'
+                    ),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.generic(
+                        AST.literal('Array'),
+                        [AST.literal('T')]
+                    )]
+                )
+            }),
+            'mapReduce': AST.functionType({
+                args: [
+                    AST.literal('Function', true, {
+                        label: 'map'
+                    }),
+                    AST.literal('Function', true, {
+                        label: 'reduce'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('Collection')]
+                )
+            }),
+            'remove': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('Number')]
+                )
+            }),
+            'update': AST.functionType({
+                args: [
+                    AST.literal('Object', true, {
+                        label: 'selector'
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'doc',
+                        optional: true
+                    }),
+                    AST.literal('Object', true, {
+                        label: 'options',
+                        optional: true
+                    })
+                ],
+                result: AST.generic(
+                    AST.literal('Continuable'),
+                    [AST.literal('Number')]
+                )
+            })
+        }),
+        AST.functionType({
+            args: [AST.generic(
+                AST.literal('Callback'),
+                [AST.literal('MongoCollection')]
+            )],
+            result: AST.literal('void')
+        })
+    ]), [ AST.literal('T') ]),
+    AST.assignment('continuable-mongo/cursor', AST.functionType({
+        args: [AST.generic(
+            AST.literal('Collection'),
+            [AST.literal('T')]
+        )],
+        result: AST.functionType({
+            args: [
+                AST.literal('Object', true, {
+                    label: 'selector'
+                }),
+                AST.literal('Object', true, {
+                    label: 'options',
+                    optional: true
+                })
+            ],
+            result: AST.generic(
+                AST.literal('Cursor'),
+                [AST.literal('T')]
+            )
+        })
+    })),
+    AST.assignment('continuable-mongo/collection',
+        AST.functionType({
+            args: [AST.literal('Client')],
+            result: AST.functionType({
+                args: [AST.literal('String', true, {
+                    label: 'collectionName'
+                })],
+                result: AST.literal('Collection')
+            })
+        })),
+    AST.assignment('continuable-mongo', AST.functionType({
+        args: [
+            AST.literal('String', true, {
+                label: 'uri'
+            }),
+            AST.literal('Object', true, {
+                label: 'options',
+                optional: true
+            })
+        ],
+        result: AST.literal('Client')
+    }))
 ]);
 
 test('the error type definition', function t(assert) {
@@ -89,32 +302,3 @@ test('the error type definition', function t(assert) {
 
     assert.end();
 });
-
-
-// type Collection<T> := (Callback<MongoCollection>) => void & {
-//     find: (selector: Object, options: Object?) => Cursor<T>,
-//     findById: (id: String, options: Object?) => Continuable<T>,
-//     findAndModify: (selector: Object, sort: Array?, doc: Object?,
-//         options: Object?) => Continuable<T>,
-//     findAndRemove: (selector: Object, sort: Array?, options: Object?) =>
-//         Continuable<T>
-//     findOne: (selector: Object, options: Object?) => Continuable<T>,
-//     insert: (docs: Array<T>, options: Object?) =>
-//         Continuable<Array<T>>,
-//     mapReduce: (map: Function, reduce: Function, options: Object?) =>
-//         Continuable<Collection>,
-//     remove: (selector: Object, options: Object?) =>
-//         Continuable<Number>,
-//     update: (selector: Object, doc: Object?, options: Object?) =>
-//         Continuable<Number>
-// }
-
-
-
-// continuable-mongo/cursor := (Collection<T>) =>
-//     (selector: Object, options: Object?) => Cursor<T>
-
-// continuable-mongo/collection := (Client) =>
-//     (collectionName: String) => Collection
-
-// continuable-mongo := (uri: String, options: Object?) => Client

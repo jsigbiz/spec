@@ -7,7 +7,8 @@ var builtinTypes = [
     'void',
     'Any',
     'Array',
-    'Error'
+    'Error',
+    'Function'
 ];
 
 module.exports = builtinTypes;
