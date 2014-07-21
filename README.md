@@ -1,6 +1,7 @@
 # jsig - precise & concise JavaScript signature notation
 
 ## v 0.1.0
+
 *Stability Note* - This specification is a draft. The spirit of what we intend to capture is here, but the exact wording is still being ironed out. Expect change. Please participate with your comments and feedback.
 
 ## Motivation
@@ -15,7 +16,7 @@ The goal of this system of annotation is not necessarily to be computable but to
 
 ## Example
 
-    // (array: Array, (accumulated: Value, elem: Value) => Value, seed: Value) => Value
+    // (array: Array, (accumulated: Any, elem: Any) => Any, seed: Any) => Any
     function reduce(array, reducer, seed) {
       return array.reduce(reducer, seed);
     }
@@ -94,7 +95,7 @@ Custom types can be named like function parameters using a colon character `:`, 
 
 Values that may be of any type (or unspecified type) should be written as:
 
-    Value
+    Any
 
 #### No Value
 
@@ -156,7 +157,7 @@ Parameters may be named for clarity and documentation purposes. The parameter na
 
 When a function accepts an arbitrary number of parameters of the same type, they may be specified with ES6 Rest Parameter syntax, consisting of three periods before the parameter name:
 
-    (name: String, ...pets: String) => Value
+    (name: String, ...pets: String) => Any
     function petOwner(name) {
       var pets = Array.prototype.slice.call(arguments)
       pets.shift()
