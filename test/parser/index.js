@@ -16,3 +16,4 @@ require('./integration/jsig.js');
 require('./integration/frp-keyboard.js');
 require('./integration/error.js');
 require('./integration/continuable-mongo.js');
+require('./integration/jsonml-stringify.js');
