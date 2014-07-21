@@ -59,19 +59,42 @@ Formally, the generic type preceeds the specific type, which is surrounded by an
 
 In Node.js, we can read a file using `fs.readFile`. We could write this signature (simplified) as:
 
-    readFile (filename: String, options?: Object, callback: (err: Error, contents: Buffer)) => void`
+```
+readFile : (
+  filename: String,
+  options?: Object,
+  callback: (err: Error, contents: Buffer)
+) => void
+```
 
 or we could create a generic `Callback<Type>` notation and write:
 
-    readFile (filename: String, options?: Object, callback: Callback<Buffer>)
+```
+type Callback<T> : (err: Error, contents: T) => void
+
+readFile : (
+  filename: String,
+  options?: Object,
+  callback: Callback<Buffer>
+) => void
+```
 
 Using Promise values, we could simplify and clarify the type signature even further to:
 
-    readFile (filename: String, options?: Object) => Promise<Buffer>
+```
+type Promise<T> : {
+  then: ((result: T) => void, (error: Error) => void) => void
+}
+
+readFile (
+  filename: String,
+  options?: Object
+) => Promise<Buffer>
+```
 
 Generic types should be fully specified as a Custom Type (see below). In the custom type definition, any symbol may be used inside the angle brackets and should be internally consistent in the definition. In this example, the definition for generic Callback would be:
 
-    Callback<T>: (err: Error, result: T) => void
+    type Callback<T> : (err: Error, result: T) => void
 
 Multiple generic types may be specified if necessary. Type parameters should be separated by a comma, e.g.:
 
