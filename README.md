@@ -24,7 +24,7 @@ Read through for further examples. Please contribute your own via a pull request
 
 ## Specification
 
-`jsig` specifies values and describes their types. It can be used to describe a single value, for example a variable or a configuration object. It can also describe a function as a value, and its relationship between its parameters and a return value. This relationship is called the function's signature.
+`jsig` specifies values and describes their types. It can be used to describe a single value, for example a variable or a configuration object. It can also describe a function as a value, and its relationship between its parameters and a return value. This relationship is called the function's signature. It can also be used to create named types to be used in other signatures
 
 ### Basic Types
 
@@ -39,11 +39,12 @@ The built in JavaScript constructor functions describe basic types: String, Arra
 
 In `jsig` we can make statements about this object.
 
-    bicycle: Object
-    bicyle.gears: Number
-    bicycle.tires: String
-    bicycle.color: String
-    bicycle.lastUsed: Date
+    bicycle : {
+      gears: Number,
+      tires: String,
+      color: String,
+      lastUsed: Date
+    }
 
 ### Generic Types
 
