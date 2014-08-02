@@ -61,7 +61,7 @@ In Node.js, we can read a file using `fs.readFile`. We could write this signatur
 readFile : (
   filename: String,
   options?: Object,
-  callback: (err: Error, contents: Buffer)
+  callback: (err: Error, contents: Buffer) => void
 ) => void
 ```
 
@@ -81,7 +81,8 @@ Using Promise values, we could simplify and clarify the type signature even furt
 
 ```
 type Promise<T> : {
-  then: ((result: T) => void, (error: Error) => void) => void
+  then: ((result: T) => S, (error: Error) => S) => Promise<S>,
+  catch: ((error: Error) => S) => Promise<S>
 }
 
 readFile (
