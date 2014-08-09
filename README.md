@@ -146,12 +146,14 @@ Functions may be named by preceeding the parentheses with the function name. Whe
 
 Parameters may be named for clarity and documentation purposes. The parameter name is separated from the type by a colon. Whitespace is ignored. The parameter name is optional, but a type must be specified.
 
+The return value can also be labeled.
+
     // anonymous signature
     (String, Number) => Boolean
 
 
     // named signature
-    isMinLength(str: String, min: Number) => Boolean
+    isMinLength: (str: String, min: Number) => isValid: Boolean
 
 #### Variadic (variable number of parmeters) functions
 
