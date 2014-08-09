@@ -157,10 +157,9 @@ Parameters may be named for clarity and documentation purposes. The parameter na
 
 When a function accepts an arbitrary number of parameters of the same type, they may be specified with ES6 Rest Parameter syntax, consisting of three periods before the parameter name:
 
-    (name: String, ...pets: String) => Value
+    // (name: String, ...pets: String) => Any
     function petOwner(name) {
-      var pets = Array.prototype.slice.call(arguments)
-      pets.shift()
+      var pets = Array.prototype.slice.call(arguments, 1)
       console.log(name + ' owns ' + pets.join(', '))
     }
 
