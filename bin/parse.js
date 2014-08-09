@@ -1,16 +1,18 @@
+'use strict';
+
 var Parsimmon = require('parsimmon');
-var body = require('body');
+var plainBody = require('body');
 var process = require('process');
 
 var program = require('../parser/program.js');
 
 function parse(opts, cb) {
     if (process.stdin.isTTY) {
-        var err = new Error('usage: cat docs.mli | jsig --depth=2')
-        return cb(err)
+        var err = new Error('usage: cat docs.mli | jsig --depth=2');
+        return cb(err);
     }
 
-    body(process.stdin, function (err, body) {
+    plainBody(process.stdin, function onBody(err2, body) {
         if (err) {
             throw err;
         }
@@ -19,12 +21,12 @@ function parse(opts, cb) {
         var res = program.parse(buf);
 
         if (res.status) {
-            return cb(null, res.value)
+            return cb(null, res.value);
         }
 
-        var message = Parsimmon.formatError(buf, res)
+        var message = Parsimmon.formatError(buf, res);
         cb(new Error(message));
-    })
+    });
 }
 
-module.exports = parse
+module.exports = parse;

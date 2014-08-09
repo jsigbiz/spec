@@ -1,15 +1,17 @@
-var path = require('path')
+'use strict';
 
-var typeCheckAndVerify = require('../type-checker/')
+var path = require('path');
 
-module.exports = typeCheck
+var typeCheckAndVerify = require('../type-checker/');
+
+module.exports = typeCheck;
 
 function typeCheck(opts, cb) {
-    var file = opts._[0]
+    var file = opts._[0];
 
     if (!file) {
-        cb(new Error('must pass file argument'))
+        cb(new Error('must pass file argument'));
     }
 
-    typeCheckAndVerify(path.resolve(file), cb)
+    typeCheckAndVerify(path.resolve(file), cb);
 }

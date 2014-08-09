@@ -1,68 +1,67 @@
 /*global global*/
+'use strict';
 
-var hook = require('node-hook')
-var path = require('path')
-var falafel = require('falafel')
+var hook = require('node-hook');
+var path = require('path');
+var falafel = require('falafel');
 
-var findJsigUriSync = require('../lib/find-jsig-uri').sync
+var findJsigUriSync = require('../lib/find-jsig-uri').sync;
 var isModuleExportsStatement =
-    require('../lib/is-module-exports.js')
+    require('../lib/is-module-exports.js');
 
 var annotateUri = path.join(__dirname, '..',
-    'runtime', 'annotate.js')
+    'runtime', 'annotate.js');
 
-module.exports = annotate
+module.exports = annotate;
 
 function annotate(opts, cb) {
-    var file = opts._[0]
+    var file = opts._[0];
 
     if (!file) {
-        cb(new Error('must pass file argument'))
+        cb(new Error('must pass file argument'));
     }
 
-    hook.hook('.js', interceptAndInstrument)
+    hook.hook('.js', interceptAndInstrument);
 
-    var res = require(path.resolve(file))
+    var res = require(path.resolve(file));
 
-    hook.unhook('.js')
+    hook.unhook('.js');
 
     if (cb) {
-        cb(null, res)
+        cb(null, res);
     }
 
-    return res
+    return res;
 }
 
 function interceptAndInstrument(source, filename) {
-    var jsigUri = findJsigUriSync(filename)
+    var jsigUri = findJsigUriSync(filename);
 
     // do not annotate the annotator file, thats silly
     if (filename === annotateUri ||
         global.JSIG_ANNOTATE_SKIP
     ) {
-        return source
+        return source;
     }
 
     var prefix = 'var jsigAnnotate = require("' +
-        annotateUri + '")\n'
+        annotateUri + '")\n';
 
 
     var res = prefix + falafel(source, function (node) {
         if (!isModuleExportsStatement(node)) {
-            return
+            return;
         }
 
-        var expression = node.expression
+        var expression = node.expression;
 
         var newSource = 'jsigAnnotate(' +
             expression.right.source() +
             ', ' + JSON.stringify(jsigUri) +
-            ', ' + JSON.stringify(filename) + ')'
+            ', ' + JSON.stringify(filename) + ')';
 
-        expression.right.update(newSource)
-    })
+        expression.right.update(newSource);
+    });
 
-    return res
+    return res;
 }
-
-
