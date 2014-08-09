@@ -39,7 +39,7 @@ function serializeProgram(node, opts) {
 
 function serializeTypeDeclaration(node, opts) {
     var generics = node.generics.length ? 
-        '<' + generics.map(function s(n) {
+        '<' + node.generics.map(function s(n) {
             return serialize(n, opts);
         }).join(', ') + '>' : '';
     var str = 'type ' + node.identifier + generics + ' : ';

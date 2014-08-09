@@ -25,7 +25,7 @@ module.exports = {
     openSquareBrace: lexeme(Parsimmon.string('[')),
     closeSquareBrace: lexeme(Parsimmon.string(']')),
     notAQuote: lexeme(Parsimmon.regex(/[^\"]+/i)),
-    number: lexeme(Parsimmon.regex(/[0-9]+/i)),
+    number: lexeme(Parsimmon.regex(/\-?[0-9]+/i)),
     nullWord: lexeme(Parsimmon.string('null')),
     undefinedWord: lexeme(Parsimmon.string('undefined')),
     asWord: lexeme(Parsimmon.string('as'))
