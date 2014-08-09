@@ -32,12 +32,7 @@ var intersectionType = Parsimmon.alt(
     unionType
 );
 
-// Label is a name : whitespace at most once
-var label = lexemes.labelName
-    .skip(lexemes.labelSeperator)
-    .atMost(1);
-
-var typeDeclaration = label
+var typeDeclaration = lexemes.label
     .chain(function captureLabels(labels) {
         return intersectionType.map(function toExpr(expr) {
             var label = labels[0] || null;

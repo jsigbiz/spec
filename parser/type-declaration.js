@@ -10,7 +10,7 @@ var join = require('./lib/join.js');
 
 var genericExpression = lexemes.openAngularBrace
     .then(join(
-        typeLiteral,
+        lexemes.label.then(typeLiteral),
         lexemes.comma
     ))
     .skip(lexemes.closeAngularBrace);

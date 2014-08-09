@@ -2,7 +2,7 @@
 
 var Parsimmon = require('parsimmon');
 
-module.exports = {
+var lexemes = {
     importWord: lexeme(Parsimmon.string('import')),
     openCurlyBrace: lexeme(Parsimmon.string('{')),
     closeCurlyBrace: lexeme(Parsimmon.string('}')),
@@ -30,6 +30,12 @@ module.exports = {
     undefinedWord: lexeme(Parsimmon.string('undefined')),
     asWord: lexeme(Parsimmon.string('as'))
 };
+
+lexemes.label = lexemes.labelName
+    .skip(lexemes.labelSeperator)
+    .atMost(1);
+
+module.exports = lexemes;
 
 function lexeme(p) {
     return p.skip(Parsimmon.optWhitespace);
