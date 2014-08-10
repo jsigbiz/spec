@@ -213,9 +213,9 @@ Functions which do not return a type should be specified as `() => void`
 
 ### Optional
 
-When describing a function's parameters list, an optional parameter can be specified by appending a question mark `?` to either the parameter name (if named) or the type annotation:
+When describing a function's parameters list, an optional parameter can be specified by appending a question mark `?` to the parameter name:
 
-    // (requestUrl: String, timeout: Number?) => Promise<String>
+    // (requestUrl: String, timeout?: Number) => Promise<String>
     function get(requestUrl, timeout) {
       // do stuff
     }
