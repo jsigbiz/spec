@@ -184,9 +184,11 @@ To specify any function, use the builtin constructor `Function`.
 
 Return types must be specified.
 
-Functions may be named by preceeding the parentheses with the function name. When written as a comment above the funciton definition, this is typically omitted.
+Functions may be named by adding a label infront of the function definition.
+  When written as a comment above the funciton definition,
+  this is typically omitted.
 
-    getElementById(String) => DOMElement
+    getElementById: (String) => DOMElement
 
 #### Parameters
 
