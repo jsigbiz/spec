@@ -105,10 +105,27 @@ Multiple generic types may be specified if necessary. Type parameters should be 
 
 When describing an object with a well-defined interface (for example, from a constructor function or an interface specification like Promises/A+), this name should appear in PascalCase and should refer either to the name of the constructor or should otherwise be obvious in context (eg, ReadStream or HttpClientRequest in Node.js or DOMElement in a browser).
 
-    // (req: HttpServerRequest, res: HttpServerResponse) => void
-    function endpoint(req, res) {
-      res.end('foobar')
-    }
+```
+// (req: HttpServerRequest, res: HttpServerResponse) => void
+function endpoint(req, res) {
+  res.end('foobar')
+}
+```
+
+If possible you should either define or import any custom types
+you use.
+
+```
+import { HttpServerResponse } from 'jsig-node-types'
+
+// subset of HttpServerRequest
+type HttpServerRequest : {
+  method: String,
+  url: String
+}
+
+endpoint : (req; HttpServerRequest, res: HttpServerResponse) => void
+```
 
 Custom types can be named like function parameters using the `type` keyword
   and a colon character `:`, and should use PascalCase:
