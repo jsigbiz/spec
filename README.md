@@ -110,9 +110,12 @@ When describing an object with a well-defined interface (for example, from a con
       res.end('foobar')
     }
 
-Custom types can be named like function parameters using a colon character `:`, and should use PascalCase:
+Custom types can be named like function parameters using the `type` keyword
+  and a colon character `:`, and should use PascalCase:
 
-    User: {id: Number, name: String, email: String}
+```jsig
+type User: { id: Number, name: String, email: String }
+```
 
 ### Special Types
 
