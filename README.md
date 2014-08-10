@@ -1,8 +1,9 @@
-git pull git@github.com:Raynos/jsig.git variadic-fixes# jsig - precise & concise JavaScript signature notation
+# jsig - precise & concise JavaScript signature notation
 
-## v 0.1.0
 
-*Stability Note* - This specification is a draft. The spirit of what we intend to capture is here, but the exact wording is still being ironed out. Expect change. Please participate with your comments and feedback.
+##*Stability Note*
+
+This specification is a draft. The spirit of what we intend to capture is here, but the exact wording is still being ironed out. Expect change. Please participate with your comments and feedback.
 
 ## Motivation
 
