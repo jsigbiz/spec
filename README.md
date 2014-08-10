@@ -133,7 +133,8 @@ No value (for example, a function which does not return) should be specified usi
 
 #### Literal value
 
-Literal values should be specified using their JavaScript literals, eg `null`, `true`, `false`
+Literal values should be specified using their JavaScript literals,
+  eg `null`, `true`, `false`, `"a string"`, `22`
 
 ### Multiple Types
 
