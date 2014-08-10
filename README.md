@@ -196,11 +196,17 @@ When a function accepts an arbitrary number of parameters of the same type, they
 
 #### Return types
 
-Functions should return a single type, indicated after the arrow notation, eg `() => Type`. If a function returns different types depending on the parameters, this should be explicitly noted and each function signature should be fully specified:
+Functions should return a single type, indicated after the arrow notation, eg `() => Type`. 
 
-    fooAsync(callback: Function) => void
-    fooAsync() => Promise
+If a function returns different types depending on the parameters, this should be explicitly noted and each function signature should be fully specified:
 
+    fooAsync: (callback: Function) => void &
+        () => Promise
+
+Note that we can use a compound type to specify that `fooAsync`
+  supports both the callback interface and the promise interface.
+
+This is similar to method overloading in static languages.
 
 Functions which do not return a type should be specified as `() => void`
 
