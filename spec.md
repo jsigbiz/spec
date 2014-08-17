@@ -74,6 +74,10 @@ Example:
  - `type Pos : { x: Number, y: Number }`
  - `type HttpRequest : { url: String, method: String }`
 
+#### Generic type declaration
+
+TODO
+
 ### Import statement
 
 ```jsig
@@ -97,12 +101,30 @@ Example:
  - `import { AThing, BThing } from "./other-file.jsig"`
  - `import { AThing as BThing } from "./other-file.jsig"`
 
+## Type expression
+
+A type expression is one of the following
+
+ - A builtin type
+ - A type literal
+ - An object literal
+ - A function expression
+ - A tuple literal
+ - A union expression
+ - A compound expression
+ - A string literal
+ - A null literal
+ - A undefined literal
+ - A numeric literal
+ - A boolean literal
+
 ## Builtin Types
 
 There are a set of builtin types.
 
  - `String`
  - `Number`
+ - `Boolean`
  - `Object`
  - `void`
  - `Any`
@@ -136,6 +158,10 @@ Examples:
  - `NaN` is of type `Number`
  - `new Number(0)` is not of type `Number`
 
+### The builtin `Boolean` type
+
+TODO
+
 ### The bultin `Object` type
 
 Any Javascript object is of type `Object`
@@ -149,6 +175,15 @@ Examples:
  - `[1, 2, 3]` is of type `Object`
  - `new Object()` is of type `Object`
  - `null` is not of type `Object`
+
+
+#### The generic variant of `Object<Key, Value>`
+
+```jsig
+myThing : Object<String, T>
+```
+
+TODO
 
 ### The builtin `void` type
 
@@ -190,6 +225,14 @@ Examples:
  - `{ length: 1, 1: 10 }` is not of type `Array`
  - `{ __proto__: Array.prototype }` is not of type `Array`
 
+#### The generic variant of `Array<Value>`
+
+```jsig
+myThing : Array<T>
+```
+
+TODO
+
 ### The builtin `Error` type
 
 Any javascript Error object is of type `Error`
@@ -216,6 +259,58 @@ Examples:
  - `new Function("return 42")` is of type `Function`
  - `{ call: function () {} }` is not of type `Function`
 
+#### The generic variant of `Function<Value>`
+
+```jsig
+myThing : Function<Promise>
+```
+
+TODO
+
+## Builtin literals
+
+TODO
+
+### string literal
+
+```jsig
+myThing : "foo"
+```
+
+TODO
+
+### null literal
+
+```jsig
+myThing : null
+```
+
+TODO
+
+### undefined literal
+
+```jsig
+myThing : undefined
+```
+
+TODO
+
+### numeric literal
+
+```jsig
+myThing : 13
+```
+
+TODO
+
+### boolean literal
+
+```jsig
+myThing : true
+```
+
+TODO
+
 ## Type literals
 
 A type literal is a type name. All builtin types are type
@@ -232,3 +327,51 @@ myThing : MyCustomType
 It is expected that a custom type is either defined inside the
     file using a type declaration statement or is imported
     into the file using an import statement.
+
+### Generic type literals
+
+```jsig
+myThing : MyCustomType<T>
+```
+
+TODO
+
+## Object literals
+
+```jsig
+myThing : { foo: Number, bar: String }
+```
+
+TODO
+
+## Function expression
+
+```jsig
+myThing : (someStr: String) => Boolean
+```
+
+TODO
+
+## Tuple literals
+
+```
+myThing : [Number, Number]
+```
+
+TODO
+
+## Union expression
+
+```
+myThing : null | Object
+```
+
+TODO
+
+## Compound expression
+
+```
+myThing : { foo: String } & () => Boolean
+```
+
+TODO
