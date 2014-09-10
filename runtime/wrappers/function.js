@@ -1,16 +1,18 @@
-var TypedError = require('error/typed')
-var format = require('util').format
+'use strict';
 
-var checkValue = require('../checkers/value.js')
+var TypedError = require('error/typed');
+var format = require('util').format;
+
+var checkValue = require('../checkers/value.js');
 
 var ExpectedFunction = TypedError({
     type: 'expected.function',
     message: 'expected {identifier} to be a function.\n' +
         'instead got type {typeof}.\n' +
         'value is {value}.\n'
-})
+});
 
-module.exports = wrapFunction
+module.exports = wrapFunction;
 
 function wrapFunction(expr, value, name) {
     if (typeof value !== 'function') {
@@ -18,29 +20,28 @@ function wrapFunction(expr, value, name) {
             identifier: name,
             typeof: typeof value,
             value: value
-        })
+        });
     }
 
-    var expectedArgs = expr.args
-    var expectedResult = expr.result
+    var expectedArgs = expr.args;
+    var expectedResult = expr.result;
 
     return function () {
-        var args = [].slice.call(arguments)
+        var args = [].slice.call(arguments);
 
         expectedArgs.forEach(function (value, index) {
             var description = format('argument %d of `%s()`',
-                index, name)
+                index, name);
 
-            checkValue(value, args[index], description)
-        })
+            checkValue(value, args[index], description);
+        });
 
-        var result = value.apply(this, args)
-
+        var result = value.apply(this, args);
 
         var description =
-            format('return value of %s()', name)
-        checkValue(expectedResult, result, description)
+            format('return value of %s()', name);
+        checkValue(expectedResult, result, description);
 
-        return result
-    }
+        return result;
+    };
 }

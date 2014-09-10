@@ -45,7 +45,7 @@
   "scripts": {
     "test": "node test/index.js | tap-spec",
     "runtime": "npm run jshint -s && node test/runtime/ | tap-spec",
-    "cover-runtime": "istanbul cover --report html --print none test/runtime/ | tap-spec",
+    "cover-runtime": "istanbul cover --report html --print none test/runtime/",
     "jshint": "jshint --verbose .",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "view-cover": "istanbul report html && opn ./coverage/index.html"

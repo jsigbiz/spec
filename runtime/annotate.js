@@ -1,52 +1,54 @@
-/*global global*/
-var fs = require('fs')
+'use strict';
 
-var jsigAstCache = {}
-var IN_ANNOTATE_MODE = false
-global.JSIG_ANNOTATE_SKIP = true
+/*global global*/
+var fs = require('fs');
+
+var jsigAstCache = {};
+var IN_ANNOTATE_MODE = false;
+global.JSIG_ANNOTATE_SKIP = true;
 
 // must export to analyse circular code. i.e. code that annotate
 // uses.
-module.exports = annotate
+module.exports = annotate;
 
-var getIdentifier = requireClean('../lib/get-jsig-identifier.js')
+var getIdentifier = requireClean('../lib/get-jsig-identifier.js');
 var findByIdentifier =
-    requireClean('../lib/find-by-jsig-identifier.js')
-var parser = requireClean('../parser.js')
+    requireClean('../lib/find-by-jsig-identifier.js');
+var parser = requireClean('../parser.js');
 var enforceTypeExpression =
-    requireClean('./enforce-type-expression')
+    requireClean('./enforce-type-expression');
 
-global.JSIG_ANNOTATE_SKIP = false
+global.JSIG_ANNOTATE_SKIP = false;
 
 function annotate(object, jsigUri, filename) {
-    var _fn = null
+    var _fn = null;
 
     function Empty() {}
 
     // do lazy for function
     if (typeof object === 'function') {
-        return proxy
+        return proxy;
     }
 
-    return _annotate(object, jsigUri, filename)
+    return _annotate(object, jsigUri, filename);
 
     function proxy() {
-        var res
+        var res;
 
         if (IN_ANNOTATE_MODE) {
             if (this instanceof proxy) {
-                res = object.apply(this, arguments)
+                res = object.apply(this, arguments);
                 if (Object(res) === res) {
-                    return res
+                    return res;
                 }
-                return this
+                return this;
             }
 
-            return object.apply(this, arguments)
+            return object.apply(this, arguments);
         }
 
         if (!_fn) {
-            var constr = this instanceof proxy
+            var constr = this instanceof proxy;
 
             if (object.prototype) {
                 Empty.prototype = object.prototype;
@@ -55,77 +57,77 @@ function annotate(object, jsigUri, filename) {
             }
 
             Object.keys(object).forEach(function (key) {
-                proxy[key] = object[key]
-            })
+                proxy[key] = object[key];
+            });
 
-            IN_ANNOTATE_MODE = true
-            _fn = _annotate(object, jsigUri, filename)
-            IN_ANNOTATE_MODE = false
+            IN_ANNOTATE_MODE = true;
+            _fn = _annotate(object, jsigUri, filename);
+            IN_ANNOTATE_MODE = false;
 
             if (constr) {
                 return proxy.apply(
                     Object.create(proxy.prototype),
-                    arguments)
+                    arguments);
             }
 
-            return proxy.apply(this, arguments)
+            return proxy.apply(this, arguments);
         }
 
         if (this instanceof proxy) {
-            res = _fn.apply(this, arguments)
+            res = _fn.apply(this, arguments);
             if (Object(res) === res) {
-                return res
+                return res;
             }
-            return this
+            return this;
         }
 
-        return _fn.apply(this, arguments)
+        return _fn.apply(this, arguments);
     }
 }
 
 function _annotate(object, jsigUri, filename) {
     if (!jsigUri) {
         // cannot determine anything without jsigUri
-        return object
+        return object;
     }
 
-    var ast = getAST(jsigUri)
-    var identifier = getIdentifier(jsigUri, filename)
-    var shape = findByIdentifier(ast, identifier)
+    var ast = getAST(jsigUri);
+    var identifier = getIdentifier(jsigUri, filename);
+    var shape = findByIdentifier(ast, identifier);
 
     if (!shape) {
-        // console.warn('could not find shape', filename, jsigUri);
-        return object
+        console.warn('could not find shape', filename, jsigUri);
+        return object;
     }
 
     return enforceTypeExpression(shape.typeExpression, object,
-        shape.identifier)
+        shape.identifier);
 }
 
 function getAST(jsigUri) {
     if (jsigAstCache[jsigUri]) {
-        return jsigAstCache[jsigUri]
+        return jsigAstCache[jsigUri];
     }
 
-    var jsig = fs.readFileSync(jsigUri, 'utf8')
-    var ast = parser(jsig)
+    var jsig = fs.readFileSync(jsigUri, 'utf8');
+    var ast = parser(jsig);
 
-    jsigAstCache[jsigUri] = ast
+    jsigAstCache[jsigUri] = ast;
 
-    return ast
+    return ast;
 }
 
 
 function requireClean(uri) {
-    var oldCache = Object.keys(require.cache)
+    var oldCache = Object.keys(require.cache);
 
-    var mod = require(uri)
+    var mod = require(uri);
 
     Object.keys(require.cache).forEach(function (key) {
         if (oldCache.indexOf(key) === -1) {
-            delete require.cache[key]
+            delete require.cache[key];
         }
-    })
+    });
 
-    return mod
+    return mod;
 }

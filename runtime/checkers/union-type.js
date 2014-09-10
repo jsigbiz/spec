@@ -1,7 +1,9 @@
-var TypedError = require('error/typed')
+'use strict';
 
-var tryCatch = require('../../lib/try-catch.js')
-var checkValue = require('./value.js')
+var TypedError = require('error/typed');
+
+var tryCatch = require('../../lib/try-catch.js');
+var checkValue = require('./value.js');
 
 var ExpectedUnion = TypedError({
     type: 'expected.union',
@@ -10,28 +12,28 @@ var ExpectedUnion = TypedError({
         '{unions}\n' +
         'instead got type {typeof}.\n' +
         'value is {value}.\n'
-})
+});
 
-module.exports = checkUnionType
+module.exports = checkUnionType;
 
 function checkUnionType(expr, value, description) {
-    var tuples = expr.unions.map(function (expr) {
+    var tuples = expr.unions.map(function checkAll(union) {
         return tryCatch(function () {
-            checkValue(expr, value, description)
-        })
-    })
+            checkValue(union, value, description);
+        });
+    });
 
     var errors = tuples.map(function (t) {
-        return t[0]
-    }).filter(Boolean)
+        return t[0];
+    }).filter(Boolean);
 
     if (errors.length < expr.unions.length) {
-        return
+        return;
     }
 
     var unions = errors.map(function (err) {
-        return err.message.split('\n')[0]
-    }).join('\n')
+        return err.message.split('\n')[0];
+    }).join('\n');
 
     throw ExpectedUnion({
         typeof: typeof value,
@@ -39,5 +41,5 @@ function checkUnionType(expr, value, description) {
         description: description,
         unions: unions,
         errors: errors
-    })
+    });
 }

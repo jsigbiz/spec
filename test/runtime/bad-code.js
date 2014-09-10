@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 
 var getModule = require('./lib/get-module.js');
@@ -9,7 +11,7 @@ test('notAFunction is not a function', function (assert) {
     });
 
     assert.ok(tuple[0]);
-    assert.equal(tuple[0].type, 'expected.function')
+    assert.equal(tuple[0].type, 'expected.function');
 
     assert.end();
-})
+});
