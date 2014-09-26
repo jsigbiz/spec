@@ -9,7 +9,7 @@ This specification is a draft. The spirit of what we intend to capture is here, 
 
 JavaScript is a a dynamically typed language. Most of the time, this is great - this flexibility lets us write things like `"I'm " + thisMany` and have it work whether `thisMany === 'five'` or `thisMany === 5`. But sometimes it helps to have a vocabulary for explicitly stating expectations about the values and objects our code is expecting, especially when writing documentation for other humans.
 
-JSDoc is a attempts to solve this, but falls short by limiting itself to built in types and instanceof constructors. In particular, it is difficult to describe function signatures for callbacks and objects with a certain set of properties.
+JSDoc is an attempt to solve this, but falls short by limiting itself to built-in types and instanceof constructors. In particular, it is difficult to describe function signatures for callbacks and objects with a certain set of properties.
 
 jsig is a system of notation using structure-based type annotations to describe JavaScript interfaces. It aims to be explicit, concise, and familiar for those used to JavaScript syntax.
 
@@ -30,7 +30,7 @@ Read through for further examples. Please contribute your own via a pull request
 
 ### Basic Types
 
-The built in JavaScript constructor functions describe basic types: String, Array, RegExp, etc. For example, in JavaScript we can describe a bicycle like so:
+The built-in JavaScript constructor functions describe basic types: String, Array, RegExp, etc. For example, in JavaScript we can describe a bicycle like so:
 
     var bicycle = {
       gears: 10,
@@ -94,7 +94,7 @@ readFile (
 ) => Promise<Buffer>
 ```
 
-Generic types should be fully specified as a Custom Type (see below). In the custom type definition, any symbol may be used inside the angle brackets and should be internally consistent in the definition. In this example, the definition for generic Callback would be:
+Generic types should be fully specified as a Custom Type (see below). In the custom type definition, any symbol may be used inside the angle brackets and should be internally consistent in the definition. In this example, the definition for a generic Callback would be:
 
     type Callback<T> : (err: Error, result: T) => void
 
@@ -128,8 +128,7 @@ type HttpServerRequest : {
 endpoint : (req; HttpServerRequest, res: HttpServerResponse) => void
 ```
 
-Custom types can be named like function parameters using the `type` keyword
-  and a colon character `:`, and should use PascalCase:
+Custom types can be named like function parameters using the `type` keyword and a colon character `:`, and should use PascalCase:
 
 ```jsig
 type User: { id: Number, name: String, email: String }
@@ -181,13 +180,11 @@ Functions are specified using proposed ES6 arrow notation:
 
     (param, param2) => Type
 
-To specify any function, use the builtin constructor `Function`.
+To specify any function, use the built-in constructor `Function`.
 
 Return types must be specified.
 
-Functions may be named by adding a label infront of the function definition.
-  When written as a comment above the funciton definition,
-  this is typically omitted.
+Functions may be named by adding a label in front of the function definition. When written as a comment above the function definition, this is typically omitted.
 
     getElementById: (String) => DOMElement
 
@@ -206,7 +203,7 @@ The return value can also be labeled.
 
 #### Variadic (variable number of parmeters) functions
 
-When a function accepts an arbitrary number of parameters of the same type, they may be specified with ES6 Rest Parameter syntax, consisting of three periods before the parameter name:
+When a function accepts an arbitrary number of parameters of the same type, they may be specified with the ES6 Rest Parameter syntax, consisting of three periods before the parameter name:
 
     // (name: String, ...pets: String) => Any
     function petOwner(name) {
