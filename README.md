@@ -102,6 +102,44 @@ Multiple generic types may be specified if necessary. Type parameters should be 
 
     Generic<Type1, Type2>
 
+#### Generic objects
+
+When dealing with a generic object you could express the following:
+
+```js
+{
+  oranges: { color: 'orange', cost: 1.2 },
+  bananas: { color: 'yellow', cost: 0.8 },
+  apples:  { color: 'red', cost: 1.5 }
+}
+```
+
+As
+
+```jsig
+Object<String, {
+  color: String,
+  cost: Number
+}>
+```
+
+Here we use `Object<String, T>` to say that the type of a value
+  is an object with string keys whose values are of type `T`.
+
+This means that the object is homogenous.
+
+Note that since the type is `Object<String, T>` you are allowed
+  to change the first argument to a nice alias. For example:
+
+```jsig
+type FruitName : String
+
+Object<FruitName, {
+  color: String,
+  cost: Number
+}>
+```
+
 ### Custom Types
 
 When describing an object with a well-defined interface (for example, from a constructor function or an interface specification like Promises/A+), this name should appear in PascalCase and should refer either to the name of the constructor or should otherwise be obvious in context (eg, ReadStream or HttpClientRequest in Node.js or DOMElement in a browser).
