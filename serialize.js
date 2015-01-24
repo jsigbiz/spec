@@ -124,7 +124,8 @@ function serializeUnion(node, opts) {
             return serialize(n, opts);
         }).join(' | ');
 
-    if (str.length > 65) {
+    /* heuristic. Split across multiple lines if too long */
+    if (str.split('\n')[0].length > 65) {
         str = prettyFormatList(str, '|', opts);
     }
 
