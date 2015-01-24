@@ -1,18 +1,21 @@
-var console = require('console')
+'use strict';
 
-var wrapFunction = require('./wrappers/function.js')
-var wrapTypeLiteral = require('./wrappers/type-literal.js')
+var console = require('console');
 
-module.exports = enforceTypeExpression
+var wrapFunction = require('./wrappers/function.js');
+var wrapTypeLiteral = require('./wrappers/type-literal.js');
+
+// (JsigASTNode, T, string) => T
+module.exports = enforceTypeExpression;
 
 function enforceTypeExpression(expr, value, name) {
     if (expr.type === 'function') {
-        return wrapFunction(expr, value, name)
+        return wrapFunction(expr, value, name);
     } else if (expr.type === 'typeLiteral') {
-        return wrapTypeLiteral(expr, value, name)
+        return wrapTypeLiteral(expr, value, name);
     } else {
-        console.warn('skipping check', expr)
-        return value
+        console.warn('skipping check', expr);
+        return value;
     }
 }
 

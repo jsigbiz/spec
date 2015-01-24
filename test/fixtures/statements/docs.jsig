@@ -1,0 +1,7 @@
+statements/string-statement : String
+
+statements/string-statement-bad : String
+
+statements/error-statement : Error
+
+statements/error-statement-bad : Error
