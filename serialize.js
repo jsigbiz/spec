@@ -67,8 +67,22 @@ function serializeLabel(node) {
 }
 
 function serializeObject(node, opts) {
+    var keyValues = node.keyValues;
+
+    /* heuristic. Pretty print single key, value on one line */
+    if (keyValues.length === 1) {
+        var content = serializeLabel(node, opts) + '{ ' +
+            keyValues.map(function s(n) {
+                return serialize(n);
+            }) + ' }';
+
+        if (content.length < 40) {
+            return content;
+        }
+    }
+
     return serializeLabel(node, opts) + '{\n' +
-        node.keyValues.map(function s(n) {
+        keyValues.map(function s(n) {
             return serialize(n, extend(opts, {
                 indent: opts.indent + 1
             }));
