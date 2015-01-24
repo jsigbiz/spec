@@ -4,12 +4,12 @@
   "description": "A spec for javascript types",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
-  "repository": "git://github.com/Raynos/jsig.git",
+  "repository": "git://github.com/jden/jsig.git",
   "main": "index",
   "main.jsig": "docs.mli",
-  "homepage": "https://github.com/Raynos/jsig",
+  "homepage": "https://github.com/jden/jsig",
   "bugs": {
-    "url": "https://github.com/Raynos/jsig/issues",
+    "url": "https://github.com/jden/jsig/issues",
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
@@ -39,7 +39,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/Raynos/jsig/raw/master/LICENSE"
+      "url": "http://github.com/jden/jsig/raw/master/LICENSE"
     }
   ],
   "scripts": {
