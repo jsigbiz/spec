@@ -61,23 +61,38 @@ function serializeImportStatement(node, opts) {
 }
 
 function serializeLabel(node) {
-    return node.label ? 
+    return node.label ?
         node.label + (node.optional ? '?' : '') + ': ' :
         '';
 }
 
 function serializeObject(node, opts) {
+    var keyValues = node.keyValues;
+
+    /* heuristic. Pretty print single key, value on one line */
+    if (keyValues.length <= 1) {
+        var content = serializeLabel(node, opts) + '{ ' +
+            keyValues.map(function s(n) {
+                return serialize(n);
+            }).join(', ') + ' }';
+
+        if (content.length < 65 &&
+            content.indexOf('\n') === -1
+        ) {
+            return content;
+        }
+    }
+
     return serializeLabel(node, opts) + '{\n' +
-        node.keyValues.map(function s(n) {
+        keyValues.map(function s(n) {
             return serialize(n, extend(opts, {
                 indent: opts.indent + 1
             }));
         }).join(',\n') + '\n' + spaces(opts.indent) + '}';
 }
 
-function prettyFormatList(content, seperator, opts) {
-    var tokens = content.split(seperator);
-    var list = tokens.reduce(function (parts, token) {
+function prettyFormatList(labelStr, tokens, seperator, opts) {
+    var list = tokens.reduce(function buildPart(parts, token) {
         var lastIndex = parts.length - 1;
         var last = parts[lastIndex];
         var len = (last + token + seperator).length;
@@ -99,32 +114,36 @@ function prettyFormatList(content, seperator, opts) {
             trimLeft(token) + seperator;
         return parts;
     }, ['']);
-    var str = list.join('\n');
+    var str = labelStr + list.join('\n');
     // remove extra {seperator} at the end
     return str.substr(0, str.length - 1);
 }
 
 function serializeUnion(node, opts) {
-    var str = serializeLabel(node) +
-        node.unions.map(function s(n) {
-            return serialize(n, opts);
-        }).join(' | ');
+    var labelStr = serializeLabel(node);
+    var nodes = node.unions.map(function s(n) {
+        return serialize(n, opts);
+    });
+    var str = labelStr + nodes.join(' | ');
 
-    if (str.length > 65) {
-        str = prettyFormatList(str, '|', opts);
+    /* heuristic. Split across multiple lines if too long */
+    if (str.split('\n')[0].length > 65) {
+        str = prettyFormatList(labelStr, nodes, ' | ', opts);
     }
 
     return str;
 }
 
 function serializeIntersection(node, opts) {
-    var str = serializeLabel(node) +
-        node.intersections.map(function s(n) {
-            return serialize(n, opts);
-        }).join(' & ');
+    var labelStr = serializeLabel(node);
+    var nodes = node.intersections.map(function s(n) {
+        return serialize(n, opts);
+    });
+    var str = labelStr + nodes.join(' & ');
 
-    if (str.length > 65) {
-        str = prettyFormatList(str, '|', opts);
+    /* heuristic. Split across multiple lines if too long */
+    if (str.split('\n')[0].length > 65) {
+        str = prettyFormatList(labelStr, nodes, ' & ', opts);
     }
 
     return str;
