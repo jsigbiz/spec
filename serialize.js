@@ -61,7 +61,7 @@ function serializeImportStatement(node, opts) {
 }
 
 function serializeLabel(node) {
-    return node.label ? 
+    return node.label ?
         node.label + (node.optional ? '?' : '') + ': ' :
         '';
 }
@@ -70,13 +70,15 @@ function serializeObject(node, opts) {
     var keyValues = node.keyValues;
 
     /* heuristic. Pretty print single key, value on one line */
-    if (keyValues.length === 1) {
+    if (keyValues.length <= 1) {
         var content = serializeLabel(node, opts) + '{ ' +
             keyValues.map(function s(n) {
                 return serialize(n);
-            }) + ' }';
+            }).join(', ') + ' }';
 
-        if (content.length < 40) {
+        if (content.length < 65 &&
+            content.indexOf('\n') === -1
+        ) {
             return content;
         }
     }
