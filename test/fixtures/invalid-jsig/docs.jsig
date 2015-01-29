@@ -1,4 +1,0 @@
-valid-foo : {
-    Foo: String
-    Bar: Baz+16/()()
-}
