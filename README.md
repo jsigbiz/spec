@@ -163,7 +163,7 @@ type HttpServerRequest : {
   url: String
 }
 
-endpoint : (req; HttpServerRequest, res: HttpServerResponse) => void
+endpoint : (req: HttpServerRequest, res: HttpServerResponse) => void
 ```
 
 Custom types can be named like function parameters using the `type` keyword and a colon character `:`, and should use PascalCase:
