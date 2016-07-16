@@ -239,7 +239,7 @@ The return value can also be labeled.
     // named signature
     isMinLength: (str: String, min: Number) => isValid: Boolean
 
-#### Variadic (variable number of parmeters) functions
+#### Variadic (variable number of parameters) functions
 
 When a function accepts an arbitrary number of parameters of the same type, they may be specified with the ES6 Rest Parameter syntax, consisting of three periods before the parameter name:
 
